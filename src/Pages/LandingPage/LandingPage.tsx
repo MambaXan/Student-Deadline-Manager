@@ -1,6 +1,6 @@
 import React from 'react';
-import { Calendar, Bell, BookOpen, CheckCircle2, ArrowRight, Users, Clock, Target } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+// import { Calendar, Bell, BookOpen, CheckCircle2, ArrowRight, Users, Clock, Target } from 'lucide-react';
+import { ImageWithFallback } from '../../Fallback/ImageWithCallback';
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
@@ -13,7 +13,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <header className="container mx-auto px-4 lg:px-6 py-4 lg:py-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 lg:w-10 h-8 lg:h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-            <Calendar className="w-5 lg:w-6 h-5 lg:h-6 text-white" />
+            {/* <Calendar className="w-5 lg:w-6 h-5 lg:h-6 text-white" /> */}
           </div>
           <span className="text-lg lg:text-xl text-gray-900">DeadlineTracker</span>
         </div>
@@ -49,7 +49,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               className="w-full sm:w-auto px-6 lg:px-8 py-3 lg:py-3.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
               Get Started Free
-              <ArrowRight className="w-5 h-5" />
+              {/* <ArrowRight className="w-5 h-5" /> */}
             </button>
             <button
               onClick={() => onNavigate('login')}
@@ -84,7 +84,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             {/* Feature 1 */}
             <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
               <div className="w-12 lg:w-14 h-12 lg:h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4 lg:mb-6">
-                <Target className="w-6 lg:w-7 h-6 lg:h-7 text-blue-600" />
+                {/* <Target className="w-6 lg:w-7 h-6 lg:h-7 text-blue-600" /> */}
               </div>
               <h3 className="text-xl lg:text-2xl text-gray-900 mb-2 lg:mb-3">Dashboard Overview</h3>
               <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
@@ -96,7 +96,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             {/* Feature 2 */}
             <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
               <div className="w-12 lg:w-14 h-12 lg:h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4 lg:mb-6">
-                <Bell className="w-6 lg:w-7 h-6 lg:h-7 text-green-600" />
+                {/* <Bell className="w-6 lg:w-7 h-6 lg:h-7 text-green-600" /> */}
               </div>
               <h3 className="text-xl lg:text-2xl text-gray-900 mb-2 lg:mb-3">Smart Reminders</h3>
               <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
@@ -108,7 +108,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             {/* Feature 3 */}
             <div className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
               <div className="w-12 lg:w-14 h-12 lg:h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 lg:mb-6">
-                <BookOpen className="w-6 lg:w-7 h-6 lg:h-7 text-purple-600" />
+                {/* <BookOpen className="w-6 lg:w-7 h-6 lg:h-7 text-purple-600" /> */}
               </div>
               <h3 className="text-xl lg:text-2xl text-gray-900 mb-2 lg:mb-3">Course Organizer</h3>
               <p className="text-sm lg:text-base text-gray-600 leading-relaxed">
@@ -180,7 +180,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-blue-200 rounded-full flex items-center justify-center">
-                  <Users className="w-5 lg:w-6 h-5 lg:h-6 text-blue-700" />
+                  {/* <Users className="w-5 lg:w-6 h-5 lg:h-6 text-blue-700" /> */}
                 </div>
                 <div>
                   <div className="text-sm lg:text-base text-gray-900">Sarah Johnson</div>
@@ -200,7 +200,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-green-200 rounded-full flex items-center justify-center">
-                  <Users className="w-5 lg:w-6 h-5 lg:h-6 text-green-700" />
+                  {/* <Users className="w-5 lg:w-6 h-5 lg:h-6 text-green-700" /> */}
                 </div>
                 <div>
                   <div className="text-sm lg:text-base text-gray-900">Michael Chen</div>
@@ -220,7 +220,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-purple-200 rounded-full flex items-center justify-center">
-                  <Users className="w-5 lg:w-6 h-5 lg:h-6 text-purple-700" />
+                  {/* <Users className="w-5 lg:w-6 h-5 lg:h-6 text-purple-700" /> */}
                 </div>
                 <div>
                   <div className="text-sm lg:text-base text-gray-900">Emma Davis</div>
@@ -239,7 +239,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-3 lg:mb-4">
                 <div className="w-7 lg:w-8 h-7 lg:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-4 lg:w-5 h-4 lg:h-5 text-white" />
+                  {/* <Calendar className="w-4 lg:w-5 h-4 lg:h-5 text-white" /> */}
                 </div>
                 <span className="text-base lg:text-lg">DeadlineTracker</span>
               </div>

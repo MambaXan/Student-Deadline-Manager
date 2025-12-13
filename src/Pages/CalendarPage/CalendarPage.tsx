@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { DeadlineModal } from './DeadlineModal';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import type { Deadline, Course } from '../App';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TopBar } from '../Topbar/Topbar';
+import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
+// import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface CalendarPageProps {
   deadlines: Deadline[];
@@ -117,7 +118,7 @@ export function CalendarPage({
                     onClick={previousMonth}
                     className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
                   >
-                    <ChevronLeft className="w-5 h-5 text-gray-600" />
+                    {/* <ChevronLeft className="w-5 h-5 text-gray-600" />
                   </button>
                   <button
                     onClick={() => setCurrentDate(new Date())}
@@ -135,7 +136,7 @@ export function CalendarPage({
                     onClick={() => setShowAddModal(true)}
                     className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="w-4 h-4" /> */}
                     Add
                   </button>
                 </div>

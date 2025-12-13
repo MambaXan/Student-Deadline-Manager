@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import type { Deadline, Course } from '../App';
+// import { X } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface DeadlineModalProps {
   courses: Course[];
@@ -52,7 +53,7 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <X className="w-5 lg:w-6 h-5 lg:h-6 text-gray-600" />
+            {/* <X className="w-5 lg:w-6 h-5 lg:h-6 text-gray-600" /> */}
           </button>
         </div>
 

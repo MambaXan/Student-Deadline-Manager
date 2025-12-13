@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { MobileNav } from './MobileNav';
-import { DeadlineModal } from './DeadlineModal';
-import { AlertTriangle, Calendar, CheckCircle2, Plus, TrendingUp } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import type { Deadline, Course } from '../App';
+import { MobileNav } from '../MobileNav/MobileNav';
+import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
+// import { AlertTriangle, Calendar, CheckCircle2, Plus, TrendingUp } from 'lucide-react';
+// import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import type { Deadline, Course } from '../App';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TopBar } from '../Topbar/Topbar';
+// import { Plus, BookOpen, User, Clock } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface DashboardProps {
   userName: string;
@@ -97,7 +100,7 @@ export function Dashboard({
                   <p className="text-2xl lg:text-3xl text-gray-900">{upcomingDeadlines.length}</p>
                 </div>
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <Calendar className="w-5 lg:w-6 h-5 lg:h-6 text-blue-600" />
+                  {/* <Calendar className="w-5 lg:w-6 h-5 lg:h-6 text-blue-600" /> */}
                 </div>
               </div>
               <p className="text-sm text-gray-500">Tasks due soon</p>
@@ -111,7 +114,7 @@ export function Dashboard({
                   <p className="text-2xl lg:text-3xl text-gray-900">{overdueDeadlines.length}</p>
                 </div>
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                  <AlertTriangle className="w-5 lg:w-6 h-5 lg:h-6 text-red-600" />
+                  {/* <AlertTriangle className="w-5 lg:w-6 h-5 lg:h-6 text-red-600" /> */}
                 </div>
               </div>
               <p className="text-sm text-gray-500">Need attention</p>
@@ -125,7 +128,7 @@ export function Dashboard({
                   <p className="text-2xl lg:text-3xl text-gray-900">{completedCount}</p>
                 </div>
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                  <CheckCircle2 className="w-5 lg:w-6 h-5 lg:h-6 text-green-600" />
+                  {/* <CheckCircle2 className="w-5 lg:w-6 h-5 lg:h-6 text-green-600" /> */}
                 </div>
               </div>
               <p className="text-sm text-gray-500">Tasks finished</p>
@@ -141,7 +144,7 @@ export function Dashboard({
                   onClick={() => setShowAddModal(true)}
                   className="px-3 lg:px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm lg:text-base"
                 >
-                  <Plus className="w-4 h-4" />
+                  {/* <Plus className="w-4 h-4" /> */}
                   <span className="hidden sm:inline">Add Deadline</span>
                   <span className="sm:hidden">Add</span>
                 </button>
@@ -150,7 +153,7 @@ export function Dashboard({
               <div className="space-y-2 lg:space-y-3">
                 {upcomingDeadlines.length === 0 ? (
                   <div className="text-center py-8 lg:py-12 text-gray-500">
-                    <Calendar className="w-10 lg:w-12 h-10 lg:h-12 mx-auto mb-3 text-gray-300" />
+                    {/* <Calendar className="w-10 lg:w-12 h-10 lg:h-12 mx-auto mb-3 text-gray-300" /> */}
                     <p className="text-sm lg:text-base">No upcoming deadlines</p>
                     <p className="text-xs lg:text-sm mt-1">Add your first deadline to get started</p>
                   </div>
@@ -205,7 +208,7 @@ export function Dashboard({
               {overdueDeadlines.length > 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-2xl p-4 lg:p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <AlertTriangle className="w-5 lg:w-6 h-5 lg:h-6 text-red-600" />
+                    {/* <AlertTriangle className="w-5 lg:w-6 h-5 lg:h-6 text-red-600" /> */}
                     <h3 className="text-base lg:text-lg text-red-900">Overdue Tasks</h3>
                   </div>
                   <p className="text-sm text-red-700 mb-4">
@@ -223,10 +226,10 @@ export function Dashboard({
               {/* This Week Overview Chart */}
               <div className="bg-white rounded-2xl p-4 lg:p-6 border border-gray-200 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <TrendingUp className="w-4 lg:w-5 h-4 lg:h-5 text-gray-600" />
+                  {/* <TrendingUp className="w-4 lg:w-5 h-4 lg:h-5 text-gray-600" /> */}
                   <h3 className="text-base lg:text-lg text-gray-900">This Week Overview</h3>
                 </div>
-                <ResponsiveContainer width="100%" height={180}>
+                {/* <ResponsiveContainer width="100%" height={180}>
                   <BarChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                     <XAxis dataKey="name" fontSize={11} />
@@ -234,7 +237,7 @@ export function Dashboard({
                     <Tooltip />
                     <Bar dataKey="tasks" fill="#3B82F6" radius={[8, 8, 0, 0]} />
                   </BarChart>
-                </ResponsiveContainer>
+                </ResponsiveContainer> */}
               </div>
 
               {/* Quick Stats */}

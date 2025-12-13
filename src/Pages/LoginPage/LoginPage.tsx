@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, ArrowLeft, Mail, Lock } from 'lucide-react';
+// import { Calendar, ArrowLeft, Mail, Lock } from 'lucide-react';
 
 interface LoginPageProps {
   onLogin: (email: string, password: string) => void;
@@ -23,7 +23,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
           onClick={() => onNavigate('landing')}
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8 transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
+          {/* <ArrowLeft className="w-5 h-5" /> */}
           Back to home
         </button>
 
@@ -32,7 +32,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
           {/* Logo */}
           <div className="flex items-center justify-center gap-2 mb-8">
             <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-              <Calendar className="w-7 h-7 text-white" />
+              {/* <Calendar className="w-7 h-7 text-white" /> */}
             </div>
           </div>
 
@@ -50,7 +50,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                {/* <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" /> */}
                 <input
                   type="email"
                   value={email}
@@ -68,7 +68,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                {/* <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" /> */}
                 <input
                   type="password"
                   value={password}

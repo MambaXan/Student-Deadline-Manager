@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { CourseModal } from './CourseModal';
-import { Plus, BookOpen, User, Clock } from 'lucide-react';
-import type { Course, Deadline } from '../App';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TopBar } from '../Topbar/Topbar';
+import { CourseModal } from '../CourseModal/CourseModal';
+// import { Plus, BookOpen, User, Clock } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface CoursesPageProps {
   courses: Course[];
@@ -46,7 +47,7 @@ export function CoursesPage({
               onClick={() => setShowAddModal(true)}
               className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg"
             >
-              <Plus className="w-5 h-5" />
+              {/* <Plus className="w-5 h-5" /> */}
               Add Course
             </button>
           </div>
@@ -54,14 +55,14 @@ export function CoursesPage({
           {/* Courses Grid */}
           {courses.length === 0 ? (
             <div className="text-center py-20">
-              <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              {/* <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" /> */}
               <h3 className="text-xl text-gray-900 mb-2">No courses yet</h3>
               <p className="text-gray-600 mb-6">Add your first course to get started</p>
               <button
                 onClick={() => setShowAddModal(true)}
                 className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
               >
-                <Plus className="w-5 h-5" />
+                {/* <Plus className="w-5 h-5" /> */}
                 Add Course
               </button>
             </div>
@@ -84,7 +85,7 @@ export function CoursesPage({
                       <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/30" />
                       <div className="absolute top-4 right-4">
                         <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                          <BookOpen className="w-6 h-6 text-white" />
+                          {/* <BookOpen className="w-6 h-6 text-white" /> */}
                         </div>
                       </div>
                     </div>
@@ -97,11 +98,11 @@ export function CoursesPage({
                       
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <User className="w-4 h-4" />
+                          {/* <User className="w-4 h-4" /> */}
                           <span>{course.instructor}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Clock className="w-4 h-4" />
+                          {/* <Clock className="w-4 h-4" /> */}
                           <span>{course.semester}</span>
                         </div>
                       </div>

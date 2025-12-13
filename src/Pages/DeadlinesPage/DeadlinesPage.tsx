@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { MobileNav } from './MobileNav';
-import { DeadlineModal } from './DeadlineModal';
-import { Plus, Filter, MoreVertical, Edit2, Trash2 } from 'lucide-react';
-import type { Deadline, Course } from '../App';
+// import { Sidebar } from './Sidebar';
+// import { TopBar } from './TopBar';
+// import { MobileNav } from './MobileNav';
+// import { DeadlineModal } from './DeadlineModal';
+// import { Plus, Filter, MoreVertical, Edit2, Trash2 } from 'lucide-react';
+// import type { Deadline, Course } from '../App';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TopBar } from '../Topbar/Topbar';
+import { MobileNav } from '../MobileNav/MobileNav';
+import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
+// import { Plus, BookOpen, User, Clock } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface DeadlinesPageProps {
   deadlines: Deadline[];
@@ -115,7 +122,7 @@ export function DeadlinesPage({
               onClick={() => setShowAddModal(true)}
               className="w-full sm:w-auto px-4 lg:px-6 py-2.5 lg:py-3 text-sm lg:text-base bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
             >
-              <Plus className="w-4 lg:w-5 h-4 lg:h-5" />
+              {/* <Plus className="w-4 lg:w-5 h-4 lg:h-5" /> */}
               Add Deadline
             </button>
           </div>
@@ -123,7 +130,7 @@ export function DeadlinesPage({
           {/* Filters */}
           <div className="bg-white rounded-2xl p-4 lg:p-6 border border-gray-200 shadow-sm mb-4 lg:mb-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 lg:gap-4">
-              <Filter className="w-5 h-5 text-gray-600 hidden sm:block" />
+              {/* <Filter className="w-5 h-5 text-gray-600 hidden sm:block" /> */}
               <span className="text-sm lg:text-base text-gray-700">Filters:</span>
               
               {/* Course Filter */}
@@ -241,7 +248,7 @@ export function DeadlinesPage({
                                 onClick={() => setOpenMenuId(openMenuId === deadline.id ? null : deadline.id)}
                                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                               >
-                                <MoreVertical className="w-5 h-5 text-gray-600" />
+                                {/* <MoreVertical className="w-5 h-5 text-gray-600" /> */}
                               </button>
                               
                               {openMenuId === deadline.id && (
@@ -250,14 +257,14 @@ export function DeadlinesPage({
                                     onClick={() => handleEdit(deadline)}
                                     className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
                                   >
-                                    <Edit2 className="w-4 h-4" />
+                                    {/* <Edit2 className="w-4 h-4" /> */}
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => handleDelete(deadline.id)}
                                     className="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
                                   >
-                                    <Trash2 className="w-4 h-4" />
+                                    {/* <Trash2 className="w-4 h-4" /> */}
                                     Delete
                                   </button>
                                 </div>

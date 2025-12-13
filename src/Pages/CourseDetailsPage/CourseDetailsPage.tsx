@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Sidebar } from './Sidebar';
-import { TopBar } from './TopBar';
-import { DeadlineModal } from './DeadlineModal';
-import { ArrowLeft, Plus, BookOpen, User, Clock, Calendar } from 'lucide-react';
-import type { Course, Deadline } from '../App';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TopBar } from '../Topbar/Topbar';
+import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
+// import { ArrowLeft, Plus, BookOpen, User, Clock, Calendar } from 'lucide-react';
+import type { Course } from '../../Types/course';
+import type { Deadline } from '../../Types/deadline';
 
 interface CourseDetailsPageProps {
   course: Course;
@@ -69,7 +70,7 @@ export function CourseDetailsPage({
             onClick={onBack}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
+            {/* <ArrowLeft className="w-5 h-5" /> */}
             Back to Courses
           </button>
 
@@ -88,11 +89,11 @@ export function CourseDetailsPage({
                     </h1>
                     <div className="flex items-center gap-4 text-white/90">
                       <div className="flex items-center gap-2">
-                        <User className="w-4 h-4" />
+                        {/* <User className="w-4 h-4" /> */}
                         <span>{course.instructor}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
+                        {/* <Clock className="w-4 h-4" /> */}
                         <span>{course.semester}</span>
                       </div>
                     </div>
@@ -101,7 +102,7 @@ export function CourseDetailsPage({
                     onClick={() => setShowAddModal(true)}
                     className="px-6 py-3 bg-white text-gray-900 rounded-xl hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-lg"
                   >
-                    <Plus className="w-5 h-5" />
+                    {/* <Plus className="w-5 h-5" /> */}
                     Add Deadline
                   </button>
                 </div>
@@ -133,13 +134,13 @@ export function CourseDetailsPage({
 
             {deadlines.length === 0 ? (
               <div className="p-12 text-center">
-                <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                {/* <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" /> */}
                 <p className="text-gray-500 mb-4">No deadlines for this course yet</p>
                 <button
                   onClick={() => setShowAddModal(true)}
                   className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
                 >
-                  <Plus className="w-4 h-4" />
+                  {/* <Plus className="w-4 h-4" /> */}
                   Add First Deadline
                 </button>
               </div>

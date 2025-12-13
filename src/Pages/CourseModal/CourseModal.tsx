@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
-import type { Course } from '../App';
+// import { X } from 'lucide-react';
+import type { Course } from '../../Types/course';
 
 interface CourseModalProps {
   onSave: (course: Omit<Course, 'id'>) => void;
@@ -49,7 +49,7 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <X className="w-6 h-6 text-gray-600" />
+            {/* <X className="w-6 h-6 text-gray-600" /> */}
           </button>
         </div>
 

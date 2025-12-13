@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Clock, BookOpen, Calendar, Settings, LogOut, X } from 'lucide-react';
+// import { LayoutDashboard, Clock, BookOpen, Calendar, Settings, LogOut, X } from 'lucide-react';
 
 interface MobileNavProps {
   currentPage: string;
@@ -10,13 +10,13 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }: MobileNavProps) {
-  const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'deadlines', label: 'Deadlines', icon: Clock },
-    { id: 'courses', label: 'Courses', icon: BookOpen },
-    { id: 'calendar', label: 'Calendar', icon: Calendar },
-    { id: 'settings', label: 'Settings', icon: Settings },
-  ];
+  // const menuItems = [
+  //   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  //   { id: 'deadlines', label: 'Deadlines', icon: Clock },
+  //   { id: 'courses', label: 'Courses', icon: BookOpen },
+  //   { id: 'calendar', label: 'Calendar', icon: Calendar },
+  //   { id: 'settings', label: 'Settings', icon: Settings },
+  // ];
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
@@ -39,7 +39,7 @@ export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }
         <div className="p-6 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-              <Calendar className="w-6 h-6 text-white" />
+              {/* <Calendar className="w-6 h-6 text-white" /> */}
             </div>
             <span className="text-xl text-gray-900">DeadlineTracker</span>
           </div>
@@ -47,13 +47,13 @@ export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
           >
-            <X className="w-6 h-6 text-gray-600" />
+            {/* <X className="w-6 h-6 text-gray-600" /> */}
           </button>
         </div>
 
         {/* Menu Items */}
         <nav className="flex-1 p-4 space-y-1">
-          {menuItems.map((item) => {
+          {/* {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentPage === item.id;
             
@@ -73,7 +73,7 @@ export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }
                 <span>{item.label}</span>
               </button>
             );
-          })}
+          })} */}
         </nav>
 
         {/* Logout Button */}
@@ -85,7 +85,7 @@ export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }
             }}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
           >
-            <LogOut className="w-5 h-5" />
+            {/* <LogOut className="w-5 h-5" /> */}
             <span>Log Out</span>
           </button>
         </div>
