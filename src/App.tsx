@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { LandingPage } from './Pages/LandingPage/LandingPage';
 import { LoginPage } from './Pages/LoginPage/LoginPage';
 import { SignupPage } from './Pages/SignupPage/SignupPage';
@@ -8,25 +9,27 @@ import { CoursesPage } from './Pages/CoursesPage/CoursesPage';
 import { CourseDetailsPage } from './Pages/CourseDetailsPage/CourseDetailsPage';
 import { CalendarPage } from './Pages/CalendarPage/CalendarPage';
 // import { SettingsPage } from './Pages/SettingsPage/SettingsPage';
+import { Course } from './Types/course';
+import { Deadline } from './Types/deadline';
 
-export type Deadline = {
-  id: string;
-  taskName: string;
-  courseId: string;
-  type: 'assignment' | 'quiz' | 'exam' | 'project';
-  dueDate: Date;
-  priority: 'low' | 'medium' | 'high';
-  description: string;
-  status: 'upcoming' | 'overdue' | 'completed';
-};
+// export type Deadline = {
+//   id: string;
+//   taskName: string;
+//   courseId: string;
+//   type: 'assignment' | 'quiz' | 'exam' | 'project';
+//   dueDate: Date;
+//   priority: 'low' | 'medium' | 'high';
+//   description: string;
+//   status: 'upcoming' | 'overdue' | 'completed';
+// };
 
-export type Course = {
-  id: string;
-  title: string;
-  instructor: string;
-  semester: string;
-  color: string;
-};
+// export type Course = {
+//   id: string;
+//   title: string;
+//   instructor: string;
+//   semester: string;
+//   color: string;
+// };
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('landing');
@@ -169,6 +172,11 @@ export default function App() {
     setCourses([...courses, newCourse]);
   };
 
+  // Функция обновления имени пользователя
+  const updateUserName = (name: string) => {
+    setUserName(name);
+  };
+
   const renderPage = () => {
     if (!isAuthenticated) {
       switch (currentPage) {
@@ -190,7 +198,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            // onAddDeadline={addDeadline}
             onUpdateDeadline={updateDeadline}
           />
         );
@@ -201,7 +209,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            // onAddDeadline={addDeadline}
             onUpdateDeadline={updateDeadline}
             onDeleteDeadline={deleteDeadline}
           />
@@ -218,9 +226,10 @@ export default function App() {
           />
         );
       case 'course-details':
-        return selectedCourseId ? (
+        const selectedCourse = courses.find(c => c.id === selectedCourseId);
+        return selectedCourse ? (
           <CourseDetailsPage
-            course={courses.find(c => c.id === selectedCourseId)!}
+            course={selectedCourse}
             deadlines={deadlines.filter(d => d.courseId === selectedCourseId)}
             onNavigate={navigateTo}
             onLogout={handleLogout}
@@ -244,7 +253,7 @@ export default function App() {
       //       userName={userName}
       //       onNavigate={navigateTo}
       //       onLogout={handleLogout}
-      //       onUpdateName={setUserName}
+      //       onUpdateName={updateUserName}
       //     />
       //   );
       default:
@@ -262,5 +271,5 @@ export default function App() {
     }
   };
 
-  return <div className="min-h-screen">{renderPage()}</div>;
+  return <div className="app">{renderPage()}</div>;
 }

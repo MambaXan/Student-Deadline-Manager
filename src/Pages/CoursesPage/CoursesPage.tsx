@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
-import { Sidebar } from '../Sidebar/Sidebar';
-import { TopBar } from '../Topbar/Topbar';
-import { CourseModal } from '../CourseModal/CourseModal';
-// import { Plus, BookOpen, User, Clock } from 'lucide-react';
-import type { Course } from '../../Types/course';
-import type { Deadline } from '../../Types/deadline';
+import './CoursesPage.scss';
+
+// Интерфейсы
+interface Course {
+  id: string;
+  title: string;
+  instructor: string;
+  semester: string;
+  color: string;
+}
+
+interface Deadline {
+  id: string;
+  courseId: string;
+  taskName: string;
+  type: string;
+  dueDate: Date;
+  status: 'upcoming' | 'overdue' | 'completed';
+  priority: string;
+}
 
 interface CoursesPageProps {
   courses: Course[];
@@ -14,6 +28,150 @@ interface CoursesPageProps {
   onViewCourse: (courseId: string) => void;
   onAddCourse: (course: Omit<Course, 'id'>) => void;
 }
+
+// Компоненты
+const Sidebar: React.FC<{
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  onLogout: () => void;
+}> = ({ currentPage, onNavigate, onLogout }) => {
+  return (
+    <div className="sidebar">
+      <div className="sidebar__content">
+        <h2 className="sidebar__title">Student Planner</h2>
+        <nav className="sidebar__nav">
+          <button 
+            onClick={() => onNavigate('calendar')}
+            className="sidebar__nav-item"
+          >
+            📅 Calendar
+          </button>
+          <button 
+            onClick={() => onNavigate('courses')}
+            className={`sidebar__nav-item ${currentPage === 'courses' ? 'sidebar__nav-item--active' : ''}`}
+          >
+            📚 Courses
+          </button>
+          <button 
+            onClick={() => onNavigate('deadlines')}
+            className="sidebar__nav-item"
+          >
+            📝 Deadlines
+          </button>
+        </nav>
+        <button onClick={onLogout} className="sidebar__logout-btn">
+          👤 Logout
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+  return (
+    <div className="topbar">
+      <div className="topbar__content">
+        <h1 className="topbar__title">My Courses</h1>
+        <div className="topbar__user">
+          <span className="topbar__user-name">Welcome, {userName}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CourseModal: React.FC<{
+  onSave: (course: Omit<Course, 'id'>) => void;
+  onClose: () => void;
+}> = ({ onSave, onClose }) => {
+  const [title, setTitle] = useState('');
+  const [instructor, setInstructor] = useState('');
+  const [semester, setSemester] = useState('');
+  const [color, setColor] = useState('#3B82F6');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!title || !instructor || !semester) return;
+
+    onSave({
+      title,
+      instructor,
+      semester,
+      color
+    });
+    
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal__header">
+          <h3 className="modal__title">Add New Course</h3>
+          <button onClick={onClose} className="modal__close-btn">×</button>
+        </div>
+        <form onSubmit={handleSubmit} className="modal__form">
+          <div className="form-group">
+            <label className="form-label">Course Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="form-input"
+              placeholder="e.g., Computer Science 101"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Instructor Name</label>
+            <input
+              type="text"
+              value={instructor}
+              onChange={(e) => setInstructor(e.target.value)}
+              className="form-input"
+              placeholder="e.g., Dr. Smith"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Semester</label>
+            <input
+              type="text"
+              value={semester}
+              onChange={(e) => setSemester(e.target.value)}
+              className="form-input"
+              placeholder="e.g., Fall 2024"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Course Color</label>
+            <div className="color-picker">
+              {['#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444', '#EC4899', '#14B8A6', '#F97316'].map(colorOption => (
+                <button
+                  key={colorOption}
+                  type="button"
+                  onClick={() => setColor(colorOption)}
+                  className={`color-picker__item ${color === colorOption ? 'color-picker__item--selected' : ''}`}
+                  style={{ backgroundColor: colorOption }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="modal__actions">
+            <button type="button" className="btn btn--secondary" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn--primary">
+              Add Course
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export function CoursesPage({
   courses,
@@ -30,92 +188,90 @@ export function CoursesPage({
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="courses-page">
       <Sidebar currentPage="courses" onNavigate={onNavigate} onLogout={onLogout} />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="main-content">
         <TopBar userName="Alex" />
         
-        <main className="flex-1 overflow-y-auto p-8">
+        <main className="content">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl text-gray-900 mb-2">My Courses</h1>
-              <p className="text-gray-600">Organize and track all your university courses</p>
+          <div className="courses-header">
+            <div className="courses-header__text">
+              <h1 className="courses-header__title">My Courses</h1>
+              <p className="courses-header__subtitle">Organize and track all your university courses</p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg"
+              className="btn btn--add-course"
             >
-              {/* <Plus className="w-5 h-5" /> */}
+              <span className="btn__icon">+</span>
               Add Course
             </button>
           </div>
 
           {/* Courses Grid */}
           {courses.length === 0 ? (
-            <div className="text-center py-20">
-              {/* <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" /> */}
-              <h3 className="text-xl text-gray-900 mb-2">No courses yet</h3>
-              <p className="text-gray-600 mb-6">Add your first course to get started</p>
+            <div className="empty-state">
+              <span className="empty-state__icon">📚</span>
+              <h3 className="empty-state__title">No courses yet</h3>
+              <p className="empty-state__text">Add your first course to get started</p>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+                className="btn btn--primary"
               >
-                {/* <Plus className="w-5 h-5" /> */}
+                <span className="btn__icon">+</span>
                 Add Course
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="courses-grid">
               {courses.map(course => {
                 const upcomingCount = getUpcomingTasksCount(course.id);
                 
                 return (
                   <div
                     key={course.id}
-                    className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all cursor-pointer overflow-hidden"
+                    className="course-card"
                     onClick={() => onViewCourse(course.id)}
                   >
                     {/* Color Header */}
                     <div
-                      className="h-32 relative"
+                      className="course-card__banner"
                       style={{ backgroundColor: course.color }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-black/10 to-black/30" />
-                      <div className="absolute top-4 right-4">
-                        <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                          {/* <BookOpen className="w-6 h-6 text-white" /> */}
-                        </div>
+                      <div className="course-card__overlay" />
+                      <div className="course-card__icon">
+                        📚
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl text-gray-900 mb-3">
+                    <div className="course-card__content">
+                      <h3 className="course-card__title">
                         {course.title}
                       </h3>
                       
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          {/* <User className="w-4 h-4" /> */}
-                          <span>{course.instructor}</span>
+                      <div className="course-card__details">
+                        <div className="course-card__detail">
+                          <span className="course-card__detail-icon">👤</span>
+                          <span className="course-card__detail-text">{course.instructor}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          {/* <Clock className="w-4 h-4" /> */}
-                          <span>{course.semester}</span>
+                        <div className="course-card__detail">
+                          <span className="course-card__detail-icon">⏰</span>
+                          <span className="course-card__detail-text">{course.semester}</span>
                         </div>
                       </div>
 
                       {/* Tasks Badge */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                        <span className="text-sm text-gray-600">
+                      <div className="course-card__footer">
+                        <span className="course-card__tasks-label">
                           Upcoming tasks
                         </span>
                         <span
-                          className="px-3 py-1 rounded-lg text-sm"
+                          className="course-card__tasks-count"
                           style={{ 
-                            backgroundColor: upcomingCount > 0 ? course.color + '20' : '#f3f4f6',
+                            backgroundColor: upcomingCount > 0 ? `${course.color}20` : '#f3f4f6',
                             color: upcomingCount > 0 ? course.color : '#6b7280'
                           }}
                         >
@@ -124,9 +280,7 @@ export function CoursesPage({
                       </div>
 
                       {/* View Details Button */}
-                      <button
-                        className="w-full mt-4 px-4 py-2 bg-gray-50 text-gray-700 rounded-xl hover:bg-gray-100 transition-colors"
-                      >
+                      <button className="course-card__view-btn">
                         View Details →
                       </button>
                     </div>

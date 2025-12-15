@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { Sidebar } from '../Sidebar/Sidebar';
-import { TopBar } from '../Topbar/Topbar';
-import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
-// import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import type { Course } from '../../Types/course';
-import type { Deadline } from '../../Types/deadline';
+import './CalendarPage.scss';
+// import { Course } from '../../Types/course';
+// import { Deadline } from '../../Types/deadline';
+
+// Интерфейсы
+interface Course {
+  id: string;
+  title: string;
+  color: string;
+}
+
+interface Deadline {
+  id: string;
+  courseId: string;
+  taskName: string;
+  dueDate: Date;
+  status: 'upcoming' | 'completed';
+}
 
 interface CalendarPageProps {
   deadlines: Deadline[];
@@ -13,6 +25,138 @@ interface CalendarPageProps {
   onLogout: () => void;
   onAddDeadline: (deadline: Omit<Deadline, 'id'>) => void;
 }
+
+// Компоненты
+const Sidebar: React.FC<{
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  onLogout: () => void;
+}> = ({ currentPage, onNavigate, onLogout }) => {
+  return (
+    <div className="sidebar">
+      <div className="sidebar__content">
+        <h2 className="sidebar__title">Student Planner</h2>
+        <nav className="sidebar__nav">
+          <button 
+            onClick={() => onNavigate('calendar')} 
+            className={`sidebar__nav-item ${currentPage === 'calendar' ? 'sidebar__nav-item--active' : ''}`}
+          >
+            📅 Calendar
+          </button>
+          <button 
+            onClick={() => onNavigate('courses')}
+            className="sidebar__nav-item"
+          >
+            📚 Courses
+          </button>
+          <button 
+            onClick={() => onNavigate('deadlines')}
+            className="sidebar__nav-item"
+          >
+            📝 Deadlines
+          </button>
+        </nav>
+        <button onClick={onLogout} className="sidebar__logout-btn">
+          👤 Logout
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+  return (
+    <div className="topbar">
+      <div className="topbar__content">
+        <h1 className="topbar__title">Academic Calendar</h1>
+        <div className="topbar__user">
+          <span className="topbar__user-name">Welcome, {userName}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const DeadlineModal: React.FC<{
+  courses: Course[];
+  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onClose: () => void;
+}> = ({ courses, onSave, onClose }) => {
+  const [taskName, setTaskName] = useState('');
+  const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [dueDate, setDueDate] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!taskName || !selectedCourseId || !dueDate) return;
+
+    onSave({
+      courseId: selectedCourseId,
+      taskName,
+      dueDate: new Date(dueDate),
+      status: 'upcoming'
+    });
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal__header">
+          <h3 className="modal__title">Add New Deadline</h3>
+          <button onClick={onClose} className="modal__close-btn">×</button>
+        </div>
+        <form onSubmit={handleSubmit} className="modal__form">
+          <div className="form-group">
+            <label className="form-label">Task Name</label>
+            <input
+              type="text"
+              value={taskName}
+              onChange={(e) => setTaskName(e.target.value)}
+              className="form-input"
+              required
+              placeholder="Enter task name"
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Course</label>
+            <select
+              value={selectedCourseId}
+              onChange={(e) => setSelectedCourseId(e.target.value)}
+              className="form-select"
+              required
+            >
+              <option value="">Select a course</option>
+              {courses.map(course => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Due Date</label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="form-input"
+              required
+            />
+          </div>
+          <div className="modal__actions">
+            <button type="button" className="btn btn--secondary" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn--primary">
+              Save Deadline
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export function CalendarPage({
   deadlines,
@@ -23,7 +167,6 @@ export function CalendarPage({
 }: CalendarPageProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const getCourseById = (courseId: string) => {
     return courses.find(c => c.id === courseId);
@@ -95,58 +238,57 @@ export function CalendarPage({
     const dueDate = new Date(deadline.dueDate);
     dueDate.setHours(0, 0, 0, 0);
     return dueDate >= today && dueDate <= weekEnd && deadline.status === 'upcoming';
-  }).sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+  }).sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="calendar-page">
       <Sidebar currentPage="calendar" onNavigate={onNavigate} onLogout={onLogout} />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="main-content">
         <TopBar userName="Alex" />
         
-        <main className="flex-1 overflow-y-auto p-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <main className="content">
+          <div className="calendar-container">
             {/* Calendar */}
-            <div className="lg:col-span-3 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <div className="calendar">
               {/* Calendar Header */}
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl text-gray-900">
+              <div className="calendar__header">
+                <h2 className="calendar__title">
                   {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
                 </h2>
-                <div className="flex items-center gap-2">
+                <div className="calendar__controls">
                   <button
                     onClick={previousMonth}
-                    className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                    className="calendar__nav-btn"
                   >
-                    {/* <ChevronLeft className="w-5 h-5 text-gray-600" />
+                    ‹
                   </button>
                   <button
                     onClick={() => setCurrentDate(new Date())}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
+                    className="btn btn--today"
                   >
                     Today
                   </button>
                   <button
                     onClick={nextMonth}
-                    className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                    className="calendar__nav-btn"
                   >
-                    <ChevronRight className="w-5 h-5 text-gray-600" />
+                    ›
                   </button>
                   <button
                     onClick={() => setShowAddModal(true)}
-                    className="ml-4 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    className="btn btn--add"
                   >
-                    <Plus className="w-4 h-4" /> */}
-                    Add
+                    + Add Deadline
                   </button>
                 </div>
               </div>
 
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 gap-px bg-gray-200 rounded-xl overflow-hidden">
+              <div className="calendar__grid">
                 {/* Day Headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="bg-gray-50 p-3 text-center text-sm text-gray-600">
+                  <div key={day} className="calendar__day-header">
                     {day}
                   </div>
                 ))}
@@ -154,7 +296,7 @@ export function CalendarPage({
                 {/* Calendar Days */}
                 {days.map((day, index) => {
                   if (day === null) {
-                    return <div key={`empty-${index}`} className="bg-white p-3 min-h-[120px]" />;
+                    return <div key={`empty-${index}`} className="calendar__day calendar__day--empty" />;
                   }
 
                   const dayDeadlines = getDeadlinesForDate(day);
@@ -163,24 +305,22 @@ export function CalendarPage({
                   return (
                     <div
                       key={day}
-                      className={`bg-white p-3 min-h-[120px] hover:bg-gray-50 transition-colors cursor-pointer ${
-                        isTodayDate ? 'ring-2 ring-blue-500' : ''
-                      }`}
-                      onClick={() => setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day))}
+                      className={`calendar__day ${isTodayDate ? 'calendar__day--today' : ''}`}
                     >
-                      <div className={`text-sm mb-2 ${isTodayDate ? 'text-blue-600' : 'text-gray-700'}`}>
+                      <div className={`calendar__day-number ${isTodayDate ? 'calendar__day-number--today' : ''}`}>
                         {day}
                       </div>
-                      <div className="space-y-1">
+                      <div className="calendar__deadlines">
                         {dayDeadlines.slice(0, 3).map(deadline => {
                           const course = getCourseById(deadline.courseId);
                           return (
                             <div
                               key={deadline.id}
-                              className="text-xs px-2 py-1 rounded truncate"
+                              className="calendar__deadline-item"
                               style={{
-                                backgroundColor: course?.color ? course.color + '20' : '#f3f4f6',
-                                color: course?.color || '#6b7280'
+                                backgroundColor: course?.color ? `${course.color}20` : '#f3f4f6',
+                                color: course?.color || '#6b7280',
+                                borderLeft: `3px solid ${course?.color || '#6b7280'}`
                               }}
                               title={deadline.taskName}
                             >
@@ -189,7 +329,7 @@ export function CalendarPage({
                           );
                         })}
                         {dayDeadlines.length > 3 && (
-                          <div className="text-xs text-gray-500 px-2">
+                          <div className="calendar__deadline-more">
                             +{dayDeadlines.length - 3} more
                           </div>
                         )}
@@ -200,38 +340,39 @@ export function CalendarPage({
               </div>
             </div>
 
-            {/* This Week Sidebar */}
-            <div className="space-y-6">
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <h3 className="text-lg text-gray-900 mb-4">This Week</h3>
+            {/* Sidebar */}
+            <div className="sidebar-content">
+              {/* This Week */}
+              <div className="sidebar-card">
+                <h3 className="sidebar-card__title">This Week</h3>
                 
                 {thisWeekDeadlines.length === 0 ? (
-                  <p className="text-sm text-gray-500 text-center py-4">
+                  <p className="sidebar-card__empty">
                     No deadlines this week
                   </p>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="deadlines-list">
                     {thisWeekDeadlines.map(deadline => {
                       const course = getCourseById(deadline.courseId);
                       return (
-                        <div key={deadline.id} className="p-3 bg-gray-50 rounded-xl">
-                          <div className="text-gray-900 mb-2">
+                        <div key={deadline.id} className="deadline-card">
+                          <div className="deadline-card__title">
                             {deadline.taskName}
                           </div>
-                          <div className="flex items-center justify-between text-xs">
+                          <div className="deadline-card__details">
                             {course && (
                               <span
-                                className="px-2 py-1 rounded"
+                                className="deadline-card__course"
                                 style={{
-                                  backgroundColor: course.color + '20',
+                                  backgroundColor: `${course.color}20`,
                                   color: course.color
                                 }}
                               >
                                 {course.title.split(' ')[0]}
                               </span>
                             )}
-                            <span className="text-gray-600">
-                              {deadline.dueDate.toLocaleDateString('en-US', { 
+                            <span className="deadline-card__date">
+                              {new Date(deadline.dueDate).toLocaleDateString('en-US', { 
                                 month: 'short', 
                                 day: 'numeric'
                               })}
@@ -245,16 +386,16 @@ export function CalendarPage({
               </div>
 
               {/* Color Legend */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <h3 className="text-lg text-gray-900 mb-4">Courses</h3>
-                <div className="space-y-2">
+              <div className="sidebar-card">
+                <h3 className="sidebar-card__title">Courses</h3>
+                <div className="courses-list">
                   {courses.slice(0, 5).map(course => (
-                    <div key={course.id} className="flex items-center gap-2">
+                    <div key={course.id} className="course-item">
                       <div
-                        className="w-4 h-4 rounded"
+                        className="course-item__color"
                         style={{ backgroundColor: course.color }}
                       />
-                      <span className="text-sm text-gray-700 truncate">
+                      <span className="course-item__title">
                         {course.title}
                       </span>
                     </div>

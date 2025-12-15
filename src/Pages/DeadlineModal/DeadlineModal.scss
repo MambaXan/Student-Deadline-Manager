@@ -1,0 +1,347 @@
+// Variables
+$primary-color: #4f46e5;
+$primary-light: #eef2ff;
+$secondary-color: #6b7280;
+$light-gray: #f9fafb;
+$medium-gray: #e5e7eb;
+$dark-gray: #374151;
+$white: #ffffff;
+$success-color: #10b981;
+$success-light: #d1fae5;
+$danger-color: #ef4444;
+$danger-light: #fee2e2;
+$warning-color: #f59e0b;
+$warning-light: #fef3c7;
+$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Deadline Modal
+.deadline-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.deadline-modal {
+  background-color: $white;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease-out;
+  box-shadow: $modal-shadow;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid $medium-gray;
+    position: sticky;
+    top: 0;
+    background-color: $white;
+    z-index: 10;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $dark-gray;
+    margin: 0;
+
+    @media (min-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  &__close-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: none;
+    font-size: 28px;
+    color: $secondary-color;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $light-gray;
+      color: $dark-gray;
+    }
+  }
+
+  &__form {
+    padding: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+}
+
+// Form elements
+.form-group {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: $dark-gray;
+  margin-bottom: 8px;
+
+  &::after {
+    content: ' *';
+    color: $danger-color;
+    margin-left: 2px;
+  }
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid $medium-gray;
+  border-radius: 12px;
+  font-size: 14px;
+  color: $dark-gray;
+  background-color: $white;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &::placeholder {
+    color: $secondary-color;
+    opacity: 0.6;
+  }
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.form-textarea {
+  resize: none;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+// Priority buttons
+.priority-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.priority-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border: 2px solid transparent;
+  background-color: $light-gray;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: $secondary-color;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $medium-gray;
+    color: $dark-gray;
+  }
+
+  &--low {
+    &:hover {
+      background-color: $success-light;
+      color: $success-color;
+    }
+  }
+
+  &--medium {
+    &:hover {
+      background-color: $warning-light;
+      color: $warning-color;
+    }
+  }
+
+  &--high {
+    &:hover {
+      background-color: $danger-light;
+      color: $danger-color;
+    }
+  }
+
+  &--selected {
+    font-weight: 600;
+
+    &.priority-btn--low {
+      background-color: $success-light;
+      color: $success-color;
+      border-color: $success-color;
+    }
+
+    &.priority-btn--medium {
+      background-color: $warning-light;
+      color: $warning-color;
+      border-color: $warning-color;
+    }
+
+    &.priority-btn--high {
+      background-color: $danger-light;
+      color: $danger-color;
+      border-color: $danger-color;
+    }
+  }
+}
+
+// Buttons
+.btn {
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &--primary {
+    background-color: $primary-color;
+    color: $white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &--secondary {
+    background-color: $light-gray;
+    color: $dark-gray;
+    border: 1px solid $medium-gray;
+
+    &:hover {
+      background-color: darken($light-gray, 5%);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 640px) {
+  .deadline-modal {
+    &__header {
+      padding: 16px;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+
+    &__form {
+      padding: 16px;
+    }
+
+    &__close-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 24px;
+    }
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .priority-btn {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .deadline-modal__actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .priority-buttons {
+    flex-direction: column;
+  }
+
+  .priority-btn {
+    width: 100%;
+  }
+}

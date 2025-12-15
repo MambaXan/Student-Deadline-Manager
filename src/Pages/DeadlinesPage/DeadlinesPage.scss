@@ -1,0 +1,850 @@
+// Variables
+$primary-color: #4f46e5;
+$primary-light: #eef2ff;
+$secondary-color: #6b7280;
+$light-gray: #f9fafb;
+$medium-gray: #e5e7eb;
+$dark-gray: #374151;
+$white: #ffffff;
+$success-color: #10b981;
+$success-light: #d1fae5;
+$danger-color: #ef4444;
+$danger-light: #fee2e2;
+$warning-color: #f59e0b;
+$warning-light: #fef3c7;
+$info-color: #3b82f6;
+$info-light: #dbeafe;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+// Base styles
+.deadlines-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: $light-gray;
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+
+    @media (min-width: 768px) {
+      padding: 24px;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 32px;
+    }
+  }
+}
+
+// Header
+.deadlines-header {
+  @include flex-between;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: $dark-gray;
+    margin-bottom: 4px;
+
+    @media (min-width: 768px) {
+      font-size: 28px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    color: $secondary-color;
+
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+}
+
+// Add deadline button
+.btn--add-deadline {
+  background-color: $primary-color;
+  color: $white;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  @include flex-center;
+  gap: 8px;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: auto;
+    padding: 12px 24px;
+  }
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .btn__icon {
+    font-size: 16px;
+  }
+}
+
+// Filters card
+.filters-card {
+  background-color: $white;
+  border-radius: 16px;
+  border: 1px solid $medium-gray;
+  padding: 16px;
+  margin-bottom: 24px;
+  @include card-shadow;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $dark-gray;
+
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+
+  &__select {
+    padding: 8px 12px;
+    border: 1px solid $medium-gray;
+    border-radius: 8px;
+    font-size: 14px;
+    color: $dark-gray;
+    background-color: $white;
+    transition: all 0.2s ease;
+    width: 100%;
+
+    @media (min-width: 640px) {
+      width: auto;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+  }
+
+  &__count {
+    font-size: 14px;
+    color: $secondary-color;
+    margin-left: auto;
+  }
+}
+
+// Deadlines table
+.deadlines-table-container {
+  background-color: $white;
+  border-radius: 16px;
+  border: 1px solid $medium-gray;
+  overflow: hidden;
+  @include card-shadow;
+}
+
+.deadlines-table-wrapper {
+  overflow-x: auto;
+}
+
+.deadlines-table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+
+  &__head {
+    background-color: $light-gray;
+  }
+
+  &__header {
+    padding: 16px 24px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: $secondary-color;
+    border-bottom: 1px solid $medium-gray;
+    white-space: nowrap;
+  }
+
+  &__body {
+    .deadlines-table__row {
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: $light-gray;
+      }
+    }
+  }
+
+  &__cell {
+    padding: 16px 24px;
+    border-bottom: 1px solid $medium-gray;
+    vertical-align: middle;
+
+    &--task {
+      min-width: 200px;
+    }
+
+    &--date {
+      white-space: nowrap;
+    }
+
+    &--actions {
+      position: relative;
+      width: 80px;
+    }
+  }
+
+  &__empty {
+    padding: 60px 24px;
+    text-align: center;
+    font-size: 16px;
+    color: $secondary-color;
+  }
+}
+
+// Task cell
+.task-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid $medium-gray;
+    background-color: $white;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+
+    &:checked {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+
+    &:hover {
+      border-color: $primary-color;
+    }
+  }
+
+  &__text {
+    font-size: 14px;
+    font-weight: 500;
+    color: $dark-gray;
+
+    &--completed {
+      text-decoration: line-through;
+      color: $secondary-color;
+    }
+  }
+}
+
+// Course badge
+.course-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Type cell
+.type-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &__icon {
+    font-size: 16px;
+  }
+
+  &__text {
+    font-size: 14px;
+    color: $dark-gray;
+    text-transform: capitalize;
+  }
+}
+
+// Actions cell
+.actions-cell {
+  position: relative;
+
+  &__menu-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: $secondary-color;
+    cursor: pointer;
+    border-radius: 8px;
+    @include flex-center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $light-gray;
+      color: $dark-gray;
+    }
+  }
+}
+
+// Actions menu
+.actions-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  width: 160px;
+  background-color: $white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid $medium-gray;
+  padding: 8px;
+  z-index: 100;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: $dark-gray;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+
+    &--delete {
+      color: $danger-color;
+
+      &:hover {
+        background-color: $danger-light;
+      }
+    }
+  }
+
+  &__icon {
+    font-size: 14px;
+  }
+}
+
+// Badges
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &--high {
+    background-color: $danger-light;
+    color: $danger-color;
+  }
+
+  &--medium {
+    background-color: $warning-light;
+    color: $warning-color;
+  }
+
+  &--low {
+    background-color: $success-light;
+    color: $success-color;
+  }
+
+  &--completed {
+    background-color: $success-light;
+    color: $success-color;
+  }
+
+  &--overdue {
+    background-color: $danger-light;
+    color: $danger-color;
+  }
+
+  &--upcoming {
+    background-color: $info-light;
+    color: $info-color;
+  }
+}
+
+// Buttons
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  @include flex-center;
+  gap: 8px;
+
+  &--primary {
+    background-color: $primary-color;
+    color: $white;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: $light-gray;
+    color: $dark-gray;
+    border: 1px solid $medium-gray;
+
+    &:hover {
+      background-color: darken($light-gray, 5%);
+    }
+  }
+
+  .btn__icon {
+    font-size: 14px;
+  }
+}
+
+// Sidebar and Topbar (повторно используем стили)
+.sidebar {
+  width: 240px;
+  background-color: $white;
+  border-right: 1px solid $medium-gray;
+  display: none;
+  flex-direction: column;
+
+  @media (min-width: 1024px) {
+    display: flex;
+  }
+
+  &__content {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  &__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__nav-item {
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    border-radius: 8px;
+    font-size: 14px;
+    color: $secondary-color;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $light-gray;
+      color: $primary-color;
+    }
+
+    &--active {
+      background-color: $primary-light;
+      color: $primary-color;
+      font-weight: 500;
+    }
+  }
+
+  &__logout-btn {
+    margin-top: auto;
+    padding: 12px 16px;
+    border: 1px solid $medium-gray;
+    background-color: $white;
+    border-radius: 8px;
+    font-size: 14px;
+    color: $dark-gray;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $light-gray;
+      border-color: $danger-color;
+      color: $danger-color;
+    }
+  }
+}
+
+.topbar {
+  background-color: $white;
+  border-bottom: 1px solid $medium-gray;
+  padding: 16px 20px;
+
+  &__content {
+    @include flex-between;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__menu-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid $medium-gray;
+    background: none;
+    border-radius: 8px;
+    font-size: 20px;
+    color: $secondary-color;
+    cursor: pointer;
+    @include flex-center;
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $dark-gray;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__user-name {
+    font-size: 14px;
+    color: $secondary-color;
+  }
+}
+
+// Mobile navigation
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-nav {
+  width: 280px;
+  height: 100%;
+  background-color: $white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    @include flex-between;
+    padding: 20px;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $dark-gray;
+  }
+
+  &__close-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: none;
+    font-size: 28px;
+    color: $secondary-color;
+    cursor: pointer;
+    border-radius: 8px;
+    @include flex-center;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+
+  &__list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  &__item {
+    padding: 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    border-radius: 8px;
+    font-size: 16px;
+    color: $secondary-color;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+
+    &:hover {
+      background-color: $light-gray;
+      color: $primary-color;
+    }
+
+    &--active {
+      background-color: $primary-light;
+      color: $primary-color;
+      font-weight: 500;
+    }
+
+    &--logout {
+      margin-top: auto;
+      border: 1px solid $medium-gray;
+      color: $dark-gray;
+
+      &:hover {
+        border-color: $danger-color;
+        color: $danger-color;
+        background-color: $light-gray;
+      }
+    }
+  }
+}
+
+// Modal (повторно используем стили)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include flex-center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: $white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  &__header {
+    @include flex-between;
+    padding: 20px;
+    border-bottom: 1px solid $medium-gray;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $dark-gray;
+  }
+
+  &__close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    color: $secondary-color;
+    cursor: pointer;
+    @include flex-center;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: $light-gray;
+    }
+  }
+
+  &__form {
+    padding: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+}
+
+// Form elements
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: $dark-gray;
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid $medium-gray;
+  border-radius: 8px;
+  font-size: 14px;
+  color: $dark-gray;
+  background-color: $white;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .deadlines-table {
+    &__cell {
+      padding: 12px 16px;
+    }
+  }
+
+  .course-badge {
+    max-width: 120px;
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .filters {
+    &__select {
+      font-size: 13px;
+      padding: 6px 10px;
+    }
+
+    &__count {
+      font-size: 13px;
+    }
+  }
+
+  .deadlines-table {
+    &__header {
+      padding: 12px 16px;
+      font-size: 13px;
+    }
+
+    &__cell {
+      padding: 12px 16px;
+    }
+  }
+
+  .task-cell {
+    gap: 8px;
+
+    &__text {
+      font-size: 13px;
+    }
+  }
+
+  .type-cell {
+    &__text {
+      font-size: 13px;
+    }
+  }
+}

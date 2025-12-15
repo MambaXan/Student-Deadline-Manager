@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-// import { Sidebar } from './Sidebar';
-// import { TopBar } from './TopBar';
-// import { MobileNav } from './MobileNav';
-// import { DeadlineModal } from './DeadlineModal';
-// import { Plus, Filter, MoreVertical, Edit2, Trash2 } from 'lucide-react';
-// import type { Deadline, Course } from '../App';
-import { Sidebar } from '../Sidebar/Sidebar';
-import { TopBar } from '../Topbar/Topbar';
-import { MobileNav } from '../MobileNav/MobileNav';
-import { DeadlineModal } from '../DeadlineModal/DeadlineModal';
-// import { Plus, BookOpen, User, Clock } from 'lucide-react';
-import type { Course } from '../../Types/course';
-import type { Deadline } from '../../Types/deadline';
+import './DeadlinesPage.scss';
+
+// Интерфейсы
+interface Course {
+  id: string;
+  title: string;
+  color: string;
+}
+
+interface Deadline {
+  id: string;
+  courseId: string;
+  taskName: string;
+  type: 'assignment' | 'quiz' | 'exam' | 'project';
+  dueDate: Date;
+  status: 'upcoming' | 'overdue' | 'completed';
+  priority: 'low' | 'medium' | 'high';
+}
 
 interface DeadlinesPageProps {
   deadlines: Deadline[];
@@ -22,6 +27,250 @@ interface DeadlinesPageProps {
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
   onDeleteDeadline: (id: string) => void;
 }
+
+// Компоненты
+const Sidebar: React.FC<{
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  onLogout: () => void;
+}> = ({ currentPage, onNavigate, onLogout }) => {
+  return (
+    <div className="sidebar">
+      <div className="sidebar__content">
+        <h2 className="sidebar__title">Student Planner</h2>
+        <nav className="sidebar__nav">
+          <button 
+            onClick={() => onNavigate('dashboard')}
+            className="sidebar__nav-item"
+          >
+            📊 Dashboard
+          </button>
+          <button 
+            onClick={() => onNavigate('calendar')}
+            className="sidebar__nav-item"
+          >
+            📅 Calendar
+          </button>
+          <button 
+            onClick={() => onNavigate('courses')}
+            className="sidebar__nav-item"
+          >
+            📚 Courses
+          </button>
+          <button 
+            onClick={() => onNavigate('deadlines')}
+            className={`sidebar__nav-item ${currentPage === 'deadlines' ? 'sidebar__nav-item--active' : ''}`}
+          >
+            📝 Deadlines
+          </button>
+        </nav>
+        <button onClick={onLogout} className="sidebar__logout-btn">
+          👤 Logout
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const TopBar: React.FC<{ 
+  userName: string;
+  onMenuClick?: () => void;
+}> = ({ userName, onMenuClick }) => {
+  return (
+    <div className="topbar">
+      <div className="topbar__content">
+        <div className="topbar__left">
+          {onMenuClick && (
+            <button 
+              onClick={onMenuClick}
+              className="topbar__menu-btn"
+            >
+              ☰
+            </button>
+          )}
+          <h1 className="topbar__title">Deadlines</h1>
+        </div>
+        <div className="topbar__user">
+          <span className="topbar__user-name">Welcome, {userName}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const DeadlineModal: React.FC<{
+  courses: Course[];
+  deadline?: Deadline;
+  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onClose: () => void;
+}> = ({ courses, deadline, onSave, onClose }) => {
+  const [taskName, setTaskName] = useState(deadline?.taskName || '');
+  const [courseId, setCourseId] = useState(deadline?.courseId || '');
+  const [type, setType] = useState<'assignment' | 'quiz' | 'exam' | 'project'>(deadline?.type || 'assignment');
+  const [dueDate, setDueDate] = useState(
+    deadline?.dueDate 
+      ? new Date(deadline.dueDate).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0]
+  );
+  const [priority, setPriority] = useState<'low' | 'medium' | 'high'>(deadline?.priority || 'medium');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!taskName || !courseId) return;
+
+    onSave({
+      taskName,
+      courseId,
+      type,
+      dueDate: new Date(dueDate),
+      priority,
+      status: 'upcoming'
+    });
+    
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <div className="modal__header">
+          <h3 className="modal__title">
+            {deadline ? 'Edit Deadline' : 'Add New Deadline'}
+          </h3>
+          <button onClick={onClose} className="modal__close-btn">×</button>
+        </div>
+        <form onSubmit={handleSubmit} className="modal__form">
+          <div className="form-group">
+            <label className="form-label">Task Name</label>
+            <input
+              type="text"
+              value={taskName}
+              onChange={(e) => setTaskName(e.target.value)}
+              className="form-input"
+              placeholder="e.g., Lab Report #3"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Course</label>
+            <select
+              value={courseId}
+              onChange={(e) => setCourseId(e.target.value)}
+              className="form-select"
+              required
+            >
+              <option value="">Select a course</option>
+              {courses.map(course => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Type</label>
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value as any)}
+              className="form-select"
+              required
+            >
+              <option value="assignment">Assignment</option>
+              <option value="quiz">Quiz</option>
+              <option value="exam">Exam</option>
+              <option value="project">Project</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Priority</label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value as any)}
+              className="form-select"
+              required
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Due Date</label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="form-input"
+              required
+            />
+          </div>
+          <div className="modal__actions">
+            <button type="button" className="btn btn--secondary" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="btn btn--primary">
+              {deadline ? 'Save Changes' : 'Add Deadline'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const MobileNav: React.FC<{
+  currentPage: string;
+  onNavigate: (page: string) => void;
+  onLogout: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+}> = ({ currentPage, onNavigate, onLogout, isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="mobile-nav-overlay" onClick={onClose}>
+      <div className="mobile-nav" onClick={(e) => e.stopPropagation()}>
+        <div className="mobile-nav__header">
+          <h3 className="mobile-nav__title">Menu</h3>
+          <button onClick={onClose} className="mobile-nav__close-btn">×</button>
+        </div>
+        <nav className="mobile-nav__list">
+          <button 
+            onClick={() => { onNavigate('dashboard'); onClose(); }}
+            className="mobile-nav__item"
+          >
+            📊 Dashboard
+          </button>
+          <button 
+            onClick={() => { onNavigate('calendar'); onClose(); }}
+            className="mobile-nav__item"
+          >
+            📅 Calendar
+          </button>
+          <button 
+            onClick={() => { onNavigate('courses'); onClose(); }}
+            className="mobile-nav__item"
+          >
+            📚 Courses
+          </button>
+          <button 
+            onClick={() => { onNavigate('deadlines'); onClose(); }}
+            className={`mobile-nav__item ${currentPage === 'deadlines' ? 'mobile-nav__item--active' : ''}`}
+          >
+            📝 Deadlines
+          </button>
+          <button 
+            onClick={() => { onLogout(); onClose(); }}
+            className="mobile-nav__item mobile-nav__item--logout"
+          >
+            👤 Logout
+          </button>
+        </nav>
+      </div>
+    </div>
+  );
+};
 
 export function DeadlinesPage({
   deadlines,
@@ -43,21 +292,21 @@ export function DeadlinesPage({
     return courses.find(c => c.id === courseId);
   };
 
-  const getPriorityColor = (priority: string) => {
+  const getPriorityClass = (priority: string) => {
     switch (priority) {
-      case 'high': return 'text-red-600 bg-red-50';
-      case 'medium': return 'text-yellow-600 bg-yellow-50';
-      case 'low': return 'text-green-600 bg-green-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case 'high': return 'badge badge--high';
+      case 'medium': return 'badge badge--medium';
+      case 'low': return 'badge badge--low';
+      default: return 'badge';
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusClass = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600 bg-green-50';
-      case 'overdue': return 'text-red-600 bg-red-50';
-      case 'upcoming': return 'text-blue-600 bg-blue-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case 'completed': return 'badge badge--completed';
+      case 'overdue': return 'badge badge--overdue';
+      case 'upcoming': return 'badge badge--upcoming';
+      default: return 'badge';
     }
   };
 
@@ -84,7 +333,7 @@ export function DeadlinesPage({
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this deadline?')) {
+    if (window.confirm('Are you sure you want to delete this deadline?')) {
       onDeleteDeadline(id);
       setOpenMenuId(null);
     }
@@ -98,7 +347,7 @@ export function DeadlinesPage({
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="deadlines-page">
       <Sidebar currentPage="deadlines" onNavigate={onNavigate} onLogout={onLogout} />
       <MobileNav 
         currentPage="deadlines" 
@@ -108,36 +357,35 @@ export function DeadlinesPage({
         onClose={() => setMobileMenuOpen(false)}
       />
       
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="main-content">
         <TopBar userName="Alex" onMenuClick={() => setMobileMenuOpen(true)} />
         
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8">
+        <main className="content">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 lg:mb-8">
-            <div>
-              <h1 className="text-2xl lg:text-3xl text-gray-900 mb-1 lg:mb-2">All Deadlines</h1>
-              <p className="text-sm lg:text-base text-gray-600">Manage and track all your upcoming tasks</p>
+          <div className="deadlines-header">
+            <div className="deadlines-header__text">
+              <h1 className="deadlines-header__title">All Deadlines</h1>
+              <p className="deadlines-header__subtitle">Manage and track all your upcoming tasks</p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="w-full sm:w-auto px-4 lg:px-6 py-2.5 lg:py-3 text-sm lg:text-base bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
+              className="btn btn--add-deadline"
             >
-              {/* <Plus className="w-4 lg:w-5 h-4 lg:h-5" /> */}
+              <span className="btn__icon">+</span>
               Add Deadline
             </button>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-2xl p-4 lg:p-6 border border-gray-200 shadow-sm mb-4 lg:mb-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 lg:gap-4">
-              {/* <Filter className="w-5 h-5 text-gray-600 hidden sm:block" /> */}
-              <span className="text-sm lg:text-base text-gray-700">Filters:</span>
+          <div className="filters-card">
+            <div className="filters">
+              <span className="filters__label">Filters:</span>
               
               {/* Course Filter */}
               <select
                 value={filterCourse}
                 onChange={(e) => setFilterCourse(e.target.value)}
-                className="w-full sm:w-auto px-3 lg:px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="filters__select"
               >
                 <option value="all">All Courses</option>
                 {courses.map(course => (
@@ -151,7 +399,7 @@ export function DeadlinesPage({
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="w-full sm:w-auto px-3 lg:px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="filters__select"
               >
                 <option value="all">All Status</option>
                 <option value="upcoming">Upcoming</option>
@@ -159,31 +407,31 @@ export function DeadlinesPage({
                 <option value="completed">Completed</option>
               </select>
 
-              <span className="text-sm text-gray-500 sm:ml-auto">
+              <span className="filters__count">
                 {filteredDeadlines.length} {filteredDeadlines.length === 1 ? 'deadline' : 'deadlines'}
               </span>
             </div>
           </div>
 
           {/* Deadlines Table */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[800px]">
-                <thead className="bg-gray-50 border-b border-gray-200">
+          <div className="deadlines-table-container">
+            <div className="deadlines-table-wrapper">
+              <table className="deadlines-table">
+                <thead className="deadlines-table__head">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Task</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Course</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Type</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Due Date</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Status</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Priority</th>
-                    <th className="px-6 py-4 text-left text-sm text-gray-600">Actions</th>
+                    <th className="deadlines-table__header">Task</th>
+                    <th className="deadlines-table__header">Course</th>
+                    <th className="deadlines-table__header">Type</th>
+                    <th className="deadlines-table__header">Due Date</th>
+                    <th className="deadlines-table__header">Status</th>
+                    <th className="deadlines-table__header">Priority</th>
+                    <th className="deadlines-table__header">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="deadlines-table__body">
                   {filteredDeadlines.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                      <td colSpan={7} className="deadlines-table__empty">
                         No deadlines found
                       </td>
                     </tr>
@@ -191,9 +439,9 @@ export function DeadlinesPage({
                     filteredDeadlines.map(deadline => {
                       const course = getCourseById(deadline.courseId);
                       return (
-                        <tr key={deadline.id} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
+                        <tr key={deadline.id} className="deadlines-table__row">
+                          <td className="deadlines-table__cell deadlines-table__cell--task">
+                            <div className="task-cell">
                               <input
                                 type="checkbox"
                                 checked={deadline.status === 'completed'}
@@ -202,69 +450,72 @@ export function DeadlinesPage({
                                     status: deadline.status === 'completed' ? 'upcoming' : 'completed'
                                   });
                                 }}
-                                className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                className="task-cell__checkbox"
                               />
-                              <span className={deadline.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-900'}>
+                              <span className={`task-cell__text ${deadline.status === 'completed' ? 'task-cell__text--completed' : ''}`}>
                                 {deadline.taskName}
                               </span>
                             </div>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="deadlines-table__cell">
                             {course && (
                               <span
-                                className="px-3 py-1 rounded-lg text-sm"
-                                style={{ backgroundColor: course.color + '20', color: course.color }}
+                                className="course-badge"
+                                style={{ 
+                                  backgroundColor: `${course.color}20`, 
+                                  color: course.color 
+                                }}
                               >
                                 {course.title}
                               </span>
                             )}
                           </td>
-                          <td className="px-6 py-4">
-                            <span className="flex items-center gap-2 text-gray-700">
-                              <span>{getTypeIcon(deadline.type)}</span>
-                              <span className="capitalize">{deadline.type}</span>
+                          <td className="deadlines-table__cell">
+                            <span className="type-cell">
+                              <span className="type-cell__icon">{getTypeIcon(deadline.type)}</span>
+                              <span className="type-cell__text">{deadline.type}</span>
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-gray-700">
-                            {deadline.dueDate.toLocaleDateString('en-US', { 
+                          <td className="deadlines-table__cell deadlines-table__cell--date">
+                            {new Date(deadline.dueDate).toLocaleDateString('en-US', { 
                               month: 'short', 
                               day: 'numeric',
                               year: 'numeric'
                             })}
                           </td>
-                          <td className="px-6 py-4">
-                            <span className={`px-3 py-1 rounded-lg text-sm capitalize ${getStatusColor(deadline.status)}`}>
+                          <td className="deadlines-table__cell">
+                            <span className={getStatusClass(deadline.status)}>
                               {deadline.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4">
-                            <span className={`px-3 py-1 rounded-lg text-sm capitalize ${getPriorityColor(deadline.priority)}`}>
+                          <td className="deadlines-table__cell">
+                            <span className={getPriorityClass(deadline.priority)}>
                               {deadline.priority}
                             </span>
                           </td>
-                          <td className="px-6 py-4">
-                            <div className="relative">
+                          <td className="deadlines-table__cell deadlines-table__cell--actions">
+                            <div className="actions-cell">
                               <button
                                 onClick={() => setOpenMenuId(openMenuId === deadline.id ? null : deadline.id)}
-                                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="actions-cell__menu-btn"
                               >
-                                {/* <MoreVertical className="w-5 h-5 text-gray-600" /> */}
+                                ⋮
                               </button>
                               
                               {openMenuId === deadline.id && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-10">
+                                <div className="actions-menu">
                                   <button
                                     onClick={() => handleEdit(deadline)}
-                                    className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                    className="actions-menu__item"
                                   >
-                                    {/* <Edit2 className="w-4 h-4" /> */}
+                                    <span className="actions-menu__icon">✏️</span>
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => handleDelete(deadline.id)}
-                                    className="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
+                                    className="actions-menu__item actions-menu__item--delete"
                                   >
-                                    {/* <Trash2 className="w-4 h-4" /> */}
+                                    <span className="actions-menu__icon">🗑️</span>
                                     Delete
                                   </button>
                                 </div>

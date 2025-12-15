@@ -1,5 +1,5 @@
 import React from 'react';
-// import { LayoutDashboard, Clock, BookOpen, Calendar, Settings, LogOut, X } from 'lucide-react';
+import './MobileNav.scss';
 
 interface MobileNavProps {
   currentPage: string;
@@ -10,13 +10,12 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }: MobileNavProps) {
-  // const menuItems = [
-  //   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  //   { id: 'deadlines', label: 'Deadlines', icon: Clock },
-  //   { id: 'courses', label: 'Courses', icon: BookOpen },
-  //   { id: 'calendar', label: 'Calendar', icon: Calendar },
-  //   { id: 'settings', label: 'Settings', icon: Settings },
-  // ];
+  const menuItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+    { id: 'deadlines', label: 'Deadlines', icon: '📝' },
+    { id: 'courses', label: 'Courses', icon: '📚' },
+    { id: 'calendar', label: 'Calendar', icon: '📅' },
+  ];
 
   const handleNavigate = (page: string) => {
     onNavigate(page);
@@ -29,64 +28,55 @@ export function MobileNav({ currentPage, onNavigate, onLogout, isOpen, onClose }
     <>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black/50 z-40 lg:hidden animate-fade-in"
+        className="mobile-nav-overlay"
         onClick={onClose}
       />
       
       {/* Mobile Menu */}
-      <div className="fixed inset-y-0 left-0 w-72 bg-white z-50 lg:hidden shadow-2xl animate-slide-in-left">
+      <div className="mobile-nav">
         {/* Header */}
-        <div className="p-6 border-b border-gray-200 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-              {/* <Calendar className="w-6 h-6 text-white" /> */}
-            </div>
-            <span className="text-xl text-gray-900">DeadlineTracker</span>
+        <div className="mobile-nav__header">
+          <div className="mobile-nav__brand">
+            <div className="mobile-nav__logo">📅</div>
+            <span className="mobile-nav__title">DeadlineTracker</span>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+            className="mobile-nav__close-btn"
           >
-            {/* <X className="w-6 h-6 text-gray-600" /> */}
+            ✕
           </button>
         </div>
 
         {/* Menu Items */}
-        <nav className="flex-1 p-4 space-y-1">
-          {/* {menuItems.map((item) => {
-            const Icon = item.icon;
+        <nav className="mobile-nav__menu">
+          {menuItems.map((item) => {
             const isActive = currentPage === item.id;
             
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavigate(item.id)}
-                className={`
-                  w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all
-                  ${isActive 
-                    ? 'bg-blue-50 text-blue-600' 
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }
-                `}
+                className={`mobile-nav__item ${isActive ? 'mobile-nav__item--active' : ''}`}
               >
-                <Icon className="w-5 h-5" />
-                <span>{item.label}</span>
+                <span className="mobile-nav__item-icon">{item.icon}</span>
+                <span className="mobile-nav__item-label">{item.label}</span>
               </button>
             );
-          })} */}
+          })}
         </nav>
 
         {/* Logout Button */}
-        <div className="p-4 border-t border-gray-200">
+        <div className="mobile-nav__footer">
           <button
             onClick={() => {
               onLogout();
               onClose();
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
+            className="mobile-nav__logout-btn"
           >
-            {/* <LogOut className="w-5 h-5" /> */}
-            <span>Log Out</span>
+            <span className="mobile-nav__logout-icon">👤</span>
+            <span className="mobile-nav__logout-label">Log Out</span>
           </button>
         </div>
       </div>

@@ -1,7 +1,22 @@
-import React, { useState, useEffect } from 'react';
-// import { X } from 'lucide-react';
-import type { Course } from '../../Types/course';
-import type { Deadline } from '../../Types/deadline';
+import React, { useState } from 'react';
+import './DeadlineModal.scss';
+
+// Интерфейсы
+interface Course {
+  id: string;
+  title: string;
+}
+
+interface Deadline {
+  id: string;
+  taskName: string;
+  courseId: string;
+  type: 'assignment' | 'quiz' | 'exam' | 'project';
+  dueDate: Date;
+  priority: 'low' | 'medium' | 'high';
+  description: string;
+  status: 'upcoming' | 'overdue' | 'completed';
+}
 
 interface DeadlineModalProps {
   courses: Course[];
@@ -11,13 +26,19 @@ interface DeadlineModalProps {
   preselectedCourseId?: string;
 }
 
-export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedCourseId }: DeadlineModalProps) {
+export function DeadlineModal({ 
+  courses, 
+  deadline, 
+  onSave, 
+  onClose, 
+  preselectedCourseId 
+}: DeadlineModalProps) {
   const [taskName, setTaskName] = useState(deadline?.taskName || '');
   const [courseId, setCourseId] = useState(deadline?.courseId || preselectedCourseId || '');
   const [type, setType] = useState<'assignment' | 'quiz' | 'exam' | 'project'>(deadline?.type || 'assignment');
   const [dueDate, setDueDate] = useState(
     deadline?.dueDate 
-      ? deadline.dueDate.toISOString().split('T')[0]
+      ? new Date(deadline.dueDate).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0]
   );
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>(deadline?.priority || 'medium');
@@ -42,26 +63,26 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 lg:p-6 z-50 animate-fade-in">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-slide-up">
+    <div className="deadline-modal-overlay" onClick={onClose}>
+      <div className="deadline-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-gray-200">
-          <h2 className="text-xl lg:text-2xl text-gray-900">
+        <div className="deadline-modal__header">
+          <h2 className="deadline-modal__title">
             {deadline ? 'Edit Deadline' : 'Add New Deadline'}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+            className="deadline-modal__close-btn"
           >
-            {/* <X className="w-5 lg:w-6 h-5 lg:h-6 text-gray-600" /> */}
+            ×
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-4 lg:p-6 space-y-4 lg:space-y-5">
+        <form onSubmit={handleSubmit} className="deadline-modal__form">
           {/* Task Name */}
-          <div>
-            <label className="block text-sm text-gray-700 mb-2">
+          <div className="form-group">
+            <label className="form-label">
               Task Name *
             </label>
             <input
@@ -69,22 +90,22 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
               placeholder="e.g., Lab Report #3"
-              className="w-full px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="form-input"
               required
             />
           </div>
 
           {/* Course and Type Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="form-row">
             {/* Course */}
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="form-group">
+              <label className="form-label">
                 Course *
               </label>
               <select
                 value={courseId}
                 onChange={(e) => setCourseId(e.target.value)}
-                className="w-full px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="form-select"
                 required
               >
                 <option value="">Select a course</option>
@@ -97,14 +118,14 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
             </div>
 
             {/* Type */}
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="form-group">
+              <label className="form-label">
                 Type *
               </label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value as any)}
-                className="w-full px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="form-select"
               >
                 <option value="assignment">Assignment</option>
                 <option value="quiz">Quiz</option>
@@ -115,57 +136,45 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
           </div>
 
           {/* Due Date and Priority Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="form-row">
             {/* Due Date */}
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="form-group">
+              <label className="form-label">
                 Due Date *
               </label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="form-input"
                 required
               />
             </div>
 
             {/* Priority */}
-            <div>
-              <label className="block text-sm text-gray-700 mb-2">
+            <div className="form-group">
+              <label className="form-label">
                 Priority *
               </label>
-              <div className="flex gap-2">
+              <div className="priority-buttons">
                 <button
                   type="button"
                   onClick={() => setPriority('low')}
-                  className={`flex-1 px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base rounded-xl transition-colors ${
-                    priority === 'low'
-                      ? 'bg-green-100 text-green-700 border-2 border-green-500'
-                      : 'bg-gray-100 text-gray-600 border-2 border-transparent hover:bg-gray-200'
-                  }`}
+                  className={`priority-btn ${priority === 'low' ? 'priority-btn--low priority-btn--selected' : ''}`}
                 >
                   Low
                 </button>
                 <button
                   type="button"
                   onClick={() => setPriority('medium')}
-                  className={`flex-1 px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base rounded-xl transition-colors ${
-                    priority === 'medium'
-                      ? 'bg-yellow-100 text-yellow-700 border-2 border-yellow-500'
-                      : 'bg-gray-100 text-gray-600 border-2 border-transparent hover:bg-gray-200'
-                  }`}
+                  className={`priority-btn ${priority === 'medium' ? 'priority-btn--medium priority-btn--selected' : ''}`}
                 >
                   Med
                 </button>
                 <button
                   type="button"
                   onClick={() => setPriority('high')}
-                  className={`flex-1 px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base rounded-xl transition-colors ${
-                    priority === 'high'
-                      ? 'bg-red-100 text-red-700 border-2 border-red-500'
-                      : 'bg-gray-100 text-gray-600 border-2 border-transparent hover:bg-gray-200'
-                  }`}
+                  className={`priority-btn ${priority === 'high' ? 'priority-btn--high priority-btn--selected' : ''}`}
                 >
                   High
                 </button>
@@ -174,8 +183,8 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
           </div>
 
           {/* Description */}
-          <div>
-            <label className="block text-sm text-gray-700 mb-2">
+          <div className="form-group">
+            <label className="form-label">
               Description
             </label>
             <textarea
@@ -183,22 +192,22 @@ export function DeadlineModal({ courses, deadline, onSave, onClose, preselectedC
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Add notes or details about this task..."
               rows={4}
-              className="w-full px-3 lg:px-4 py-2.5 lg:py-3 text-sm lg:text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="form-textarea"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4">
+          <div className="deadline-modal__actions">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 lg:px-6 py-2.5 lg:py-3 text-sm lg:text-base bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
+              className="btn btn--secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 lg:px-6 py-2.5 lg:py-3 text-sm lg:text-base bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-lg"
+              className="btn btn--primary"
             >
               {deadline ? 'Save Changes' : 'Add Deadline'}
             </button>
