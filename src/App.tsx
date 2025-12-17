@@ -8,7 +8,7 @@ import { DeadlinesPage } from './Pages/DeadlinesPage/DeadlinesPage';
 import { CoursesPage } from './Pages/CoursesPage/CoursesPage';
 import { CourseDetailsPage } from './Pages/CourseDetailsPage/CourseDetailsPage';
 import { CalendarPage } from './Pages/CalendarPage/CalendarPage';
-// import { SettingsPage } from './Pages/SettingsPage/SettingsPage';
+import { SettingsPage } from './Pages/SettingsPage/SettingsPage';
 import { Course } from './Types/course';
 import { Deadline } from './Types/deadline';
 
@@ -198,7 +198,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            // onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline}
             onUpdateDeadline={updateDeadline}
           />
         );
@@ -209,7 +209,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            // onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline}
             onUpdateDeadline={updateDeadline}
             onDeleteDeadline={deleteDeadline}
           />
@@ -247,15 +247,15 @@ export default function App() {
             onAddDeadline={addDeadline}
           />
         );
-      // case 'settings':
-      //   return (
-      //     <SettingsPage
-      //       userName={userName}
-      //       onNavigate={navigateTo}
-      //       onLogout={handleLogout}
-      //       onUpdateName={updateUserName}
-      //     />
-      //   );
+      case 'settings':
+        return (
+          <SettingsPage
+            userName={userName}
+            onNavigate={navigateTo}
+            onLogout={handleLogout}
+            onUpdateName={updateUserName}
+          />
+        );
       default:
         return (
           <Dashboard
