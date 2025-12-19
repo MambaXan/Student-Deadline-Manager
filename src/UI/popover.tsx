@@ -1,48 +1,70 @@
 "use client";
 
 import * as React from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover@1.1.6";
+import '../Styles/globals.scss';
 
-import { cn } from "./utils";
-
-function Popover({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />;
+interface PopoverProps {
+  children: React.ReactNode;
+  trigger: React.ReactNode;
+  position?: "top" | "bottom" | "left" | "right";
 }
 
-function PopoverTrigger({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
-  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
-}
+export const Popover: React.FC<PopoverProps> = ({
+  children,
+  trigger,
+  position = "bottom"
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const popoverRef = React.useRef<HTMLDivElement>(null);
 
-function PopoverContent({
-  className,
-  align = "center",
-  sideOffset = 4,
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+  const togglePopover = () => setIsOpen(!isOpen);
+  const closePopover = () => setIsOpen(false);
+
+  // Закрытие по клику вне
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
+        closePopover();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Content
-        data-slot="popover-content"
-        align={align}
-        sideOffset={sideOffset}
-        className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
-          className,
-        )}
-        {...props}
-      />
-    </PopoverPrimitive.Portal>
+    <div className="popover" ref={popoverRef}>
+      <div className="popover-trigger" onClick={togglePopover}>
+        {trigger}
+      </div>
+      
+      {isOpen && (
+        <div className={`popover-content ${position}`}>
+          {children}
+        </div>
+      )}
+    </div>
   );
-}
+};
 
-function PopoverAnchor({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
-  return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />;
-}
+export const PopoverTrigger: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ 
+  className = "", 
+  ...props 
+}) => {
+  return <div className={`popover-trigger ${className}`.trim()} {...props} />;
+};
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+export const PopoverContent: React.FC<React.HTMLAttributes<HTMLDivElement> & {
+  position?: "top" | "bottom" | "left" | "right";
+}> = ({ 
+  className = "", 
+  position = "bottom",
+  ...props 
+}) => {
+  return <div className={`popover-content ${position} ${className}`.trim()} {...props} />;
+};

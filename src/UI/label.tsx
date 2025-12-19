@@ -1,24 +1,22 @@
-"use client";
-
 import * as React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label@2.1.2";
+import '../Styles/globals.scss';
 
-import { cn } from "./utils";
-
-function Label({
-  className,
-  ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
-  return (
-    <LabelPrimitive.Root
-      data-slot="label"
-      className={cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className,
-      )}
-      {...props}
-    />
-  );
+interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  disabled?: boolean;
 }
 
-export { Label };
+export const Label: React.FC<LabelProps> = ({ 
+  className = "",
+  disabled,
+  children,
+  ...props 
+}) => {
+  return (
+    <label 
+      className={`label ${disabled ? 'disabled' : ''} ${className}`.trim()}
+      {...props}
+    >
+      {children}
+    </label>
+  );
+};

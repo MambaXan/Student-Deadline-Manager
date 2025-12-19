@@ -1,53 +1,38 @@
-"use client";
-
+// components/ui/new/AvatarSimple.tsx
 import * as React from "react";
-import * as AvatarPrimitive from "@radix-ui/react-avatar@1.1.3";
 
-import { cn } from "./utils";
-
-function Avatar({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Root>) {
+export const Avatar: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ 
+  className = "", 
+  ...props 
+}) => {
   return (
-    <AvatarPrimitive.Root
-      data-slot="avatar"
-      className={cn(
-        "relative flex size-10 shrink-0 overflow-hidden rounded-full",
-        className,
-      )}
+    <div
+      className={`avatar ${className}`.trim()}
       {...props}
     />
   );
-}
+};
 
-function AvatarImage({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ 
+  className = "", 
+  ...props 
+}) => {
   return (
-    <AvatarPrimitive.Image
-      data-slot="avatar-image"
-      className={cn("aspect-square size-full", className)}
+    <img
+      className={`avatar-image ${className}`.trim()}
       {...props}
     />
   );
-}
+};
 
-function AvatarFallback({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+export const AvatarFallback: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ 
+  className = "", 
+  ...props 
+}) => {
   return (
-    <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
-      className={cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
-        className,
-      )}
+    <div
+      className={`avatar-fallback ${className}`.trim()}
       {...props}
     />
   );
-}
-
-export { Avatar, AvatarImage, AvatarFallback };
+};

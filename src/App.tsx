@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Styles/globals.scss'
 
 import { LandingPage } from './Pages/LandingPage/LandingPage';
 import { LoginPage } from './Pages/LoginPage/LoginPage';
@@ -11,25 +12,6 @@ import { CalendarPage } from './Pages/CalendarPage/CalendarPage';
 import { SettingsPage } from './Pages/SettingsPage/SettingsPage';
 import { Course } from './Types/course';
 import { Deadline } from './Types/deadline';
-
-// export type Deadline = {
-//   id: string;
-//   taskName: string;
-//   courseId: string;
-//   type: 'assignment' | 'quiz' | 'exam' | 'project';
-//   dueDate: Date;
-//   priority: 'low' | 'medium' | 'high';
-//   description: string;
-//   status: 'upcoming' | 'overdue' | 'completed';
-// };
-
-// export type Course = {
-//   id: string;
-//   title: string;
-//   instructor: string;
-//   semester: string;
-//   color: string;
-// };
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<string>('landing');
@@ -198,7 +180,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline as any}
             onUpdateDeadline={updateDeadline}
           />
         );
@@ -209,7 +191,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline as any}
             onUpdateDeadline={updateDeadline}
             onDeleteDeadline={deleteDeadline}
           />
@@ -233,7 +215,7 @@ export default function App() {
             deadlines={deadlines.filter(d => d.courseId === selectedCourseId)}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline as any}
             onBack={() => navigateTo('courses')}
           />
         ) : null;
@@ -244,7 +226,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline as any}
           />
         );
       case 'settings':
@@ -264,7 +246,7 @@ export default function App() {
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
-            onAddDeadline={addDeadline}
+            onAddDeadline={addDeadline as any}
             onUpdateDeadline={updateDeadline}
           />
         );

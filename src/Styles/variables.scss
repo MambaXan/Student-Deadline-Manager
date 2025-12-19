@@ -1,0 +1,22 @@
+// styles/_variables.scss
+:root {
+    // Цвета
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-secondary: #f3f4f6;
+    
+    // Текст
+    --color-text: #111827;
+    --color-text-light: #6b7280;
+    
+    // Размеры
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    // Отступы
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+  }

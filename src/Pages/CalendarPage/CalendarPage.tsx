@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import './CalendarPage.scss';
-// import { Course } from '../../Types/course';
-// import { Deadline } from '../../Types/deadline';
+import { Course } from '../../Types/course';
+import { Deadline as ImportedDeadline} from '../../Types/deadline';
 
 // Интерфейсы
-interface Course {
-  id: string;
-  title: string;
-  color: string;
-}
+// interface Course {
+//   id: string;
+//   title: string;
+//   color: string;
+// }
 
 interface Deadline {
   id: string;
@@ -19,7 +19,7 @@ interface Deadline {
 }
 
 interface CalendarPageProps {
-  deadlines: Deadline[];
+  deadlines: ImportedDeadline[];
   courses: Course[];
   onNavigate: (page: string) => void;
   onLogout: () => void;
