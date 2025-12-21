@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
-import './CalendarPage.scss';
-import { Course } from '../../Types/course';
-import { Deadline as ImportedDeadline} from '../../Types/deadline';
-
-// Интерфейсы
-// interface Course {
-//   id: string;
-//   title: string;
-//   color: string;
-// }
+import React, { useState } from "react";
+import "./CalendarPage.scss";
+import { Course } from "../../Types/course";
+import { Deadline as ImportedDeadline } from "../../Types/deadline";
 
 interface Deadline {
   id: string;
   courseId: string;
   taskName: string;
   dueDate: Date;
-  status: 'upcoming' | 'completed';
+  status: "upcoming" | "completed";
 }
 
 interface CalendarPageProps {
@@ -23,10 +16,10 @@ interface CalendarPageProps {
   courses: Course[];
   onNavigate: (page: string) => void;
   onLogout: () => void;
-  onAddDeadline: (deadline: Omit<Deadline, 'id'>) => void;
+  onAddDeadline: (deadline: Omit<Deadline, "id">) => void;
 }
 
-// Компоненты
+// Components
 const Sidebar: React.FC<{
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -37,20 +30,22 @@ const Sidebar: React.FC<{
       <div className="sidebar__content">
         <h2 className="sidebar__title">Student Planner</h2>
         <nav className="sidebar__nav">
-          <button 
-            onClick={() => onNavigate('calendar')} 
-            className={`sidebar__nav-item ${currentPage === 'calendar' ? 'sidebar__nav-item--active' : ''}`}
+          <button
+            onClick={() => onNavigate("calendar")}
+            className={`sidebar__nav-item ${
+              currentPage === "calendar" ? "sidebar__nav-item--active" : ""
+            }`}
           >
             📅 Calendar
           </button>
-          <button 
-            onClick={() => onNavigate('courses')}
+          <button
+            onClick={() => onNavigate("courses")}
             className="sidebar__nav-item"
           >
             📚 Courses
           </button>
-          <button 
-            onClick={() => onNavigate('deadlines')}
+          <button
+            onClick={() => onNavigate("deadlines")}
             className="sidebar__nav-item"
           >
             📝 Deadlines
@@ -70,7 +65,7 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
       <div className="topbar__content">
         <h1 className="topbar__title">Academic Calendar</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome, {userName}</span>
+          <span className="topbar__user-name">Welcome back!{userName}</span>
         </div>
       </div>
     </div>
@@ -79,12 +74,12 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
 
 const DeadlineModal: React.FC<{
   courses: Course[];
-  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onSave: (deadline: Omit<Deadline, "id">) => void;
   onClose: () => void;
 }> = ({ courses, onSave, onClose }) => {
-  const [taskName, setTaskName] = useState('');
-  const [selectedCourseId, setSelectedCourseId] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [taskName, setTaskName] = useState("");
+  const [selectedCourseId, setSelectedCourseId] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,7 +89,7 @@ const DeadlineModal: React.FC<{
       courseId: selectedCourseId,
       taskName,
       dueDate: new Date(dueDate),
-      status: 'upcoming'
+      status: "upcoming",
     });
     onClose();
   };
@@ -104,7 +99,9 @@ const DeadlineModal: React.FC<{
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
           <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">×</button>
+          <button onClick={onClose} className="modal__close-btn">
+            ×
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="form-group">
@@ -127,7 +124,7 @@ const DeadlineModal: React.FC<{
               required
             >
               <option value="">Select a course</option>
-              {courses.map(course => (
+              {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.title}
                 </option>
@@ -145,7 +142,11 @@ const DeadlineModal: React.FC<{
             />
           </div>
           <div className="modal__actions">
-            <button type="button" className="btn btn--secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn--secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn--primary">
@@ -163,18 +164,28 @@ export function CalendarPage({
   courses,
   onNavigate,
   onLogout,
-  onAddDeadline
+  onAddDeadline,
 }: CalendarPageProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
 
   const getCourseById = (courseId: string) => {
-    return courses.find(c => c.id === courseId);
+    return courses.find((c) => c.id === courseId);
   };
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const daysInMonth = (date: Date) => {
@@ -186,18 +197,26 @@ export function CalendarPage({
   };
 
   const previousMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+    );
   };
 
   const nextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+    );
   };
 
   const getDeadlinesForDate = (day: number) => {
-    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+    const date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      day
+    );
     date.setHours(0, 0, 0, 0);
-    
-    return deadlines.filter(deadline => {
+
+    return deadlines.filter((deadline) => {
       const dueDate = new Date(deadline.dueDate);
       dueDate.setHours(0, 0, 0, 0);
       return dueDate.getTime() === date.getTime();
@@ -233,34 +252,40 @@ export function CalendarPage({
   today.setHours(0, 0, 0, 0);
   const weekEnd = new Date(today);
   weekEnd.setDate(weekEnd.getDate() + 7);
-  
-  const thisWeekDeadlines = deadlines.filter(deadline => {
-    const dueDate = new Date(deadline.dueDate);
-    dueDate.setHours(0, 0, 0, 0);
-    return dueDate >= today && dueDate <= weekEnd && deadline.status === 'upcoming';
-  }).sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+
+  const thisWeekDeadlines = deadlines
+    .filter((deadline) => {
+      const dueDate = new Date(deadline.dueDate);
+      dueDate.setHours(0, 0, 0, 0);
+      return (
+        dueDate >= today && dueDate <= weekEnd && deadline.status === "upcoming"
+      );
+    })
+    .sort(
+      (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    );
 
   return (
     <div className="calendar-page">
-      <Sidebar currentPage="calendar" onNavigate={onNavigate} onLogout={onLogout} />
-      
+      <Sidebar
+        currentPage="calendar"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+      />
+
       <div className="main-content">
-        <TopBar userName="Alex" />
-        
+        <TopBar userName="" />
+
         <main className="content">
           <div className="calendar-container">
-            {/* Calendar */}
             <div className="calendar">
-              {/* Calendar Header */}
               <div className="calendar__header">
                 <h2 className="calendar__title">
-                  {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+                  {monthNames[currentDate.getMonth()]}{" "}
+                  {currentDate.getFullYear()}
                 </h2>
                 <div className="calendar__controls">
-                  <button
-                    onClick={previousMonth}
-                    className="calendar__nav-btn"
-                  >
+                  <button onClick={previousMonth} className="calendar__nav-btn">
                     ‹
                   </button>
                   <button
@@ -269,10 +294,7 @@ export function CalendarPage({
                   >
                     Today
                   </button>
-                  <button
-                    onClick={nextMonth}
-                    className="calendar__nav-btn"
-                  >
+                  <button onClick={nextMonth} className="calendar__nav-btn">
                     ›
                   </button>
                   <button
@@ -284,19 +306,23 @@ export function CalendarPage({
                 </div>
               </div>
 
-              {/* Calendar Grid */}
               <div className="calendar__grid">
-                {/* Day Headers */}
-                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="calendar__day-header">
-                    {day}
-                  </div>
-                ))}
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                  (day) => (
+                    <div key={day} className="calendar__day-header">
+                      {day}
+                    </div>
+                  )
+                )}
 
-                {/* Calendar Days */}
                 {days.map((day, index) => {
                   if (day === null) {
-                    return <div key={`empty-${index}`} className="calendar__day calendar__day--empty" />;
+                    return (
+                      <div
+                        key={`empty-${index}`}
+                        className="calendar__day calendar__day--empty"
+                      />
+                    );
                   }
 
                   const dayDeadlines = getDeadlinesForDate(day);
@@ -305,22 +331,32 @@ export function CalendarPage({
                   return (
                     <div
                       key={day}
-                      className={`calendar__day ${isTodayDate ? 'calendar__day--today' : ''}`}
+                      className={`calendar__day ${
+                        isTodayDate ? "calendar__day--today" : ""
+                      }`}
                     >
-                      <div className={`calendar__day-number ${isTodayDate ? 'calendar__day-number--today' : ''}`}>
+                      <div
+                        className={`calendar__day-number ${
+                          isTodayDate ? "calendar__day-number--today" : ""
+                        }`}
+                      >
                         {day}
                       </div>
                       <div className="calendar__deadlines">
-                        {dayDeadlines.slice(0, 3).map(deadline => {
+                        {dayDeadlines.slice(0, 3).map((deadline) => {
                           const course = getCourseById(deadline.courseId);
                           return (
                             <div
                               key={deadline.id}
                               className="calendar__deadline-item"
                               style={{
-                                backgroundColor: course?.color ? `${course.color}20` : '#f3f4f6',
-                                color: course?.color || '#6b7280',
-                                borderLeft: `3px solid ${course?.color || '#6b7280'}`
+                                backgroundColor: course?.color
+                                  ? `${course.color}20`
+                                  : "#f3f4f6",
+                                color: course?.color || "#6b7280",
+                                borderLeft: `3px solid ${
+                                  course?.color || "#6b7280"
+                                }`,
                               }}
                               title={deadline.taskName}
                             >
@@ -340,19 +376,15 @@ export function CalendarPage({
               </div>
             </div>
 
-            {/* Sidebar */}
             <div className="sidebar-content">
-              {/* This Week */}
               <div className="sidebar-card">
                 <h3 className="sidebar-card__title">This Week</h3>
-                
+
                 {thisWeekDeadlines.length === 0 ? (
-                  <p className="sidebar-card__empty">
-                    No deadlines this week
-                  </p>
+                  <p className="sidebar-card__empty">No deadlines this week</p>
                 ) : (
                   <div className="deadlines-list">
-                    {thisWeekDeadlines.map(deadline => {
+                    {thisWeekDeadlines.map((deadline) => {
                       const course = getCourseById(deadline.courseId);
                       return (
                         <div key={deadline.id} className="deadline-card">
@@ -365,17 +397,20 @@ export function CalendarPage({
                                 className="deadline-card__course"
                                 style={{
                                   backgroundColor: `${course.color}20`,
-                                  color: course.color
+                                  color: course.color,
                                 }}
                               >
-                                {course.title.split(' ')[0]}
+                                {course.title.split(" ")[0]}
                               </span>
                             )}
                             <span className="deadline-card__date">
-                              {new Date(deadline.dueDate).toLocaleDateString('en-US', { 
-                                month: 'short', 
-                                day: 'numeric'
-                              })}
+                              {new Date(deadline.dueDate).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                }
+                              )}
                             </span>
                           </div>
                         </div>
@@ -385,19 +420,16 @@ export function CalendarPage({
                 )}
               </div>
 
-              {/* Color Legend */}
               <div className="sidebar-card">
                 <h3 className="sidebar-card__title">Courses</h3>
                 <div className="courses-list">
-                  {courses.slice(0, 5).map(course => (
+                  {courses.slice(0, 5).map((course) => (
                     <div key={course.id} className="course-item">
                       <div
                         className="course-item__color"
                         style={{ backgroundColor: course.color }}
                       />
-                      <span className="course-item__title">
-                        {course.title}
-                      </span>
+                      <span className="course-item__title">{course.title}</span>
                     </div>
                   ))}
                 </div>

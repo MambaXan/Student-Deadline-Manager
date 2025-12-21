@@ -48,12 +48,12 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
                 Email Address
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">✉️</span>
+                {/* <span className="input-icon">✉️</span> */}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@university.edu"
+                  placeholder="Enter your email"
                   className="form-input"
                   required
                 />
@@ -66,12 +66,12 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
                 Password
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">🔒</span>
+                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   className="form-input"
                   required
                 />

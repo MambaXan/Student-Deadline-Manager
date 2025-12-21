@@ -69,12 +69,12 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
                 Full Name
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">👤</span>
+                {/* <span className="input-icon">👤</span> */}
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Alex Johnson"
+                  placeholder="Enter your full name"
                   className="form-input"
                   required
                 />
@@ -87,12 +87,12 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
                 Email Address
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">✉️</span>
+                {/* <span className="input-icon">✉️</span> */}
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@university.edu"
+                  placeholder="Enter your email"
                   className="form-input"
                   required
                 />
@@ -105,12 +105,12 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
                 Password
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">🔒</span>
+                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Create a password"
                   className="form-input"
                   required
                 />
@@ -123,12 +123,12 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
                 Confirm Password
               </label>
               <div className="input-with-icon">
-                <span className="input-icon">🔒</span>
+                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Confirm the password"
                   className="form-input"
                   required
                 />
