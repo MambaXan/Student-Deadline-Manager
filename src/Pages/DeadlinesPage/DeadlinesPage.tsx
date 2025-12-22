@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './DeadlinesPage.scss';
+import React, { useState } from "react";
+import "./DeadlinesPage.scss";
 
-// Интерфейсы
+// Interface
 interface Course {
   id: string;
   title: string;
@@ -12,10 +12,10 @@ interface Deadline {
   id: string;
   courseId: string;
   taskName: string;
-  type: 'assignment' | 'quiz' | 'exam' | 'project';
+  type: "assignment" | "quiz" | "exam" | "project";
   dueDate: Date;
-  status: 'upcoming' | 'overdue' | 'completed';
-  priority: 'low' | 'medium' | 'high';
+  status: "upcoming" | "overdue" | "completed";
+  priority: "low" | "medium" | "high";
 }
 
 interface DeadlinesPageProps {
@@ -23,12 +23,12 @@ interface DeadlinesPageProps {
   courses: Course[];
   onNavigate: (page: string) => void;
   onLogout: () => void;
-  onAddDeadline: (deadline: Omit<Deadline, 'id'>) => void;
+  onAddDeadline: (deadline: Omit<Deadline, "id">) => void;
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
   onDeleteDeadline: (id: string) => void;
 }
 
-// Компоненты
+// Components
 const Sidebar: React.FC<{
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -39,27 +39,29 @@ const Sidebar: React.FC<{
       <div className="sidebar__content">
         <h2 className="sidebar__title">Student Planner</h2>
         <nav className="sidebar__nav">
-          <button 
-            onClick={() => onNavigate('dashboard')}
+          <button
+            onClick={() => onNavigate("dashboard")}
             className="sidebar__nav-item"
           >
             📊 Dashboard
           </button>
-          <button 
-            onClick={() => onNavigate('calendar')}
+          <button
+            onClick={() => onNavigate("calendar")}
             className="sidebar__nav-item"
           >
             📅 Calendar
           </button>
-          <button 
-            onClick={() => onNavigate('courses')}
+          <button
+            onClick={() => onNavigate("courses")}
             className="sidebar__nav-item"
           >
             📚 Courses
           </button>
-          <button 
-            onClick={() => onNavigate('deadlines')}
-            className={`sidebar__nav-item ${currentPage === 'deadlines' ? 'sidebar__nav-item--active' : ''}`}
+          <button
+            onClick={() => onNavigate("deadlines")}
+            className={`sidebar__nav-item ${
+              currentPage === "deadlines" ? "sidebar__nav-item--active" : ""
+            }`}
           >
             📝 Deadlines
           </button>
@@ -72,7 +74,7 @@ const Sidebar: React.FC<{
   );
 };
 
-const TopBar: React.FC<{ 
+const TopBar: React.FC<{
   userName: string;
   onMenuClick?: () => void;
 }> = ({ userName, onMenuClick }) => {
@@ -81,17 +83,14 @@ const TopBar: React.FC<{
       <div className="topbar__content">
         <div className="topbar__left">
           {onMenuClick && (
-            <button 
-              onClick={onMenuClick}
-              className="topbar__menu-btn"
-            >
+            <button onClick={onMenuClick} className="topbar__menu-btn">
               ☰
             </button>
           )}
           <h1 className="topbar__title">Deadlines</h1>
         </div>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome, {userName}</span>
+          <span className="topbar__user-name">Welcome back!</span>
         </div>
       </div>
     </div>
@@ -101,22 +100,26 @@ const TopBar: React.FC<{
 const DeadlineModal: React.FC<{
   courses: Course[];
   deadline?: Deadline;
-  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onSave: (deadline: Omit<Deadline, "id">) => void;
   onClose: () => void;
 }> = ({ courses, deadline, onSave, onClose }) => {
-  const [taskName, setTaskName] = useState(deadline?.taskName || '');
-  const [courseId, setCourseId] = useState(deadline?.courseId || '');
-  const [type, setType] = useState<'assignment' | 'quiz' | 'exam' | 'project'>(deadline?.type || 'assignment');
-  const [dueDate, setDueDate] = useState(
-    deadline?.dueDate 
-      ? new Date(deadline.dueDate).toISOString().split('T')[0]
-      : new Date().toISOString().split('T')[0]
+  const [taskName, setTaskName] = useState(deadline?.taskName || "");
+  const [courseId, setCourseId] = useState(deadline?.courseId || "");
+  const [type, setType] = useState<"assignment" | "quiz" | "exam" | "project">(
+    deadline?.type || "assignment"
   );
-  const [priority, setPriority] = useState<'low' | 'medium' | 'high'>(deadline?.priority || 'medium');
+  const [dueDate, setDueDate] = useState(
+    deadline?.dueDate
+      ? new Date(deadline.dueDate).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0]
+  );
+  const [priority, setPriority] = useState<"low" | "medium" | "high">(
+    deadline?.priority || "medium"
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!taskName || !courseId) return;
 
     onSave({
@@ -125,9 +128,9 @@ const DeadlineModal: React.FC<{
       type,
       dueDate: new Date(dueDate),
       priority,
-      status: 'upcoming'
+      status: "upcoming",
     });
-    
+
     onClose();
   };
 
@@ -136,9 +139,11 @@ const DeadlineModal: React.FC<{
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
           <h3 className="modal__title">
-            {deadline ? 'Edit Deadline' : 'Add New Deadline'}
+            {deadline ? "Edit Deadline" : "Add New Deadline"}
           </h3>
-          <button onClick={onClose} className="modal__close-btn">×</button>
+          <button onClick={onClose} className="modal__close-btn">
+            ×
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="form-group">
@@ -161,7 +166,7 @@ const DeadlineModal: React.FC<{
               required
             >
               <option value="">Select a course</option>
-              {courses.map(course => (
+              {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.title}
                 </option>
@@ -206,11 +211,15 @@ const DeadlineModal: React.FC<{
             />
           </div>
           <div className="modal__actions">
-            <button type="button" className="btn btn--secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn--secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn--primary">
-              {deadline ? 'Save Changes' : 'Add Deadline'}
+              {deadline ? "Save Changes" : "Add Deadline"}
             </button>
           </div>
         </form>
@@ -233,35 +242,54 @@ const MobileNav: React.FC<{
       <div className="mobile-nav" onClick={(e) => e.stopPropagation()}>
         <div className="mobile-nav__header">
           <h3 className="mobile-nav__title">Menu</h3>
-          <button onClick={onClose} className="mobile-nav__close-btn">×</button>
+          <button onClick={onClose} className="mobile-nav__close-btn">
+            ×
+          </button>
         </div>
         <nav className="mobile-nav__list">
-          <button 
-            onClick={() => { onNavigate('dashboard'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("dashboard");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📊 Dashboard
           </button>
-          <button 
-            onClick={() => { onNavigate('calendar'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("calendar");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📅 Calendar
           </button>
-          <button 
-            onClick={() => { onNavigate('courses'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("courses");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📚 Courses
           </button>
-          <button 
-            onClick={() => { onNavigate('deadlines'); onClose(); }}
-            className={`mobile-nav__item ${currentPage === 'deadlines' ? 'mobile-nav__item--active' : ''}`}
+          <button
+            onClick={() => {
+              onNavigate("deadlines");
+              onClose();
+            }}
+            className={`mobile-nav__item ${
+              currentPage === "deadlines" ? "mobile-nav__item--active" : ""
+            }`}
           >
             📝 Deadlines
           </button>
-          <button 
-            onClick={() => { onLogout(); onClose(); }}
+          <button
+            onClick={() => {
+              onLogout();
+              onClose();
+            }}
             className="mobile-nav__item mobile-nav__item--logout"
           >
             👤 Logout
@@ -279,51 +307,66 @@ export function DeadlinesPage({
   onLogout,
   onAddDeadline,
   onUpdateDeadline,
-  onDeleteDeadline
+  onDeleteDeadline,
 }: DeadlinesPageProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingDeadline, setEditingDeadline] = useState<Deadline | null>(null);
-  const [filterCourse, setFilterCourse] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterCourse, setFilterCourse] = useState<string>("all");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getCourseById = (courseId: string) => {
-    return courses.find(c => c.id === courseId);
+    return courses.find((c) => c.id === courseId);
   };
 
   const getPriorityClass = (priority: string) => {
     switch (priority) {
-      case 'high': return 'badge badge--high';
-      case 'medium': return 'badge badge--medium';
-      case 'low': return 'badge badge--low';
-      default: return 'badge';
+      case "high":
+        return "badge badge--high";
+      case "medium":
+        return "badge badge--medium";
+      case "low":
+        return "badge badge--low";
+      default:
+        return "badge";
     }
   };
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case 'completed': return 'badge badge--completed';
-      case 'overdue': return 'badge badge--overdue';
-      case 'upcoming': return 'badge badge--upcoming';
-      default: return 'badge';
+      case "completed":
+        return "badge badge--completed";
+      case "overdue":
+        return "badge badge--overdue";
+      case "upcoming":
+        return "badge badge--upcoming";
+      default:
+        return "badge";
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'assignment': return '📝';
-      case 'quiz': return '❓';
-      case 'exam': return '📋';
-      case 'project': return '💼';
-      default: return '📄';
+      case "assignment":
+        return "📝";
+      case "quiz":
+        return "❓";
+      case "exam":
+        return "📋";
+      case "project":
+        return "💼";
+      default:
+        return "📄";
     }
   };
 
   // Filter deadlines
-  const filteredDeadlines = deadlines.filter(deadline => {
-    if (filterCourse !== 'all' && deadline.courseId !== filterCourse) return false;
-    if (filterStatus !== 'all' && deadline.status !== filterStatus) return false;
+  const filteredDeadlines = deadlines.filter((deadline) => {
+    if (filterCourse !== "all" && deadline.courseId !== filterCourse)
+      return false;
+    if (filterStatus !== "all" && deadline.status !== filterStatus)
+      return false;
     return true;
   });
 
@@ -333,13 +376,13 @@ export function DeadlinesPage({
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this deadline?')) {
+    if (window.confirm("Are you sure you want to delete this deadline?")) {
       onDeleteDeadline(id);
       setOpenMenuId(null);
     }
   };
 
-  const handleUpdateDeadline = (deadline: Omit<Deadline, 'id'>) => {
+  const handleUpdateDeadline = (deadline: Omit<Deadline, "id">) => {
     if (editingDeadline) {
       onUpdateDeadline(editingDeadline.id, deadline);
       setEditingDeadline(null);
@@ -348,24 +391,30 @@ export function DeadlinesPage({
 
   return (
     <div className="deadlines-page">
-      <Sidebar currentPage="deadlines" onNavigate={onNavigate} onLogout={onLogout} />
-      <MobileNav 
-        currentPage="deadlines" 
-        onNavigate={onNavigate} 
+      <Sidebar
+        currentPage="deadlines"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+      />
+      <MobileNav
+        currentPage="deadlines"
+        onNavigate={onNavigate}
         onLogout={onLogout}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
-      
+
       <div className="main-content">
         <TopBar userName="Alex" onMenuClick={() => setMobileMenuOpen(true)} />
-        
+
         <main className="content">
           {/* Header */}
           <div className="deadlines-header">
             <div className="deadlines-header__text">
               <h1 className="deadlines-header__title">All Deadlines</h1>
-              <p className="deadlines-header__subtitle">Manage and track all your upcoming tasks</p>
+              <p className="deadlines-header__subtitle">
+                Manage and track all your upcoming tasks
+              </p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
@@ -380,7 +429,7 @@ export function DeadlinesPage({
           <div className="filters-card">
             <div className="filters">
               <span className="filters__label">Filters:</span>
-              
+
               {/* Course Filter */}
               <select
                 value={filterCourse}
@@ -388,7 +437,7 @@ export function DeadlinesPage({
                 className="filters__select"
               >
                 <option value="all">All Courses</option>
-                {courses.map(course => (
+                {courses.map((course) => (
                   <option key={course.id} value={course.id}>
                     {course.title}
                   </option>
@@ -408,7 +457,8 @@ export function DeadlinesPage({
               </select>
 
               <span className="filters__count">
-                {filteredDeadlines.length} {filteredDeadlines.length === 1 ? 'deadline' : 'deadlines'}
+                {filteredDeadlines.length}{" "}
+                {filteredDeadlines.length === 1 ? "deadline" : "deadlines"}
               </span>
             </div>
           </div>
@@ -436,7 +486,7 @@ export function DeadlinesPage({
                       </td>
                     </tr>
                   ) : (
-                    filteredDeadlines.map(deadline => {
+                    filteredDeadlines.map((deadline) => {
                       const course = getCourseById(deadline.courseId);
                       return (
                         <tr key={deadline.id} className="deadlines-table__row">
@@ -444,15 +494,24 @@ export function DeadlinesPage({
                             <div className="task-cell">
                               <input
                                 type="checkbox"
-                                checked={deadline.status === 'completed'}
+                                checked={deadline.status === "completed"}
                                 onChange={() => {
                                   onUpdateDeadline(deadline.id, {
-                                    status: deadline.status === 'completed' ? 'upcoming' : 'completed'
+                                    status:
+                                      deadline.status === "completed"
+                                        ? "upcoming"
+                                        : "completed",
                                   });
                                 }}
                                 className="task-cell__checkbox"
                               />
-                              <span className={`task-cell__text ${deadline.status === 'completed' ? 'task-cell__text--completed' : ''}`}>
+                              <span
+                                className={`task-cell__text ${
+                                  deadline.status === "completed"
+                                    ? "task-cell__text--completed"
+                                    : ""
+                                }`}
+                              >
                                 {deadline.taskName}
                               </span>
                             </div>
@@ -461,9 +520,9 @@ export function DeadlinesPage({
                             {course && (
                               <span
                                 className="course-badge"
-                                style={{ 
-                                  backgroundColor: `${course.color}20`, 
-                                  color: course.color 
+                                style={{
+                                  backgroundColor: `${course.color}20`,
+                                  color: course.color,
                                 }}
                               >
                                 {course.title}
@@ -472,16 +531,23 @@ export function DeadlinesPage({
                           </td>
                           <td className="deadlines-table__cell">
                             <span className="type-cell">
-                              <span className="type-cell__icon">{getTypeIcon(deadline.type)}</span>
-                              <span className="type-cell__text">{deadline.type}</span>
+                              <span className="type-cell__icon">
+                                {getTypeIcon(deadline.type)}
+                              </span>
+                              <span className="type-cell__text">
+                                {deadline.type}
+                              </span>
                             </span>
                           </td>
                           <td className="deadlines-table__cell deadlines-table__cell--date">
-                            {new Date(deadline.dueDate).toLocaleDateString('en-US', { 
-                              month: 'short', 
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}
+                            {new Date(deadline.dueDate).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
                           </td>
                           <td className="deadlines-table__cell">
                             <span className={getStatusClass(deadline.status)}>
@@ -489,33 +555,45 @@ export function DeadlinesPage({
                             </span>
                           </td>
                           <td className="deadlines-table__cell">
-                            <span className={getPriorityClass(deadline.priority)}>
+                            <span
+                              className={getPriorityClass(deadline.priority)}
+                            >
                               {deadline.priority}
                             </span>
                           </td>
                           <td className="deadlines-table__cell deadlines-table__cell--actions">
                             <div className="actions-cell">
                               <button
-                                onClick={() => setOpenMenuId(openMenuId === deadline.id ? null : deadline.id)}
+                                onClick={() =>
+                                  setOpenMenuId(
+                                    openMenuId === deadline.id
+                                      ? null
+                                      : deadline.id
+                                  )
+                                }
                                 className="actions-cell__menu-btn"
                               >
                                 ⋮
                               </button>
-                              
+
                               {openMenuId === deadline.id && (
                                 <div className="actions-menu">
                                   <button
                                     onClick={() => handleEdit(deadline)}
                                     className="actions-menu__item"
                                   >
-                                    <span className="actions-menu__icon">✏️</span>
+                                    <span className="actions-menu__icon">
+                                      ✏️
+                                    </span>
                                     Edit
                                   </button>
                                   <button
                                     onClick={() => handleDelete(deadline.id)}
                                     className="actions-menu__item actions-menu__item--delete"
                                   >
-                                    <span className="actions-menu__icon">🗑️</span>
+                                    <span className="actions-menu__icon">
+                                      🗑️
+                                    </span>
                                     Delete
                                   </button>
                                 </div>

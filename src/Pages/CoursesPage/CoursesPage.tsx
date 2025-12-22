@@ -221,19 +221,23 @@ export function CoursesPage({
 
         <main className="content">
           <div className="courses-header">
-            <div className="courses-header__text">
-              <h1 className="courses-header__title">My Courses</h1>
-              <p className="courses-header__subtitle">
-                Organize and track all your university courses
-              </p>
+            <div className="courses-header__content">
+              <div className="courses-header__text">
+                <h1 className="courses-header__title">My Courses</h1>
+                <p className="courses-header__subtitle">
+                  Organize and track all your university courses
+                </p>
+              </div>
+              <div className="courses-header__actions">
+                <button
+                  onClick={() => setShowAddModal(true)}
+                  className="btn btn--add-course"
+                >
+                  <span className="btn__icon">+</span>
+                  Add Course
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="btn btn--add-course"
-            >
-              <span className="btn__icon">+</span>
-              Add Course
-            </button>
           </div>
 
           {courses.length === 0 ? (

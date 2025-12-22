@@ -19,7 +19,11 @@ $danger-light: #fee2e2;
 // Signup page
 .signup-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, $primary-light, lighten($primary-color, 40%));
+  background: linear-gradient(
+    135deg,
+    $primary-light,
+    lighten($primary-color, 40%)
+  );
   @include flex-center;
   padding: 20px;
 }

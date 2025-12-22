@@ -1,5 +1,5 @@
-import React from 'react';
-import './Sidebar.scss';
+import React from "react";
+import "./Sidebar.scss";
 
 interface SidebarProps {
   currentPage: string;
@@ -9,11 +9,11 @@ interface SidebarProps {
 
 export function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'calendar', label: 'Calendar', icon: '📅' },
-    { id: 'courses', label: 'Courses', icon: '📚' },
-    { id: 'deadlines', label: 'Deadlines', icon: '📝' },
-    { id: 'settings', label: 'Settings', icon: '⚙️' },
+    { id: "dashboard", label: "Dashboard", icon: "📊" },
+    { id: "calendar", label: "Calendar", icon: "📅" },
+    { id: "courses", label: "Courses", icon: "📚" },
+    { id: "deadlines", label: "Deadlines", icon: "📝" },
+    { id: "settings", label: "Settings", icon: "⚙️" },
   ];
 
   return (
@@ -30,12 +30,14 @@ export function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
       <nav className="sidebar__nav">
         {menuItems.map((item) => {
           const isActive = currentPage === item.id;
-          
+
           return (
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`sidebar__nav-item ${isActive ? 'sidebar__nav-item--active' : ''}`}
+              className={`sidebar__nav-item ${
+                isActive ? "sidebar__nav-item--active" : ""
+              }`}
             >
               <span className="sidebar__nav-icon">{item.icon}</span>
               <span className="sidebar__nav-label">{item.label}</span>
@@ -46,10 +48,7 @@ export function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
 
       {/* Logout Button */}
       <div className="sidebar__footer">
-        <button
-          onClick={onLogout}
-          className="sidebar__logout-btn"
-        >
+        <button onClick={onLogout} className="sidebar__logout-btn">
           <span className="sidebar__logout-icon">👤</span>
           <span className="sidebar__logout-label">Log Out</span>
         </button>

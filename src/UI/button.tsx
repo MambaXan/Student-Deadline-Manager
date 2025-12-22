@@ -1,68 +1,7 @@
-// import * as React from "react";
-// import { Slot } from "@radix-ui/react-slot@1.1.2";
-// import { cva, type VariantProps } from "class-variance-authority@0.7.1";
-
-// import { cn } from "./utils";
-
-// const buttonVariants = cva(
-//   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-//   {
-//     variants: {
-//       variant: {
-//         default: "bg-primary text-primary-foreground hover:bg-primary/90",
-//         destructive:
-//           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-//         outline:
-//           "border bg-background text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-//         secondary:
-//           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-//         ghost:
-//           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-//         link: "text-primary underline-offset-4 hover:underline",
-//       },
-//       size: {
-//         default: "h-9 px-4 py-2 has-[>svg]:px-3",
-//         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-//         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-//         icon: "size-9 rounded-md",
-//       },
-//     },
-//     defaultVariants: {
-//       variant: "default",
-//       size: "default",
-//     },
-//   },
-// );
-
-// function Button({
-//   className,
-//   variant,
-//   size,
-//   asChild = false,
-//   ...props
-// }: React.ComponentProps<"button"> &
-//   VariantProps<typeof buttonVariants> & {
-//     asChild?: boolean;
-//   }) {
-//   const Comp = asChild ? Slot : "button";
-
-//   return (
-//     <Comp
-//       data-slot="button"
-//       className={cn(buttonVariants({ variant, size, className }))}
-//       {...props}
-//     />
-//   );
-// }
-
-// export { Button, buttonVariants };
-
-// components/ui/new/Button.tsx
 import * as React from "react";
-import "../Styles/globals.scss"; // Подключаем стили
+import "../Styles/globals.scss";
 
-// Типы для вариантов
-export type ButtonVariant = 
+export type ButtonVariant =
   | "default"
   | "destructive"
   | "outline"
@@ -70,36 +9,31 @@ export type ButtonVariant =
   | "ghost"
   | "link";
 
-export type ButtonSize = 
-  | "default"
-  | "sm"
-  | "lg"
-  | "icon";
+export type ButtonSize = "default" | "sm" | "lg" | "icon";
 
-export interface ButtonProps 
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'asChild'> {
+export interface ButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "asChild"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   asChild?: boolean;
 }
 
-// Утилита для объединения классов
 const cn = (...classes: (string | boolean | undefined)[]) => {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 };
 
-// Компонент кнопки
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ 
-    className, 
-    variant = "default", 
-    size = "default", 
-    asChild = false,
-    children,
-    ...props 
-  }, ref) => {
-    
-    // Если asChild=true, рендерим children с пропсами
+  (
+    {
+      className,
+      variant = "default",
+      size = "default",
+      asChild = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     if (asChild && React.isValidElement(children)) {
       const child = children as React.ReactElement<any>;
       return React.cloneElement(child, {
@@ -111,13 +45,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className
         ),
         ...props,
-        ref
+        ref,
       });
     }
-    
-    // Базовая кнопка
-    const Comp = asChild ? 'div' : 'button';
-    
+
+    const Comp = asChild ? "div" : "button";
+
     return React.createElement(
       Comp,
       {
@@ -129,7 +62,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           `button--${size}`,
           className
         ),
-        "data-slot": "button"
+        "data-slot": "button",
       },
       children
     );

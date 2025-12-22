@@ -1,4 +1,3 @@
-// components/ui/new/AlertSimple.tsx (упрощенный)
 import * as React from "react";
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {

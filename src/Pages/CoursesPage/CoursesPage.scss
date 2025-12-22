@@ -44,11 +44,15 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0
 
 // Header
 .courses-header {
-  @include flex-between;
   margin-bottom: 32px;
 
+  &__content {
+    @include flex-between;
+    gap: 20px;
+  }
+
   &__text {
-    flex: -1;
+    flex: 1;
   }
 
   &__title {
@@ -56,11 +60,18 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0
     font-weight: 700;
     color: $dark-gray;
     margin-bottom: 8px;
+    line-height: 1.2;
   }
 
   &__subtitle {
     font-size: 16px;
     color: $secondary-color;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
   }
 }
 
@@ -279,7 +290,7 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0
   }
 }
 
-// Sidebar and Topbar (повторно используем стили)
+// Sidebar and Topbar
 .sidebar {
   width: 240px;
   background-color: $white;
@@ -379,7 +390,7 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0
   }
 }
 
-// Modal (повторно используем стили)
+// Modal
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -503,27 +514,20 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0
 // Responsive
 @media (max-width: 768px) {
   .courses-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    &__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    &__title {
+      font-size: 28px;
+    }
   }
 
   .btn--add-course {
-    width: 100%;
-  }
-
-  .courses-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .course-card {
-    &__banner {
-      height: 112px;
-    }
-
-    &__content {
-      padding: 20px;
-    }
+    width: auto; 
+    padding: 10px 20px;
   }
 }
 

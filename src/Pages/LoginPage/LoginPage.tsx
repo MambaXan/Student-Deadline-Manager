@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './LoginPage.scss';
+import React, { useState } from "react";
+import "./LoginPage.scss";
 
 interface LoginPageProps {
   onLogin: (email: string, password: string) => void;
@@ -7,8 +7,8 @@ interface LoginPageProps {
 }
 
 export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,10 +19,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
     <div className="login-page">
       <div className="login-container">
         {/* Back Button */}
-        <button
-          onClick={() => onNavigate('landing')}
-          className="back-btn"
-        >
+        <button onClick={() => onNavigate("landing")} className="back-btn">
           <span className="back-btn__icon">←</span>
           Back to home
         </button>
@@ -34,21 +31,14 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
             <div className="logo-icon">📅</div>
           </div>
 
-          <h1 className="login-title">
-            Welcome Back
-          </h1>
-          <p className="login-subtitle">
-            Log in to manage your deadlines
-          </p>
+          <h1 className="login-title">Welcome Back</h1>
+          <p className="login-subtitle">Log in to manage your deadlines</p>
 
           <form onSubmit={handleSubmit} className="login-form">
             {/* Email Field */}
             <div className="form-group">
-              <label className="form-label">
-                Email Address
-              </label>
+              <label className="form-label">Email Address</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">✉️</span> */}
                 <input
                   type="email"
                   value={email}
@@ -62,9 +52,7 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
 
             {/* Password Field */}
             <div className="form-group">
-              <label className="form-label">
-                Password
-              </label>
+              <label className="form-label">Password</label>
               <div className="input-with-icon">
                 {/* <span className="input-icon">🔒</span> */}
                 <input
@@ -80,30 +68,21 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
 
             {/* Forgot Password Link */}
             <div className="forgot-password">
-              <button
-                type="button"
-                className="forgot-password-btn"
-              >
+              <button type="button" className="forgot-password-btn">
                 Forgot password?
               </button>
             </div>
 
             {/* Login Button */}
-            <button
-              type="submit"
-              className="btn btn--login"
-            >
+            <button type="submit" className="btn btn--login">
               Log In
             </button>
           </form>
 
           {/* Sign Up Link */}
           <p className="signup-link">
-            Don't have an account?{' '}
-            <button
-              onClick={() => onNavigate('signup')}
-              className="signup-btn"
-            >
+            Don't have an account?{" "}
+            <button onClick={() => onNavigate("signup")} className="signup-btn">
               Sign Up
             </button>
           </p>

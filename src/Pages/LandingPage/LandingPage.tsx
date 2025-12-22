@@ -1,5 +1,5 @@
-import React from 'react';
-import './LandingPage.scss';
+import React from "react";
+import "./LandingPage.scss";
 
 interface LandingPageProps {
   onNavigate: (page: string) => void;
@@ -12,7 +12,7 @@ const ImageWithFallback: React.FC<{
   className?: string;
 }> = ({ src, alt, className }) => {
   const [hasError, setHasError] = React.useState(false);
-  
+
   const handleError = () => {
     setHasError(true);
   };
@@ -50,13 +50,13 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             </div>
             <div className="landing-header__actions">
               <button
-                onClick={() => onNavigate('login')}
+                onClick={() => onNavigate("login")}
                 className="btn btn--text"
               >
                 Log In
               </button>
               <button
-                onClick={() => onNavigate('signup')}
+                onClick={() => onNavigate("signup")}
                 className="btn btn--primary"
               >
                 Sign Up
@@ -74,25 +74,25 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               Track All Your Deadlines in One Place
             </h1>
             <p className="hero__subtitle">
-              Stay organized, never miss a deadline, and manage your university coursework with ease. 
-              Built by students, for students.
+              Stay organized, never miss a deadline, and manage your university
+              coursework with ease. Built by students, for students.
             </p>
             <div className="hero__actions">
               <button
-                onClick={() => onNavigate('signup')}
+                onClick={() => onNavigate("signup")}
                 className="btn btn--hero"
               >
                 Get Started Free
                 <span className="btn__arrow">→</span>
               </button>
               <button
-                onClick={() => onNavigate('login')}
+                onClick={() => onNavigate("login")}
                 className="btn btn--secondary"
               >
                 Log In
               </button>
             </div>
-            
+
             {/* Dashboard Preview */}
             <div className="dashboard-preview">
               <ImageWithFallback
@@ -109,46 +109,44 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
       <section className="features">
         <div className="container">
           <div className="section-header">
-            <h2 className="section-title">Everything You Need to Stay Organized</h2>
+            <h2 className="section-title">
+              Everything You Need to Stay Organized
+            </h2>
             <p className="section-subtitle">
-              Powerful features designed to help you manage your academic life effortlessly
+              Powerful features designed to help you manage your academic life
+              effortlessly
             </p>
           </div>
-          
+
           <div className="features-grid">
             {/* Feature 1 */}
             <div className="feature-card">
-              <div className="feature-icon feature-icon--blue">
-                🎯
-              </div>
+              <div className="feature-icon feature-icon--blue">🎯</div>
               <h3 className="feature-title">Dashboard Overview</h3>
               <p className="feature-description">
-                Get a clear view of all your upcoming deadlines, overdue tasks, and weekly schedule at a glance. 
-                Stay on top of everything that matters.
+                Get a clear view of all your upcoming deadlines, overdue tasks,
+                and weekly schedule at a glance. Stay on top of everything that
+                matters.
               </p>
             </div>
 
             {/* Feature 2 */}
             <div className="feature-card">
-              <div className="feature-icon feature-icon--green">
-                🔔
-              </div>
+              <div className="feature-icon feature-icon--green">🔔</div>
               <h3 className="feature-title">Smart Reminders</h3>
               <p className="feature-description">
-                Never miss a deadline with customizable email reminders. Get notified at the right time, 
-                so you're always prepared.
+                Never miss a deadline with customizable email reminders. Get
+                notified at the right time, so you're always prepared.
               </p>
             </div>
 
             {/* Feature 3 */}
             <div className="feature-card">
-              <div className="feature-icon feature-icon--purple">
-                📚
-              </div>
+              <div className="feature-icon feature-icon--purple">📚</div>
               <h3 className="feature-title">Course Organizer</h3>
               <p className="feature-description">
-                Organize all your courses in one place. Track assignments, exams, and projects by course 
-                with color-coded labels.
+                Organize all your courses in one place. Track assignments,
+                exams, and projects by course with color-coded labels.
               </p>
             </div>
           </div>
@@ -161,13 +159,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="section-header">
             <h2 className="section-title">How It Works</h2>
           </div>
-          
+
           <div className="steps-grid">
             <div className="step">
               <div className="step-number">1</div>
               <h3 className="step-title">Create Your Courses</h3>
               <p className="step-description">
-                Add all your university courses with instructor names and semester information.
+                Add all your university courses with instructor names and
+                semester information.
               </p>
             </div>
 
@@ -175,7 +174,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               <div className="step-number">2</div>
               <h3 className="step-title">Add Your Deadlines</h3>
               <p className="step-description">
-                Input assignments, quizzes, exams, and projects with due dates and priorities.
+                Input assignments, quizzes, exams, and projects with due dates
+                and priorities.
               </p>
             </div>
 
@@ -183,7 +183,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               <div className="step-number">3</div>
               <h3 className="step-title">Stay Organized</h3>
               <p className="step-description">
-                View your schedule on the calendar, get reminders, and check off completed tasks.
+                View your schedule on the calendar, get reminders, and check off
+                completed tasks.
               </p>
             </div>
           </div>
@@ -196,16 +197,19 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="section-header">
             <h2 className="section-title">What Students Say</h2>
           </div>
-          
+
           <div className="testimonials-grid">
             <div className="testimonial-card">
               <div className="stars">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="star">★</span>
+                  <span key={i} className="star">
+                    ★
+                  </span>
                 ))}
               </div>
               <p className="testimonial-text">
-                "This app completely changed how I manage my coursework. I haven't missed a deadline since I started using it!"
+                "This app completely changed how I manage my coursework. I
+                haven't missed a deadline since I started using it!"
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar author-avatar--blue">👤</div>
@@ -219,11 +223,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <div className="testimonial-card">
               <div className="stars">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="star">★</span>
+                  <span key={i} className="star">
+                    ★
+                  </span>
                 ))}
               </div>
               <p className="testimonial-text">
-                "Simple, clean, and exactly what I needed. The calendar view helps me plan my study schedule perfectly."
+                "Simple, clean, and exactly what I needed. The calendar view
+                helps me plan my study schedule perfectly."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar author-avatar--green">👤</div>
@@ -237,11 +244,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
             <div className="testimonial-card">
               <div className="stars">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="star">★</span>
+                  <span key={i} className="star">
+                    ★
+                  </span>
                 ))}
               </div>
               <p className="testimonial-text">
-                "Love the priority system! I can quickly see which tasks need my attention first. Highly recommend!"
+                "Love the priority system! I can quickly see which tasks need my
+                attention first. Highly recommend!"
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar author-avatar--purple">👤</div>
@@ -266,35 +276,71 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 Helping students stay organized and succeed academically.
               </p>
             </div>
-            
+
             <div className="footer-column">
               <h4 className="footer-title">Product</h4>
               <ul className="footer-links">
-                <li><a href="#" className="footer-link">Features</a></li>
-                <li><a href="#" className="footer-link">Pricing</a></li>
-                <li><a href="#" className="footer-link">FAQ</a></li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    FAQ
+                  </a>
+                </li>
               </ul>
             </div>
-            
+
             <div className="footer-column">
               <h4 className="footer-title">Company</h4>
               <ul className="footer-links">
-                <li><a href="#" className="footer-link">About</a></li>
-                <li><a href="#" className="footer-link">Blog</a></li>
-                <li><a href="#" className="footer-link">Careers</a></li>
+                <li>
+                  <a href="#" className="footer-link">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Careers
+                  </a>
+                </li>
               </ul>
             </div>
-            
+
             <div className="footer-column">
               <h4 className="footer-title">Support</h4>
               <ul className="footer-links">
-                <li><a href="#" className="footer-link">Help Center</a></li>
-                <li><a href="#" className="footer-link">Contact Us</a></li>
-                <li><a href="#" className="footer-link">Privacy</a></li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="footer-link">
+                    Privacy
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
-          
+
           <div className="footer-bottom">
             © 2024 DeadlineTracker. All rights reserved.
           </div>

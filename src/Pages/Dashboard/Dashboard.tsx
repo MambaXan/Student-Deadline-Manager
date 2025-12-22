@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './Dashboard.scss';
+import React, { useState } from "react";
+import "./Dashboard.scss";
 
-// Интерфейсы
+// Interfaces
 interface Course {
   id: string;
   title: string;
@@ -13,8 +13,8 @@ interface Deadline {
   courseId: string;
   taskName: string;
   dueDate: Date;
-  status: 'upcoming' | 'overdue' | 'completed';
-  priority: 'high' | 'medium' | 'low';
+  status: "upcoming" | "overdue" | "completed";
+  priority: "high" | "medium" | "low";
 }
 
 interface DashboardProps {
@@ -23,11 +23,11 @@ interface DashboardProps {
   courses: Course[];
   onNavigate: (page: string) => void;
   onLogout: () => void;
-  onAddDeadline: (deadline: Omit<Deadline, 'id'>) => void;
+  onAddDeadline: (deadline: Omit<Deadline, "id">) => void;
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
 }
 
-// Компоненты
+// Components
 const Sidebar: React.FC<{
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -38,26 +38,28 @@ const Sidebar: React.FC<{
       <div className="sidebar__content">
         <h2 className="sidebar__title">Student Planner</h2>
         <nav className="sidebar__nav">
-          <button 
-            onClick={() => onNavigate('dashboard')}
-            className={`sidebar__nav-item ${currentPage === 'dashboard' ? 'sidebar__nav-item--active' : ''}`}
+          <button
+            onClick={() => onNavigate("dashboard")}
+            className={`sidebar__nav-item ${
+              currentPage === "dashboard" ? "sidebar__nav-item--active" : ""
+            }`}
           >
             📊 Dashboard
           </button>
-          <button 
-            onClick={() => onNavigate('calendar')}
+          <button
+            onClick={() => onNavigate("calendar")}
             className="sidebar__nav-item"
           >
             📅 Calendar
           </button>
-          <button 
-            onClick={() => onNavigate('courses')}
+          <button
+            onClick={() => onNavigate("courses")}
             className="sidebar__nav-item"
           >
             📚 Courses
           </button>
-          <button 
-            onClick={() => onNavigate('deadlines')}
+          <button
+            onClick={() => onNavigate("deadlines")}
             className="sidebar__nav-item"
           >
             📝 Deadlines
@@ -71,7 +73,7 @@ const Sidebar: React.FC<{
   );
 };
 
-const TopBar: React.FC<{ 
+const TopBar: React.FC<{
   userName: string;
   onMenuClick?: () => void;
 }> = ({ userName, onMenuClick }) => {
@@ -80,17 +82,14 @@ const TopBar: React.FC<{
       <div className="topbar__content">
         <div className="topbar__left">
           {onMenuClick && (
-            <button 
-              onClick={onMenuClick}
-              className="topbar__menu-btn"
-            >
+            <button onClick={onMenuClick} className="topbar__menu-btn">
               ☰
             </button>
           )}
           <h1 className="topbar__title">Dashboard</h1>
         </div>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome, {userName}</span>
+          <span className="topbar__user-name">Welcome back!</span>
         </div>
       </div>
     </div>
@@ -99,13 +98,13 @@ const TopBar: React.FC<{
 
 const DeadlineModal: React.FC<{
   courses: Course[];
-  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onSave: (deadline: Omit<Deadline, "id">) => void;
   onClose: () => void;
 }> = ({ courses, onSave, onClose }) => {
-  const [taskName, setTaskName] = useState('');
-  const [selectedCourseId, setSelectedCourseId] = useState('');
-  const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('medium');
+  const [taskName, setTaskName] = useState("");
+  const [selectedCourseId, setSelectedCourseId] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [priority, setPriority] = useState("medium");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,8 +114,8 @@ const DeadlineModal: React.FC<{
       courseId: selectedCourseId,
       taskName,
       dueDate: new Date(dueDate),
-      status: 'upcoming',
-      priority: priority as Deadline['priority']
+      status: "upcoming",
+      priority: priority as Deadline["priority"],
     });
     onClose();
   };
@@ -126,7 +125,9 @@ const DeadlineModal: React.FC<{
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
           <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">×</button>
+          <button onClick={onClose} className="modal__close-btn">
+            ×
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="form-group">
@@ -149,7 +150,7 @@ const DeadlineModal: React.FC<{
               required
             >
               <option value="">Select a course</option>
-              {courses.map(course => (
+              {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.title}
                 </option>
@@ -180,7 +181,11 @@ const DeadlineModal: React.FC<{
             />
           </div>
           <div className="modal__actions">
-            <button type="button" className="btn btn--secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn--secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn--primary">
@@ -207,35 +212,54 @@ const MobileNav: React.FC<{
       <div className="mobile-nav" onClick={(e) => e.stopPropagation()}>
         <div className="mobile-nav__header">
           <h3 className="mobile-nav__title">Menu</h3>
-          <button onClick={onClose} className="mobile-nav__close-btn">×</button>
+          <button onClick={onClose} className="mobile-nav__close-btn">
+            ×
+          </button>
         </div>
         <nav className="mobile-nav__list">
-          <button 
-            onClick={() => { onNavigate('dashboard'); onClose(); }}
-            className={`mobile-nav__item ${currentPage === 'dashboard' ? 'mobile-nav__item--active' : ''}`}
+          <button
+            onClick={() => {
+              onNavigate("dashboard");
+              onClose();
+            }}
+            className={`mobile-nav__item ${
+              currentPage === "dashboard" ? "mobile-nav__item--active" : ""
+            }`}
           >
             📊 Dashboard
           </button>
-          <button 
-            onClick={() => { onNavigate('calendar'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("calendar");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📅 Calendar
           </button>
-          <button 
-            onClick={() => { onNavigate('courses'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("courses");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📚 Courses
           </button>
-          <button 
-            onClick={() => { onNavigate('deadlines'); onClose(); }}
+          <button
+            onClick={() => {
+              onNavigate("deadlines");
+              onClose();
+            }}
             className="mobile-nav__item"
           >
             📝 Deadlines
           </button>
-          <button 
-            onClick={() => { onLogout(); onClose(); }}
+          <button
+            onClick={() => {
+              onLogout();
+              onClose();
+            }}
             className="mobile-nav__item mobile-nav__item--logout"
           >
             👤 Logout
@@ -246,22 +270,23 @@ const MobileNav: React.FC<{
   );
 };
 
-// Простая гистограмма
-const SimpleBarChart: React.FC<{ data: Array<{name: string, tasks: number}> }> = ({ data }) => {
-  const maxTasks = Math.max(...data.map(d => d.tasks), 1);
-  
+const SimpleBarChart: React.FC<{
+  data: Array<{ name: string; tasks: number }>;
+}> = ({ data }) => {
+  const maxTasks = Math.max(...data.map((d) => d.tasks), 1);
+
   return (
     <div className="bar-chart">
       <div className="bar-chart__bars">
         {data.map((item, index) => (
           <div key={index} className="bar-chart__column">
-            <div 
+            <div
               className="bar-chart__bar"
-              style={{ 
+              style={{
                 height: `${(item.tasks / maxTasks) * 140}px`,
-                minHeight: item.tasks > 0 ? '4px' : '0'
+                minHeight: item.tasks > 0 ? "4px" : "0",
               }}
-              title={`${item.tasks} task${item.tasks !== 1 ? 's' : ''}`}
+              title={`${item.tasks} task${item.tasks !== 1 ? "s" : ""}`}
             />
             <span className="bar-chart__day">{item.name}</span>
             <span className="bar-chart__count">{item.tasks}</span>
@@ -279,7 +304,7 @@ export function Dashboard({
   onNavigate,
   onLogout,
   onAddDeadline,
-  onUpdateDeadline
+  onUpdateDeadline,
 }: DashboardProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -287,60 +312,75 @@ export function Dashboard({
   // Calculate statistics
   const now = new Date();
   now.setHours(0, 0, 0, 0);
-  
+
   const upcomingDeadlines = deadlines
-    .filter(d => d.status === 'upcoming')
-    .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
+    .filter((d) => d.status === "upcoming")
+    .sort(
+      (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    )
     .slice(0, 5);
-  
-  const overdueDeadlines = deadlines.filter(d => d.status === 'overdue');
-  
-  const completedCount = deadlines.filter(d => d.status === 'completed').length;
+
+  const overdueDeadlines = deadlines.filter((d) => d.status === "overdue");
+
+  const completedCount = deadlines.filter(
+    (d) => d.status === "completed"
+  ).length;
 
   // Chart data - deadlines per day for the next 7 days
   const chartData = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date(now);
     date.setDate(date.getDate() + i);
-    const count = deadlines.filter(d => {
+    const count = deadlines.filter((d) => {
       const dueDate = new Date(d.dueDate);
       dueDate.setHours(0, 0, 0, 0);
-      return dueDate.getTime() === date.getTime() && d.status === 'upcoming';
+      return dueDate.getTime() === date.getTime() && d.status === "upcoming";
     }).length;
-    
+
     chartData.push({
-      name: date.toLocaleDateString('en-US', { weekday: 'short' }),
-      tasks: count
+      name: date.toLocaleDateString("en-US", { weekday: "short" }),
+      tasks: count,
     });
   }
 
   const getPriorityClass = (priority: string) => {
     switch (priority) {
-      case 'high': return 'badge badge--high';
-      case 'medium': return 'badge badge--medium';
-      case 'low': return 'badge badge--low';
-      default: return 'badge';
+      case "high":
+        return "badge badge--high";
+      case "medium":
+        return "badge badge--medium";
+      case "low":
+        return "badge badge--low";
+      default:
+        return "badge";
     }
   };
 
   const getCourseById = (courseId: string) => {
-    return courses.find(c => c.id === courseId);
+    return courses.find((c) => c.id === courseId);
   };
 
   return (
     <div className="dashboard">
-      <Sidebar currentPage="dashboard" onNavigate={onNavigate} onLogout={onLogout} />
-      <MobileNav 
-        currentPage="dashboard" 
-        onNavigate={onNavigate} 
+      <Sidebar
+        currentPage="dashboard"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+      />
+      <MobileNav
+        currentPage="dashboard"
+        onNavigate={onNavigate}
         onLogout={onLogout}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
-      
+
       <div className="main-content">
-        <TopBar userName={userName} onMenuClick={() => setMobileMenuOpen(true)} />
-        
+        <TopBar
+          userName={userName}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
+
         <main className="content">
           {/* Stats Cards */}
           <div className="stats-grid">
@@ -349,7 +389,9 @@ export function Dashboard({
               <div className="stats-card__header">
                 <div>
                   <p className="stats-card__label">Upcoming</p>
-                  <p className="stats-card__value">{upcomingDeadlines.length}</p>
+                  <p className="stats-card__value">
+                    {upcomingDeadlines.length}
+                  </p>
                 </div>
                 <div className="stats-card__icon stats-card__icon--blue">
                   📅
@@ -365,9 +407,7 @@ export function Dashboard({
                   <p className="stats-card__label">Overdue</p>
                   <p className="stats-card__value">{overdueDeadlines.length}</p>
                 </div>
-                <div className="stats-card__icon stats-card__icon--red">
-                  ⚠️
-                </div>
+                <div className="stats-card__icon stats-card__icon--red">⚠️</div>
               </div>
               <p className="stats-card__description">Need attention</p>
             </div>
@@ -406,46 +446,55 @@ export function Dashboard({
                   <div className="empty-state">
                     <span className="empty-state__icon">📅</span>
                     <p className="empty-state__text">No upcoming deadlines</p>
-                    <p className="empty-state__subtext">Add your first deadline to get started</p>
+                    <p className="empty-state__subtext">
+                      Add your first deadline to get started
+                    </p>
                   </div>
                 ) : (
-                  upcomingDeadlines.map(deadline => {
+                  upcomingDeadlines.map((deadline) => {
                     const course = getCourseById(deadline.courseId);
                     return (
                       <div
                         key={deadline.id}
                         className="upcoming-item"
                         onClick={() => {
-                          if (deadline.status === 'upcoming') {
-                            onUpdateDeadline(deadline.id, { status: 'completed' });
+                          if (deadline.status === "upcoming") {
+                            onUpdateDeadline(deadline.id, {
+                              status: "completed",
+                            });
                           }
                         }}
                       >
                         <input
                           type="checkbox"
-                          checked={deadline.status === 'completed'}
+                          checked={deadline.status === "completed"}
                           onChange={() => {}}
                           className="upcoming-item__checkbox"
                         />
                         <div className="upcoming-item__content">
-                          <h3 className="upcoming-item__title">{deadline.taskName}</h3>
+                          <h3 className="upcoming-item__title">
+                            {deadline.taskName}
+                          </h3>
                           <div className="upcoming-item__details">
                             {course && (
-                              <span 
+                              <span
                                 className="upcoming-item__course"
-                                style={{ 
-                                  backgroundColor: `${course.color}20`, 
-                                  color: course.color 
+                                style={{
+                                  backgroundColor: `${course.color}20`,
+                                  color: course.color,
                                 }}
                               >
                                 {course.title}
                               </span>
                             )}
                             <span className="upcoming-item__date">
-                              {new Date(deadline.dueDate).toLocaleDateString('en-US', { 
-                                month: 'short', 
-                                day: 'numeric' 
-                              })}
+                              {new Date(deadline.dueDate).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                }
+                              )}
                             </span>
                           </div>
                         </div>
@@ -469,10 +518,11 @@ export function Dashboard({
                     <h3 className="warning-card__title">Overdue Tasks</h3>
                   </div>
                   <p className="warning-card__text">
-                    You have {overdueDeadlines.length} overdue {overdueDeadlines.length === 1 ? 'task' : 'tasks'}
+                    You have {overdueDeadlines.length} overdue{" "}
+                    {overdueDeadlines.length === 1 ? "task" : "tasks"}
                   </p>
                   <button
-                    onClick={() => onNavigate('deadlines')}
+                    onClick={() => onNavigate("deadlines")}
                     className="warning-card__link"
                   >
                     View all →
@@ -495,18 +545,27 @@ export function Dashboard({
                 <div className="stats-summary__list">
                   <div className="stats-summary__item">
                     <span className="stats-summary__label">Total Courses</span>
-                    <span className="stats-summary__value">{courses.length}</span>
-                  </div>
-                  <div className="stats-summary__item">
-                    <span className="stats-summary__label">Total Deadlines</span>
-                    <span className="stats-summary__value">{deadlines.length}</span>
-                  </div>
-                  <div className="stats-summary__item">
-                    <span className="stats-summary__label">Completion Rate</span>
                     <span className="stats-summary__value">
-                      {deadlines.length > 0 
-                        ? Math.round((completedCount / deadlines.length) * 100) 
-                        : 0}%
+                      {courses.length}
+                    </span>
+                  </div>
+                  <div className="stats-summary__item">
+                    <span className="stats-summary__label">
+                      Total Deadlines
+                    </span>
+                    <span className="stats-summary__value">
+                      {deadlines.length}
+                    </span>
+                  </div>
+                  <div className="stats-summary__item">
+                    <span className="stats-summary__label">
+                      Completion Rate
+                    </span>
+                    <span className="stats-summary__value">
+                      {deadlines.length > 0
+                        ? Math.round((completedCount / deadlines.length) * 100)
+                        : 0}
+                      %
                     </span>
                   </div>
                 </div>

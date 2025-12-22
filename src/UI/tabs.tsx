@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import '../Styles/globals.scss';
+import "../Styles/globals.scss";
 
 interface TabsSimpleProps {
   tabs: Array<{
@@ -12,11 +12,10 @@ interface TabsSimpleProps {
   defaultTab?: string;
 }
 
-export const TabsSimple: React.FC<TabsSimpleProps> = ({
-  tabs,
-  defaultTab
-}) => {
-  const [activeTab, setActiveTab] = React.useState(defaultTab || tabs[0]?.id || '');
+export const TabsSimple: React.FC<TabsSimpleProps> = ({ tabs, defaultTab }) => {
+  const [activeTab, setActiveTab] = React.useState(
+    defaultTab || tabs[0]?.id || ""
+  );
 
   return (
     <div className="tabs">
@@ -24,16 +23,16 @@ export const TabsSimple: React.FC<TabsSimpleProps> = ({
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`tabs-trigger ${activeTab === tab.id ? 'active' : ''}`}
+            className={`tabs-trigger ${activeTab === tab.id ? "active" : ""}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      
+
       <div className="tabs-content">
-        {tabs.find(tab => tab.id === activeTab)?.content}
+        {tabs.find((tab) => tab.id === activeTab)?.content}
       </div>
     </div>
   );

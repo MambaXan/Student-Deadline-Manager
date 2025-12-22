@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import '../Styles/globals.scss';
+import "../Styles/globals.scss";
 
-interface SwitchProps extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'onChange'> {
+interface SwitchProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, "onChange"> {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
@@ -24,13 +25,13 @@ export const Switch: React.FC<SwitchProps> = ({
 
   const handleToggle = () => {
     if (disabled) return;
-    
+
     const newChecked = !checked;
-    
+
     if (!isControlled) {
       setInternalChecked(newChecked);
     }
-    
+
     onCheckedChange?.(newChecked);
   };
 
@@ -40,10 +41,12 @@ export const Switch: React.FC<SwitchProps> = ({
       role="switch"
       aria-checked={checked}
       aria-disabled={disabled}
-      className={`switch ${checked ? 'checked' : ''} ${disabled ? 'disabled' : ''} ${className}`.trim()}
+      className={`switch ${checked ? "checked" : ""} ${
+        disabled ? "disabled" : ""
+      } ${className}`.trim()}
       onClick={handleToggle}
       onKeyDown={(e) => {
-        if (e.key === ' ' || e.key === 'Enter') {
+        if (e.key === " " || e.key === "Enter") {
           e.preventDefault();
           handleToggle();
         }

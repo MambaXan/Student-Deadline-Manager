@@ -26,7 +26,6 @@ export const Sheet: React.FC<SheetProps> = ({
     }
   };
 
-  // Закрытие по Escape
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();

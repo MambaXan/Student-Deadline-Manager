@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CourseModal.scss';
 
-// Интерфейсы
+// Interfaces
 interface Course {
   id: string;
   title: string;

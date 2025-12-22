@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import '../Styles/globals.scss'; // Импорт стилей
+import "../Styles/globals.scss";
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   checked?: boolean;
@@ -36,10 +36,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         checked={isChecked}
         onChange={handleChange}
         disabled={disabled}
-        className="hidden" // Скрываем нативный input
+        className="hidden"
         {...props}
       />
-      <div 
+      <div
         className="checkbox"
         data-state={isChecked ? "checked" : "unchecked"}
         aria-checked={isChecked}
@@ -47,10 +47,10 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       >
         {isChecked && (
           <div className="checkbox-indicator">
-            <svg 
-              className="checkbox-icon" 
-              viewBox="0 0 24 24" 
-              fill="none" 
+            <svg
+              className="checkbox-icon"
+              viewBox="0 0 24 24"
+              fill="none"
               stroke="currentColor"
             >
               <polyline points="20 6 9 17 4 12" />

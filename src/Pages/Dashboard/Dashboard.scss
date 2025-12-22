@@ -349,7 +349,7 @@ $info-light: #dbeafe;
   border: 1px solid $danger-color;
   border-radius: 16px;
   padding: 20px;
-  
+
   &__header {
     display: flex;
     align-items: center;
@@ -588,7 +588,7 @@ $info-light: #dbeafe;
   }
 }
 
-// Sidebar and Topbar (повторно используем стили)
+// Sidebar and Topbar
 .sidebar {
   width: 240px;
   background-color: $white;
@@ -718,7 +718,7 @@ $info-light: #dbeafe;
   }
 }
 
-// Modal (повторно используем стили)
+// Modal
 .modal-overlay {
   position: fixed;
   top: 0;

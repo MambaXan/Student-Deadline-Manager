@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import '../Styles/globals.scss';
+import "../Styles/globals.scss";
 
 interface SelectOption {
   value: string;
@@ -32,16 +32,18 @@ export const Select: React.FC<SelectProps> = ({
           {label}
         </label>
       )}
-      
+
       <select
         id={selectId}
-        className={`select-trigger ${error ? 'error' : ''} ${disabled ? 'disabled' : ''}`.trim()}
+        className={`select-trigger ${error ? "error" : ""} ${
+          disabled ? "disabled" : ""
+        }`.trim()}
         disabled={disabled}
         {...props}
       >
         {options.map((option) => (
-          <option 
-            key={option.value} 
+          <option
+            key={option.value}
             value={option.value}
             disabled={option.disabled}
           >
@@ -49,14 +51,13 @@ export const Select: React.FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      
+
       {error && <div className="form-error">{error}</div>}
-      
-      {/* Иконка стрелки */}
-      <svg 
-        className="select-icon" 
-        viewBox="0 0 24 24" 
-        fill="none" 
+
+      <svg
+        className="select-icon"
+        viewBox="0 0 24 24"
+        fill="none"
         stroke="currentColor"
       >
         <polyline points="6 9 12 15 18 9" />

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import '../Styles/globals.scss';
+import "../Styles/globals.scss";
 
 interface Toast {
   id: string;
@@ -13,11 +13,13 @@ interface Toast {
 
 interface ToastContextType {
   toasts: Toast[];
-  addToast: (toast: Omit<Toast, 'id'>) => void;
+  addToast: (toast: Omit<Toast, "id">) => void;
   removeToast: (id: string) => void;
 }
 
-const ToastContext = React.createContext<ToastContextType | undefined>(undefined);
+const ToastContext = React.createContext<ToastContextType | undefined>(
+  undefined
+);
 
 export const useToast = () => {
   const context = React.useContext(ToastContext);
@@ -27,16 +29,17 @@ export const useToast = () => {
   return context;
 };
 
-export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [toasts, setToasts] = React.useState<Toast[]>([]);
 
-  const addToast = (toast: Omit<Toast, 'id'>) => {
+  const addToast = (toast: Omit<Toast, "id">) => {
     const id = Math.random().toString(36).substring(2, 9);
     const newToast = { ...toast, id };
-    
+
     setToasts((prev) => [...prev, newToast]);
 
-    // Автоматическое удаление
     if (toast.duration !== 0) {
       setTimeout(() => {
         removeToast(id);
@@ -59,32 +62,71 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const Toaster: React.FC = () => {
   const { toasts, removeToast } = useToast();
 
-  const getIcon = (type?: Toast['type']) => {
+  const getIcon = (type?: Toast["type"]) => {
     switch (type) {
-      case 'success':
+      case "success":
         return (
-          <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M20 6L9 17l-5-5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            className="toast-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M20 6L9 17l-5-5"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         );
-      case 'error':
+      case "error":
         return (
-          <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" strokeWidth="2"/>
-            <path d="M15 9l-6 6M9 9l6 6" strokeWidth="2" strokeLinecap="round"/>
+          <svg
+            className="toast-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="10" strokeWidth="2" />
+            <path
+              d="M15 9l-6 6M9 9l6 6"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         );
-      case 'warning':
+      case "warning":
         return (
-          <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            className="toast-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         );
       default:
         return (
-          <svg className="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" strokeWidth="2"/>
-            <path d="M12 16v-4M12 8h.01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            className="toast-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="10" strokeWidth="2" />
+            <path
+              d="M12 16v-4M12 8h.01"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         );
     }
@@ -95,7 +137,7 @@ export const Toaster: React.FC = () => {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`toast toast-${toast.type || 'info'}`}
+          className={`toast toast-${toast.type || "info"}`}
           onClick={() => removeToast(toast.id)}
         >
           {getIcon(toast.type)}
@@ -120,11 +162,10 @@ export const Toaster: React.FC = () => {
   );
 };
 
-// Хук для быстрого использования
 export const useSimpleToast = () => {
   const [toasts, setToasts] = React.useState<Toast[]>([]);
 
-  const showToast = (toast: Omit<Toast, 'id'>) => {
+  const showToast = (toast: Omit<Toast, "id">) => {
     const id = Math.random().toString(36).substring(2, 9);
     setToasts((prev) => [...prev, { ...toast, id }]);
 
@@ -138,7 +179,7 @@ export const useSimpleToast = () => {
   const ToastContainer = () => (
     <div className="toast-container">
       {toasts.map((toast) => (
-        <div key={toast.id} className={`toast toast-${toast.type || 'info'}`}>
+        <div key={toast.id} className={`toast toast-${toast.type || "info"}`}>
           <div className="toast-content">
             <div className="toast-title">{toast.title}</div>
             {toast.description && (
@@ -147,7 +188,9 @@ export const useSimpleToast = () => {
           </div>
           <button
             className="toast-close"
-            onClick={() => setToasts((prev) => prev.filter((t) => t.id !== toast.id))}
+            onClick={() =>
+              setToasts((prev) => prev.filter((t) => t.id !== toast.id))
+            }
           >
             ×
           </button>

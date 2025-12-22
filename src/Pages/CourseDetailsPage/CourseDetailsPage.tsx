@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CourseDetailsPage.scss';
 
-// Интерфейсы
+// Interfaces
 interface Course {
   id: string;
   title: string;
@@ -29,7 +29,7 @@ interface CourseDetailsPageProps {
   onBack: () => void;
 }
 
-// Компоненты
+// Components
 const Sidebar: React.FC<{
   currentPage: string;
   onNavigate: (page: string) => void;
@@ -73,7 +73,7 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
       <div className="topbar__content">
         <h1 className="topbar__title">Course Details</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome, {userName}</span>
+          <span className="topbar__user-name">Welcome back!</span>
         </div>
       </div>
     </div>

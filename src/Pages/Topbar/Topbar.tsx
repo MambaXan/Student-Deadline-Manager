@@ -1,5 +1,5 @@
-import React from 'react';
-import './TopBar.scss';
+import React from "react";
+import "./TopBar.scss";
 
 interface TopBarProps {
   userName: string;
@@ -14,18 +14,17 @@ export function TopBar({ userName, onMenuClick }: TopBarProps) {
         <div className="topbar__left">
           {/* Mobile Menu Button */}
           {onMenuClick && (
-            <button
-              onClick={onMenuClick}
-              className="topbar__menu-btn"
-            >
+            <button onClick={onMenuClick} className="topbar__menu-btn">
               <span className="topbar__menu-icon">☰</span>
             </button>
           )}
-          
+
           {/* Greeting */}
           <div className="topbar__greeting">
-            <h1 className="topbar__title">Welcome back, {userName}! 👋</h1>
-            <p className="topbar__subtitle">Here's what's happening with your deadlines today</p>
+            <h1 className="topbar__title">Welcome back! 👋</h1>
+            <p className="topbar__subtitle">
+              Here's what's happening with your deadlines today
+            </p>
           </div>
         </div>
 

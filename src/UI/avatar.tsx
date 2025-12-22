@@ -1,4 +1,3 @@
-// components/ui/new/AvatarSimple.tsx
 import * as React from "react";
 
 export const Avatar: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ 
