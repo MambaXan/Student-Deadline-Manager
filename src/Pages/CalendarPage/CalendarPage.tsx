@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./CalendarPage.scss";
 import { Course } from "../../Types/course";
 import { Deadline as ImportedDeadline } from "../../Types/deadline";
+import { Sidebar } from "../../сomponents/Sidebar";
 
 interface Deadline {
   id: string;
@@ -12,6 +13,7 @@ interface Deadline {
 }
 
 interface CalendarPageProps {
+  currentPage: string;
   deadlines: ImportedDeadline[];
   courses: Course[];
   onNavigate: (page: string) => void;
@@ -20,52 +22,13 @@ interface CalendarPageProps {
 }
 
 // Components
-const Sidebar: React.FC<{
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onLogout: () => void;
-}> = ({ currentPage, onNavigate, onLogout }) => {
-  return (
-    <div className="sidebar">
-      <div className="sidebar__content">
-        <h2 className="sidebar__title">Student Planner</h2>
-        <nav className="sidebar__nav">
-          <button
-            onClick={() => onNavigate("calendar")}
-            className={`sidebar__nav-item ${
-              currentPage === "calendar" ? "sidebar__nav-item--active" : ""
-            }`}
-          >
-            📅 Calendar
-          </button>
-          <button
-            onClick={() => onNavigate("courses")}
-            className="sidebar__nav-item"
-          >
-            📚 Courses
-          </button>
-          <button
-            onClick={() => onNavigate("deadlines")}
-            className="sidebar__nav-item"
-          >
-            📝 Deadlines
-          </button>
-        </nav>
-        <button onClick={onLogout} className="sidebar__logout-btn">
-          👤 Logout
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
     <div className="topbar">
       <div className="topbar__content">
         <h1 className="topbar__title">Academic Calendar</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome back!{userName}</span>
+          <span className="topbar__user-name">Welcome {userName}!</span>
         </div>
       </div>
     </div>
@@ -160,6 +123,7 @@ const DeadlineModal: React.FC<{
 };
 
 export function CalendarPage({
+  currentPage,
   deadlines,
   courses,
   onNavigate,
@@ -268,7 +232,7 @@ export function CalendarPage({
   return (
     <div className="calendar-page">
       <Sidebar
-        currentPage="calendar"
+        currentPage={currentPage}
         onNavigate={onNavigate}
         onLogout={onLogout}
       />

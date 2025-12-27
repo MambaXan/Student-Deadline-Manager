@@ -1,136 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Styles/globals.scss";
 
-import { LandingPage } from "./Pages/LandingPage/LandingPage";
-import { LoginPage } from "./Pages/LoginPage/LoginPage";
-import { SignupPage } from "./Pages/SignupPage/SignupPage";
-import { Dashboard } from "./Pages/Dashboard/Dashboard";
-import { DeadlinesPage } from "./Pages/DeadlinesPage/DeadlinesPage";
-import { CoursesPage } from "./Pages/CoursesPage/CoursesPage";
-import { CourseDetailsPage } from "./Pages/CourseDetailsPage/CourseDetailsPage";
-import { CalendarPage } from "./Pages/CalendarPage/CalendarPage";
-import { SettingsPage } from "./Pages/SettingsPage/SettingsPage";
+// import { LandingPage } from "./Pages/LandingPage/LandingPage";
+// import { LoginPage } from "./Pages/LoginPage/LoginPage";
+// import { SignupPage } from "./Pages/SignupPage/SignupPage";
+// // import { Dashboard } from "./Pages/Dashboard/Dashboard";
+// import { Dashboard } from "./Pages/Dashboard";
+// import { DeadlinesPage } from "./Pages/DeadlinesPage/DeadlinesPage";
+// import { CoursesPage } from "./Pages/CoursesPage/CoursesPage";
+// import { CourseDetailsPage } from "./Pages/CourseDetailsPage/CourseDetailsPage";
+// import { CalendarPage } from "./Pages/CalendarPage/CalendarPage";
+// import { SettingsPage } from "./Pages/SettingsPage/SettingsPage";
+// import { Course } from "./Types/course";
+// import { Deadline } from "./Types/deadline";
+
+import { LandingPage } from "./Pages/LandingPage";
+import { LoginPage } from "./Pages/LoginPage";
+import { SignupPage } from "./Pages/SignupPage";
+import { Dashboard } from "./Pages/Dashboard";
+import { DeadlinesPage } from "./Pages/DeadlinesPage";
+import { CoursesPage } from "./Pages/CoursesPage";
+import { CourseDetailsPage } from "./Pages/CourseDetailsPage";
+import { CalendarPage } from "./Pages/CalendarPage";
+import { SettingsPage } from "./Pages/SettingsPage";
+
+import { Sidebar } from "./сomponents/Sidebar";
+import { TopBar } from "./сomponents/Topbar";
+import { MobileNav } from "./сomponents/MobileNav";
+
 import { Course } from "./Types/course";
 import { Deadline } from "./Types/deadline";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<string>("landing");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userName, setUserName] = useState("");
+  // --- LocalStorage Checked States ---
+  const [currentPage, setCurrentPage] = useState<string>(() => {
+    return localStorage.getItem("lastPage") || "landing";
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem("isAuth") === "true";
+  });
+  const [userName, setUserName] = useState(() => {
+    return localStorage.getItem("userName") || "";
+  });
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
 
-  // Mock data
-  const [courses, setCourses] = useState<Course[]>([
-    {
-      id: "1",
-      title: "Computer Science 101",
-      instructor: "Dr. Smith",
-      semester: "Fall 2024",
-      color: "#3B82F6",
-    },
-    {
-      id: "2",
-      title: "Data Structures",
-      instructor: "Prof. Johnson",
-      semester: "Fall 2024",
-      color: "#10B981",
-    },
-    {
-      id: "3",
-      title: "Calculus II",
-      instructor: "Dr. Williams",
-      semester: "Fall 2024",
-      color: "#F59E0B",
-    },
-    {
-      id: "4",
-      title: "English Literature",
-      instructor: "Prof. Brown",
-      semester: "Fall 2024",
-      color: "#8B5CF6",
-    },
-    {
-      id: "5",
-      title: "Physics I",
-      instructor: "Dr. Davis",
-      semester: "Fall 2024",
-      color: "#EF4444",
-    },
-  ]);
+  const [courses, setCourses] = useState<Course[]>(() => {
+    const saved = localStorage.getItem("my_courses");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const [deadlines, setDeadlines] = useState<Deadline[]>([
-    {
-      id: "1",
-      taskName: "Lab Report #3",
-      courseId: "1",
-      type: "assignment",
-      dueDate: new Date("2024-12-15"),
-      priority: "high",
-      description: "Complete the data analysis section",
-      status: "upcoming",
-    },
-    {
-      id: "2",
-      taskName: "Midterm Exam",
-      courseId: "2",
-      type: "exam",
-      dueDate: new Date("2024-12-18"),
-      priority: "high",
-      description: "Chapters 1-6",
-      status: "upcoming",
-    },
-    {
-      id: "3",
-      taskName: "Problem Set 7",
-      courseId: "3",
-      type: "assignment",
-      dueDate: new Date("2024-12-14"),
-      priority: "medium",
-      description: "Integration problems",
-      status: "upcoming",
-    },
-    {
-      id: "4",
-      taskName: "Essay Draft",
-      courseId: "4",
-      type: "assignment",
-      dueDate: new Date("2024-12-10"),
-      priority: "high",
-      description: "Analysis of Shakespeare",
-      status: "overdue",
-    },
-    {
-      id: "5",
-      taskName: "Quiz 4",
-      courseId: "5",
-      type: "quiz",
-      dueDate: new Date("2024-12-20"),
-      priority: "low",
-      description: "Newton's Laws",
-      status: "upcoming",
-    },
-    {
-      id: "6",
-      taskName: "Project Proposal",
-      courseId: "2",
-      type: "project",
-      dueDate: new Date("2024-12-16"),
-      priority: "medium",
-      description: "Binary search tree implementation",
-      status: "upcoming",
-    },
-    {
-      id: "7",
-      taskName: "Reading Response",
-      courseId: "4",
-      type: "assignment",
-      dueDate: new Date("2024-12-08"),
-      priority: "low",
-      description: "Hamlet Act 3",
-      status: "completed",
-    },
-  ]);
+  const [deadlines, setDeadlines] = useState<Deadline[]>(() => {
+    const saved = localStorage.getItem("my_deadlines");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return parsed.map((d: any) => ({ ...d, dueDate: new Date(d.dueDate) }));
+    }
+    return [];
+  });
 
+  // --- Save effects (do not change appearance, only write to memory) ---
+  useEffect(() => {
+    localStorage.setItem("isAuth", isAuthenticated.toString());
+    localStorage.setItem("lastPage", currentPage);
+    localStorage.setItem("userName", userName);
+  }, [isAuthenticated, currentPage, userName]);
+
+  useEffect(() => {
+    localStorage.setItem("my_courses", JSON.stringify(courses));
+  }, [courses]);
+
+  useEffect(() => {
+    localStorage.setItem("my_deadlines", JSON.stringify(deadlines));
+  }, [deadlines]);
+
+  // --- Original logic of functions ---
   const handleLogin = (email: string, password: string) => {
     setIsAuthenticated(true);
     setCurrentPage("dashboard");
@@ -145,15 +88,12 @@ export default function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setCurrentPage("landing");
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("lastPage");
   };
 
   const navigateTo = (page: string) => {
-    if (
-      !isAuthenticated &&
-      page !== "landing" &&
-      page !== "login" &&
-      page !== "signup"
-    ) {
+    if (!isAuthenticated && !["landing", "login", "signup"].includes(page)) {
       setCurrentPage("login");
       return;
     }
@@ -166,11 +106,8 @@ export default function App() {
   };
 
   const addDeadline = (deadline: Omit<Deadline, "id">) => {
-    const newDeadline = {
-      ...deadline,
-      id: Date.now().toString(),
-    };
-    setDeadlines([...deadlines, newDeadline]);
+    const newDeadline = { ...deadline, id: Date.now().toString() };
+    setDeadlines([...deadlines, newDeadline as Deadline]);
   };
 
   const updateDeadline = (id: string, updatedDeadline: Partial<Deadline>) => {
@@ -184,18 +121,15 @@ export default function App() {
   };
 
   const addCourse = (course: Omit<Course, "id">) => {
-    const newCourse = {
-      ...course,
-      id: Date.now().toString(),
-    };
+    const newCourse = { ...course, id: Date.now().toString() };
     setCourses([...courses, newCourse]);
   };
 
-  // Username update function
   const updateUserName = (name: string) => {
     setUserName(name);
   };
 
+  // --- Original rendering ---
   const renderPage = () => {
     if (!isAuthenticated) {
       switch (currentPage) {
@@ -208,10 +142,17 @@ export default function App() {
       }
     }
 
+    const commonProps = {
+      currentPage,
+      onNavigate: navigateTo,
+      onLogout: handleLogout,
+    };
+
     switch (currentPage) {
       case "dashboard":
         return (
           <Dashboard
+            currentPage={currentPage}
             userName={userName}
             deadlines={deadlines}
             courses={courses}
@@ -224,6 +165,7 @@ export default function App() {
       case "deadlines":
         return (
           <DeadlinesPage
+            currentPage={currentPage}
             deadlines={deadlines}
             courses={courses}
             onNavigate={navigateTo}
@@ -236,6 +178,7 @@ export default function App() {
       case "courses":
         return (
           <CoursesPage
+            currentPage={currentPage}
             courses={courses}
             deadlines={deadlines}
             onNavigate={navigateTo}
@@ -248,6 +191,7 @@ export default function App() {
         const selectedCourse = courses.find((c) => c.id === selectedCourseId);
         return selectedCourse ? (
           <CourseDetailsPage
+            currentPage={currentPage}
             course={selectedCourse}
             deadlines={deadlines.filter((d) => d.courseId === selectedCourseId)}
             onNavigate={navigateTo}
@@ -259,6 +203,7 @@ export default function App() {
       case "calendar":
         return (
           <CalendarPage
+            currentPage={currentPage}
             deadlines={deadlines}
             courses={courses}
             onNavigate={navigateTo}
@@ -269,6 +214,7 @@ export default function App() {
       case "settings":
         return (
           <SettingsPage
+            currentPage={currentPage}
             userName={userName}
             onNavigate={navigateTo}
             onLogout={handleLogout}
@@ -278,6 +224,7 @@ export default function App() {
       default:
         return (
           <Dashboard
+            currentPage={currentPage}
             userName={userName}
             deadlines={deadlines}
             courses={courses}

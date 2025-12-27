@@ -1,5 +1,6 @@
 import React from "react";
 import "./Sidebar.scss";
+import { MENU_ITEMS } from "../../Constants/menu";
 
 interface SidebarProps {
   currentPage: string;
@@ -8,14 +9,6 @@ interface SidebarProps {
 }
 
 export function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: "📊" },
-    { id: "calendar", label: "Calendar", icon: "📅" },
-    { id: "courses", label: "Courses", icon: "📚" },
-    { id: "deadlines", label: "Deadlines", icon: "📝" },
-    { id: "settings", label: "Settings", icon: "⚙️" },
-  ];
-
   return (
     <div className="sidebar">
       {/* Logo */}
@@ -28,9 +21,9 @@ export function Sidebar({ currentPage, onNavigate, onLogout }: SidebarProps) {
 
       {/* Menu Items */}
       <nav className="sidebar__nav">
-        {menuItems.map((item) => {
+        {MENU_ITEMS.map((item) => {
           const isActive = currentPage === item.id;
-
+          console.log("The page is active", currentPage);
           return (
             <button
               key={item.id}

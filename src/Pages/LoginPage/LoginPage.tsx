@@ -54,7 +54,6 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
             <div className="form-group">
               <label className="form-label">Password</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={password}

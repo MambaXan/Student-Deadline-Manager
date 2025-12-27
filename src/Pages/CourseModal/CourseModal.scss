@@ -6,7 +6,8 @@ $light-gray: #f9fafb;
 $medium-gray: #e5e7eb;
 $dark-gray: #374151;
 $white: #ffffff;
-$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
 // Animations
 @keyframes fadeIn {
@@ -113,7 +114,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 
   margin-bottom: 8px;
 
   &::after {
-    content: ' *';
+    content: " *";
     color: #ef4444;
     margin-left: 2px;
   }
@@ -175,7 +176,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 
     margin-bottom: 12px;
 
     &::after {
-      content: '';
+      content: "";
       margin-left: 0;
     }
   }
@@ -223,7 +224,8 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 
   &--primary {
     background-color: $primary-color;
     color: $white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     &:hover {
       background-color: darken($primary-color, 10%);
@@ -287,7 +289,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 
   .course-modal__actions {
     flex-direction: column;
   }
-  
+
   .btn {
     width: 100%;
   }

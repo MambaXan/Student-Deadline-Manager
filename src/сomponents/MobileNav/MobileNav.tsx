@@ -1,5 +1,6 @@
 import React from "react";
 import "./MobileNav.scss";
+import { MENU_ITEMS } from "../../Constants/menu";
 
 interface MobileNavProps {
   currentPage: string;
@@ -16,13 +17,6 @@ export function MobileNav({
   isOpen,
   onClose,
 }: MobileNavProps) {
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: "📊" },
-    { id: "deadlines", label: "Deadlines", icon: "📝" },
-    { id: "courses", label: "Courses", icon: "📚" },
-    { id: "calendar", label: "Calendar", icon: "📅" },
-  ];
-
   const handleNavigate = (page: string) => {
     onNavigate(page);
     onClose();
@@ -50,7 +44,7 @@ export function MobileNav({
 
         {/* Menu Items */}
         <nav className="mobile-nav__menu">
-          {menuItems.map((item) => {
+          {MENU_ITEMS.map((item) => {
             const isActive = currentPage === item.id;
 
             return (

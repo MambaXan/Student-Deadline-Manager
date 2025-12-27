@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./CoursesPage.scss";
+import { Sidebar } from "../../сomponents/Sidebar";
 
 // Interfaces
 interface Course {
@@ -21,6 +22,7 @@ interface Deadline {
 }
 
 interface CoursesPageProps {
+  currentPage: string;
   courses: Course[];
   deadlines: Deadline[];
   onNavigate: (page: string) => void;
@@ -30,52 +32,13 @@ interface CoursesPageProps {
 }
 
 // Components
-const Sidebar: React.FC<{
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onLogout: () => void;
-}> = ({ currentPage, onNavigate, onLogout }) => {
-  return (
-    <div className="sidebar">
-      <div className="sidebar__content">
-        <h2 className="sidebar__title">Student Planner</h2>
-        <nav className="sidebar__nav">
-          <button
-            onClick={() => onNavigate("calendar")}
-            className="sidebar__nav-item"
-          >
-            📅 Calendar
-          </button>
-          <button
-            onClick={() => onNavigate("courses")}
-            className={`sidebar__nav-item ${
-              currentPage === "courses" ? "sidebar__nav-item--active" : ""
-            }`}
-          >
-            📚 Courses
-          </button>
-          <button
-            onClick={() => onNavigate("deadlines")}
-            className="sidebar__nav-item"
-          >
-            📝 Deadlines
-          </button>
-        </nav>
-        <button onClick={onLogout} className="sidebar__logout-btn">
-          👤 Logout
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
     <div className="topbar">
       <div className="topbar__content">
         <h1 className="topbar__title">My Courses</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome back!</span>
+          <span className="topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -193,6 +156,7 @@ const CourseModal: React.FC<{
 };
 
 export function CoursesPage({
+  currentPage,
   courses,
   deadlines,
   onNavigate,
@@ -211,7 +175,7 @@ export function CoursesPage({
   return (
     <div className="courses-page">
       <Sidebar
-        currentPage="courses"
+        currentPage={currentPage}
         onNavigate={onNavigate}
         onLogout={onLogout}
       />

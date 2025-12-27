@@ -1,72 +1,23 @@
 import React, { useState } from "react";
 import "./SettingsPage.scss";
+import { Sidebar } from "../../сomponents/Sidebar";
 
 interface SettingsPageProps {
+  currentPage: string;
   userName: string;
   onNavigate: (page: string) => void;
   onLogout: () => void;
   onUpdateName: (name: string) => void;
 }
 
-// Sidebar and TopBar Components
-const Sidebar: React.FC<{
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onLogout: () => void;
-}> = ({ currentPage, onNavigate, onLogout }) => {
-  return (
-    <div className="sidebar">
-      <div className="sidebar__content">
-        <h2 className="sidebar__title">Student Planner</h2>
-        <nav className="sidebar__nav">
-          <button
-            onClick={() => onNavigate("dashboard")}
-            className="sidebar__nav-item"
-          >
-            📊 Dashboard
-          </button>
-          <button
-            onClick={() => onNavigate("calendar")}
-            className="sidebar__nav-item"
-          >
-            📅 Calendar
-          </button>
-          <button
-            onClick={() => onNavigate("courses")}
-            className="sidebar__nav-item"
-          >
-            📚 Courses
-          </button>
-          <button
-            onClick={() => onNavigate("deadlines")}
-            className="sidebar__nav-item"
-          >
-            📝 Deadlines
-          </button>
-          <button
-            onClick={() => onNavigate("settings")}
-            className={`sidebar__nav-item ${
-              currentPage === "settings" ? "sidebar__nav-item--active" : ""
-            }`}
-          >
-            ⚙️ Settings
-          </button>
-        </nav>
-        <button onClick={onLogout} className="sidebar__logout-btn">
-          👤 Logout
-        </button>
-      </div>
-    </div>
-  );
-};
-
+// TopBar Component
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
     <div className="topbar">
       <div className="topbar__content">
         <h1 className="topbar__title">Settings</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome back!</span>
+          <span className="topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -74,13 +25,14 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
 };
 
 export function SettingsPage({
+  currentPage,
   userName,
   onNavigate,
   onLogout,
   onUpdateName,
 }: SettingsPageProps) {
   const [name, setName] = useState(userName);
-  const [email, setEmail] = useState("alex@university.edu");
+  const [email, setEmail] = useState("example@gmail.com");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -119,7 +71,7 @@ export function SettingsPage({
   return (
     <div className="settings-page">
       <Sidebar
-        currentPage="settings"
+        currentPage={currentPage}
         onNavigate={onNavigate}
         onLogout={onLogout}
       />

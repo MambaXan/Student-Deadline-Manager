@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./DeadlinesPage.scss";
+import { Sidebar } from "../../сomponents/Sidebar";
 
 // Interface
 interface Course {
@@ -19,6 +20,7 @@ interface Deadline {
 }
 
 interface DeadlinesPageProps {
+  currentPage: string;
   deadlines: Deadline[];
   courses: Course[];
   onNavigate: (page: string) => void;
@@ -29,51 +31,6 @@ interface DeadlinesPageProps {
 }
 
 // Components
-const Sidebar: React.FC<{
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onLogout: () => void;
-}> = ({ currentPage, onNavigate, onLogout }) => {
-  return (
-    <div className="sidebar">
-      <div className="sidebar__content">
-        <h2 className="sidebar__title">Student Planner</h2>
-        <nav className="sidebar__nav">
-          <button
-            onClick={() => onNavigate("dashboard")}
-            className="sidebar__nav-item"
-          >
-            📊 Dashboard
-          </button>
-          <button
-            onClick={() => onNavigate("calendar")}
-            className="sidebar__nav-item"
-          >
-            📅 Calendar
-          </button>
-          <button
-            onClick={() => onNavigate("courses")}
-            className="sidebar__nav-item"
-          >
-            📚 Courses
-          </button>
-          <button
-            onClick={() => onNavigate("deadlines")}
-            className={`sidebar__nav-item ${
-              currentPage === "deadlines" ? "sidebar__nav-item--active" : ""
-            }`}
-          >
-            📝 Deadlines
-          </button>
-        </nav>
-        <button onClick={onLogout} className="sidebar__logout-btn">
-          👤 Logout
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const TopBar: React.FC<{
   userName: string;
   onMenuClick?: () => void;
@@ -90,7 +47,7 @@ const TopBar: React.FC<{
           <h1 className="topbar__title">Deadlines</h1>
         </div>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome back!</span>
+          <span className="topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -301,6 +258,7 @@ const MobileNav: React.FC<{
 };
 
 export function DeadlinesPage({
+  currentPage,
   deadlines,
   courses,
   onNavigate,
@@ -392,7 +350,7 @@ export function DeadlinesPage({
   return (
     <div className="deadlines-page">
       <Sidebar
-        currentPage="deadlines"
+        currentPage={currentPage}
         onNavigate={onNavigate}
         onLogout={onLogout}
       />

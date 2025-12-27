@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import './CourseDetailsPage.scss';
+import React, { useState } from "react";
+import "./CourseDetailsPage.scss";
+import { Sidebar } from "../../сomponents/Sidebar";
 
 // Interfaces
 interface Course {
@@ -14,66 +15,30 @@ interface Deadline {
   id: string;
   courseId: string;
   taskName: string;
-  type: 'assignment' | 'quiz' | 'exam' | 'project';
+  type: "assignment" | "quiz" | "exam" | "project";
   dueDate: Date;
-  status: 'upcoming' | 'overdue' | 'completed';
-  priority: 'high' | 'medium' | 'low';
+  status: "upcoming" | "overdue" | "completed";
+  priority: "high" | "medium" | "low";
 }
 
 interface CourseDetailsPageProps {
+  currentPage: string;
   course: Course;
   deadlines: Deadline[];
   onNavigate: (page: string) => void;
   onLogout: () => void;
-  onAddDeadline: (deadline: Omit<Deadline, 'id'>) => void;
+  onAddDeadline: (deadline: Omit<Deadline, "id">) => void;
   onBack: () => void;
 }
 
 // Components
-const Sidebar: React.FC<{
-  currentPage: string;
-  onNavigate: (page: string) => void;
-  onLogout: () => void;
-}> = ({ currentPage, onNavigate, onLogout }) => {
-  return (
-    <div className="sidebar">
-      <div className="sidebar__content">
-        <h2 className="sidebar__title">Student Planner</h2>
-        <nav className="sidebar__nav">
-          <button 
-            onClick={() => onNavigate('calendar')}
-            className="sidebar__nav-item"
-          >
-            📅 Calendar
-          </button>
-          <button 
-            onClick={() => onNavigate('courses')}
-            className={`sidebar__nav-item ${currentPage === 'courses' ? 'sidebar__nav-item--active' : ''}`}
-          >
-            📚 Courses
-          </button>
-          <button 
-            onClick={() => onNavigate('deadlines')}
-            className="sidebar__nav-item"
-          >
-            📝 Deadlines
-          </button>
-        </nav>
-        <button onClick={onLogout} className="sidebar__logout-btn">
-          👤 Logout
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
     <div className="topbar">
       <div className="topbar__content">
         <h1 className="topbar__title">Course Details</h1>
         <div className="topbar__user">
-          <span className="topbar__user-name">Welcome back!</span>
+          <span className="topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -83,14 +48,14 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
 const DeadlineModal: React.FC<{
   courses: Course[];
   preselectedCourseId: string;
-  onSave: (deadline: Omit<Deadline, 'id'>) => void;
+  onSave: (deadline: Omit<Deadline, "id">) => void;
   onClose: () => void;
 }> = ({ courses, preselectedCourseId, onSave, onClose }) => {
-  const [taskName, setTaskName] = useState('');
+  const [taskName, setTaskName] = useState("");
   const [selectedCourseId, setSelectedCourseId] = useState(preselectedCourseId);
-  const [dueDate, setDueDate] = useState('');
-  const [type, setType] = useState('assignment');
-  const [priority, setPriority] = useState('medium');
+  const [dueDate, setDueDate] = useState("");
+  const [type, setType] = useState("assignment");
+  const [priority, setPriority] = useState("medium");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,10 +64,10 @@ const DeadlineModal: React.FC<{
     onSave({
       courseId: selectedCourseId,
       taskName,
-      type: type as Deadline['type'],
+      type: type as Deadline["type"],
       dueDate: new Date(dueDate),
-      status: 'upcoming',
-      priority: priority as Deadline['priority']
+      status: "upcoming",
+      priority: priority as Deadline["priority"],
     });
     onClose();
   };
@@ -112,7 +77,9 @@ const DeadlineModal: React.FC<{
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
           <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">×</button>
+          <button onClick={onClose} className="modal__close-btn">
+            ×
+          </button>
         </div>
         <form onSubmit={handleSubmit} className="modal__form">
           <div className="form-group">
@@ -134,7 +101,7 @@ const DeadlineModal: React.FC<{
               className="form-select"
               required
             >
-              {courses.map(course => (
+              {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.title}
                 </option>
@@ -179,7 +146,11 @@ const DeadlineModal: React.FC<{
             />
           </div>
           <div className="modal__actions">
-            <button type="button" className="btn btn--secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn--secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn--primary">
@@ -193,60 +164,81 @@ const DeadlineModal: React.FC<{
 };
 
 export function CourseDetailsPage({
+  currentPage,
   course,
   deadlines,
   onNavigate,
   onLogout,
   onAddDeadline,
-  onBack
+  onBack,
 }: CourseDetailsPageProps) {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const getPriorityClass = (priority: string) => {
     switch (priority) {
-      case 'high': return 'badge badge--high';
-      case 'medium': return 'badge badge--medium';
-      case 'low': return 'badge badge--low';
-      default: return 'badge';
+      case "high":
+        return "badge badge--high";
+      case "medium":
+        return "badge badge--medium";
+      case "low":
+        return "badge badge--low";
+      default:
+        return "badge";
     }
   };
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case 'completed': return 'badge badge--completed';
-      case 'overdue': return 'badge badge--overdue';
-      case 'upcoming': return 'badge badge--upcoming';
-      default: return 'badge';
+      case "completed":
+        return "badge badge--completed";
+      case "overdue":
+        return "badge badge--overdue";
+      case "upcoming":
+        return "badge badge--upcoming";
+      default:
+        return "badge";
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'assignment': return '📝';
-      case 'quiz': return '❓';
-      case 'exam': return '📋';
-      case 'project': return '💼';
-      default: return '📄';
+      case "assignment":
+        return "📝";
+      case "quiz":
+        return "❓";
+      case "exam":
+        return "📋";
+      case "project":
+        return "💼";
+      default:
+        return "📄";
     }
   };
 
-  const upcomingDeadlines = deadlines.filter(d => d.status === 'upcoming').length;
-  const overdueDeadlines = deadlines.filter(d => d.status === 'overdue').length;
-  const completedDeadlines = deadlines.filter(d => d.status === 'completed').length;
+  const upcomingDeadlines = deadlines.filter(
+    (d) => d.status === "upcoming"
+  ).length;
+  const overdueDeadlines = deadlines.filter(
+    (d) => d.status === "overdue"
+  ).length;
+  const completedDeadlines = deadlines.filter(
+    (d) => d.status === "completed"
+  ).length;
 
   return (
     <div className="course-details-page">
-      <Sidebar currentPage="courses" onNavigate={onNavigate} onLogout={onLogout} />
-      
+      <Sidebar
+        currentPage={currentPage}
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+      />
+
       <div className="main-content">
         <TopBar userName="Alex" />
-        
+
         <main className="content">
           {/* Back Button */}
-          <button
-            onClick={onBack}
-            className="back-btn"
-          >
+          <button onClick={onBack} className="back-btn">
             ← Back to Courses
           </button>
 
@@ -259,17 +251,19 @@ export function CourseDetailsPage({
               <div className="course-header__overlay" />
               <div className="course-header__info">
                 <div className="course-header__left">
-                  <h1 className="course-header__title">
-                    {course.title}
-                  </h1>
+                  <h1 className="course-header__title">{course.title}</h1>
                   <div className="course-header__meta">
                     <div className="course-header__meta-item">
                       <span className="course-header__meta-icon">👤</span>
-                      <span className="course-header__meta-text">{course.instructor}</span>
+                      <span className="course-header__meta-text">
+                        {course.instructor}
+                      </span>
                     </div>
                     <div className="course-header__meta-item">
                       <span className="course-header__meta-icon">⏰</span>
-                      <span className="course-header__meta-text">{course.semester}</span>
+                      <span className="course-header__meta-text">
+                        {course.semester}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -309,7 +303,9 @@ export function CourseDetailsPage({
             {deadlines.length === 0 ? (
               <div className="empty-state">
                 <span className="empty-state__icon">📅</span>
-                <p className="empty-state__text">No deadlines for this course yet</p>
+                <p className="empty-state__text">
+                  No deadlines for this course yet
+                </p>
                 <button
                   onClick={() => setShowAddModal(true)}
                   className="btn btn--primary"
@@ -331,24 +327,34 @@ export function CourseDetailsPage({
                     </tr>
                   </thead>
                   <tbody className="deadlines-table__body">
-                    {deadlines.map(deadline => (
+                    {deadlines.map((deadline) => (
                       <tr key={deadline.id} className="deadlines-table__row">
                         <td className="deadlines-table__cell">
-                          <span className={`deadlines-table__task ${deadline.status === 'completed' ? 'deadlines-table__task--completed' : ''}`}>
+                          <span
+                            className={`deadlines-table__task ${
+                              deadline.status === "completed"
+                                ? "deadlines-table__task--completed"
+                                : ""
+                            }`}
+                          >
                             {deadline.taskName}
                           </span>
                         </td>
                         <td className="deadlines-table__cell">
                           <span className="deadlines-table__type">
-                            <span className="deadlines-table__type-icon">{getTypeIcon(deadline.type)}</span>
-                            <span className="deadlines-table__type-text">{deadline.type}</span>
+                            <span className="deadlines-table__type-icon">
+                              {getTypeIcon(deadline.type)}
+                            </span>
+                            <span className="deadlines-table__type-text">
+                              {deadline.type}
+                            </span>
                           </span>
                         </td>
                         <td className="deadlines-table__cell deadlines-table__cell--date">
-                          {deadline.dueDate.toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric',
-                            year: 'numeric'
+                          {deadline.dueDate.toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
                           })}
                         </td>
                         <td className="deadlines-table__cell">

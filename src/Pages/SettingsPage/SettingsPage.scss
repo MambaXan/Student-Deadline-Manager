@@ -187,14 +187,14 @@ $danger-light: #fee2e2;
 
 // Buttons
 .btn {
-  // padding: 12px 24px;
-  // border: none;
-  // border-radius: 12px;
-  // font-size: 14px;
-  // font-weight: 500;
-  // cursor: pointer;
-  // transition: all 0.2s ease;
-  // @include flex-center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  @include flex-center;
 
   &--primary {
     background-color: $primary-color;

@@ -19,7 +19,11 @@ $danger-color: #ef4444;
 // Login page
 .login-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, $primary-light, lighten($primary-color, 40%));
+  background: linear-gradient(
+    135deg,
+    $primary-light,
+    lighten($primary-color, 40%)
+  );
   @include flex-center;
   padding: 20px;
 }

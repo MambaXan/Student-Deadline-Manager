@@ -58,7 +58,6 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
             <div className="form-group">
               <label className="form-label">Full Name</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">👤</span> */}
                 <input
                   type="text"
                   value={name}
@@ -74,7 +73,6 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
             <div className="form-group">
               <label className="form-label">Email Address</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">✉️</span> */}
                 <input
                   type="email"
                   value={email}
@@ -90,7 +88,6 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
             <div className="form-group">
               <label className="form-label">Password</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={password}
@@ -106,7 +103,6 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
             <div className="form-group">
               <label className="form-label">Confirm Password</label>
               <div className="input-with-icon">
-                {/* <span className="input-icon">🔒</span> */}
                 <input
                   type="password"
                   value={confirmPassword}
