@@ -35,18 +35,18 @@ const TopBar: React.FC<{
   onMenuClick?: () => void;
 }> = ({ userName, onMenuClick }) => {
   return (
-    <div className="topbar">
-      <div className="topbar__content">
-        <div className="topbar__left">
+    <div className="dashboard-topbar">
+      <div className="dashboard-topbar__content">
+        <div className="dashboard-topbar__left">
           {onMenuClick && (
-            <button onClick={onMenuClick} className="topbar__menu-btn">
+            <button onClick={onMenuClick} className="dashboard-topbar__menu-btn">
               ☰
             </button>
           )}
-          <h1 className="topbar__title">Dashboard</h1>
+          <h1 className="dashboard-topbar__title">Dashboard</h1>
         </div>
-        <div className="topbar__user">
-          <span className="topbar__user-name">Welcome {userName}</span>
+        <div className="dashboard-topbar__user">
+          <span className="dashboard-topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -78,32 +78,32 @@ const DeadlineModal: React.FC<{
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal__header">
-          <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">
+    <div className="dashboard-modal-overlay" onClick={onClose}>
+      <div className="dashboard-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="dashboard-modal__header">
+          <h3 className="dashboard-modal__title">Add New Deadline</h3>
+          <button onClick={onClose} className="dashboard-modal__close-btn">
             ×
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="modal__form">
-          <div className="form-group">
-            <label className="form-label">Task Name</label>
+        <form onSubmit={handleSubmit} className="dashboard-modal__form">
+          <div className="dashboard-form-group">
+            <label className="dashboard-form-label">Task Name</label>
             <input
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
-              className="form-input"
+              className="dashboard-form-input"
               required
               placeholder="Enter task name"
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Course</label>
+          <div className="dashboard-form-group">
+            <label className="dashboard-form-label">Course</label>
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="form-select"
+              className="dashboard-form-select"
               required
             >
               <option value="">Select a course</option>
@@ -114,12 +114,12 @@ const DeadlineModal: React.FC<{
               ))}
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Priority</label>
+          <div className="dashboard-form-group">
+            <label className="dashboard-form-label">Priority</label>
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="form-select"
+              className="dashboard-form-select"
               required
             >
               <option value="low">Low</option>
@@ -127,25 +127,25 @@ const DeadlineModal: React.FC<{
               <option value="high">High</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Due Date</label>
+          <div className="dashboard-form-group">
+            <label className="dashboard-form-label">Due Date</label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="form-input"
+              className="dashboard-form-input"
               required
             />
           </div>
-          <div className="modal__actions">
+          <div className="dashboard-modal__actions">
             <button
               type="button"
-              className="btn btn--secondary"
+              className="dashboard-btn dashboard-btn--secondary"
               onClick={onClose}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
+            <button type="submit" className="dashboard-btn dashboard-btn--primary">
               Save Deadline
             </button>
           </div>
@@ -165,22 +165,22 @@ const MobileNav: React.FC<{
   if (!isOpen) return null;
 
   return (
-    <div className="mobile-nav-overlay" onClick={onClose}>
-      <div className="mobile-nav" onClick={(e) => e.stopPropagation()}>
-        <div className="mobile-nav__header">
-          <h3 className="mobile-nav__title">Menu</h3>
-          <button onClick={onClose} className="mobile-nav__close-btn">
+    <div className="dashboard-mobile-nav-overlay" onClick={onClose}>
+      <div className="dashboard-mobile-nav" onClick={(e) => e.stopPropagation()}>
+        <div className="dashboard-mobile-nav__header">
+          <h3 className="dashboard-mobile-nav__title">Menu</h3>
+          <button onClick={onClose} className="dashboard-mobile-nav__close-btn">
             ×
           </button>
         </div>
-        <nav className="mobile-nav__list">
+        <nav className="dashboard-mobile-nav__list">
           <button
             onClick={() => {
               onNavigate("dashboard");
               onClose();
             }}
-            className={`mobile-nav__item ${
-              currentPage === "dashboard" ? "mobile-nav__item--active" : ""
+            className={`dashboard-mobile-nav__item ${
+              currentPage === "dashboard" ? "dashboard-mobile-nav__item--active" : ""
             }`}
           >
             📊 Dashboard
@@ -190,7 +190,7 @@ const MobileNav: React.FC<{
               onNavigate("calendar");
               onClose();
             }}
-            className="mobile-nav__item"
+            className="dashboard-mobile-nav__item"
           >
             📅 Calendar
           </button>
@@ -199,7 +199,7 @@ const MobileNav: React.FC<{
               onNavigate("courses");
               onClose();
             }}
-            className="mobile-nav__item"
+            className="dashboard-mobile-nav__item"
           >
             📚 Courses
           </button>
@@ -208,7 +208,7 @@ const MobileNav: React.FC<{
               onNavigate("deadlines");
               onClose();
             }}
-            className="mobile-nav__item"
+            className="dashboard-mobile-nav__item"
           >
             📝 Deadlines
           </button>
@@ -217,7 +217,7 @@ const MobileNav: React.FC<{
               onLogout();
               onClose();
             }}
-            className="mobile-nav__item mobile-nav__item--logout"
+            className="dashboard-mobile-nav__item dashboard-mobile-nav__item--logout"
           >
             👤 Logout
           </button>
@@ -233,20 +233,20 @@ const SimpleBarChart: React.FC<{
   const maxTasks = Math.max(...data.map((d) => d.tasks), 1);
 
   return (
-    <div className="bar-chart">
-      <div className="bar-chart__bars">
+    <div className="dashboard-bar-chart">
+      <div className="dashboard-bar-chart__bars">
         {data.map((item, index) => (
-          <div key={index} className="bar-chart__column">
+          <div key={index} className="dashboard-bar-chart__column">
             <div
-              className="bar-chart__bar"
+              className="dashboard-bar-chart__bar"
               style={{
                 height: `${(item.tasks / maxTasks) * 140}px`,
                 minHeight: item.tasks > 0 ? "4px" : "0",
               }}
               title={`${item.tasks} task${item.tasks !== 1 ? "s" : ""}`}
             />
-            <span className="bar-chart__day">{item.name}</span>
-            <span className="bar-chart__count">{item.tasks}</span>
+            <span className="dashboard-bar-chart__day">{item.name}</span>
+            <span className="dashboard-bar-chart__count">{item.tasks}</span>
           </div>
         ))}
       </div>
@@ -304,13 +304,13 @@ export function Dashboard({
   const getPriorityClass = (priority: string) => {
     switch (priority) {
       case "high":
-        return "badge badge--high";
+        return "dashboard-badge dashboard-badge--high";
       case "medium":
-        return "badge badge--medium";
+        return "dashboard-badge dashboard-badge--medium";
       case "low":
-        return "badge badge--low";
+        return "dashboard-badge dashboard-badge--low";
       default:
-        return "badge";
+        return "dashboard-badge";
     }
   };
 
@@ -319,7 +319,7 @@ export function Dashboard({
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard-page">
       <Sidebar
         currentPage={currentPage}
         onNavigate={onNavigate}
@@ -333,78 +333,78 @@ export function Dashboard({
         onClose={() => setMobileMenuOpen(false)}
       />
 
-      <div className="main-content">
+      <div className="dashboard-main-content">
         <TopBar
           userName={userName}
           onMenuClick={() => setMobileMenuOpen(true)}
         />
 
-        <main className="content">
+        <main className="dashboard-content">
           {/* Stats Cards */}
-          <div className="stats-grid">
+          <div className="dashboard-stats-grid">
             {/* Upcoming Deadlines Card */}
-            <div className="stats-card">
-              <div className="stats-card__header">
+            <div className="dashboard-stats-card">
+              <div className="dashboard-stats-card__header">
                 <div>
-                  <p className="stats-card__label">Upcoming</p>
-                  <p className="stats-card__value">
+                  <p className="dashboard-stats-card__label">Upcoming</p>
+                  <p className="dashboard-stats-card__value">
                     {upcomingDeadlines.length}
                   </p>
                 </div>
-                <div className="stats-card__icon stats-card__icon--blue">
+                <div className="dashboard-stats-card__icon dashboard-stats-card__icon--blue">
                   📅
                 </div>
               </div>
-              <p className="stats-card__description">Tasks due soon</p>
+              <p className="dashboard-stats-card__description">Tasks due soon</p>
             </div>
 
             {/* Overdue Card */}
-            <div className="stats-card">
-              <div className="stats-card__header">
+            <div className="dashboard-stats-card">
+              <div className="dashboard-stats-card__header">
                 <div>
-                  <p className="stats-card__label">Overdue</p>
-                  <p className="stats-card__value">{overdueDeadlines.length}</p>
+                  <p className="dashboard-stats-card__label">Overdue</p>
+                  <p className="dashboard-stats-card__value">{overdueDeadlines.length}</p>
                 </div>
-                <div className="stats-card__icon stats-card__icon--red">⚠️</div>
+                <div className="dashboard-stats-card__icon dashboard-stats-card__icon--red">⚠️</div>
               </div>
-              <p className="stats-card__description">Need attention</p>
+              <p className="dashboard-stats-card__description">Need attention</p>
             </div>
 
             {/* Completed Card */}
-            <div className="stats-card">
-              <div className="stats-card__header">
+            <div className="dashboard-stats-card">
+              <div className="dashboard-stats-card__header">
                 <div>
-                  <p className="stats-card__label">Completed</p>
-                  <p className="stats-card__value">{completedCount}</p>
+                  <p className="dashboard-stats-card__label">Completed</p>
+                  <p className="dashboard-stats-card__value">{completedCount}</p>
                 </div>
-                <div className="stats-card__icon stats-card__icon--green">
+                <div className="dashboard-stats-card__icon dashboard-stats-card__icon--green">
                   ✅
                 </div>
               </div>
-              <p className="stats-card__description">Tasks finished</p>
+              <p className="dashboard-stats-card__description">Tasks finished</p>
             </div>
           </div>
 
           <div className="dashboard-grid">
             {/* Upcoming Deadlines List */}
-            <div className="upcoming-card">
-              <div className="upcoming-card__header">
-                <h2 className="upcoming-card__title">Upcoming Deadlines</h2>
+            <div className="dashboard-upcoming-card">
+              <div className="dashboard-upcoming-card__header">
+                <h2 className="dashboard-upcoming-card__title">Upcoming Deadlines</h2>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className="btn btn--primary btn--small"
+                  className="dashboard-btn dashboard-btn--primary dashboard-btn--small"
                 >
-                  <span className="btn__icon">+</span>
-                  <span className="btn__text">Add Deadline</span>
+                  <span className="dashboard-btn__icon">+</span>
+                  <span className="dashboard-btn__text">Add Deadline</span>
                 </button>
               </div>
 
-              <div className="upcoming-list">
+              <div className="dashboard-upcoming-list">
                 {upcomingDeadlines.length === 0 ? (
-                  <div className="empty-state">
-                    <span className="empty-state__icon">📅</span>
-                    <p className="empty-state__text">No upcoming deadlines</p>
-                    <p className="empty-state__subtext">
+                  <div className="dashboard-empty-state">
+                    <span className="dashboard-empty-state__icon">📅</span>
+                    <p className="dashboard-empty-state__text">No upcoming deadlines</p>
+                    <p className="dashboard-empty-state__subtext">
                       Add your first deadline to get started
                     </p>
                   </div>
@@ -414,7 +414,7 @@ export function Dashboard({
                     return (
                       <div
                         key={deadline.id}
-                        className="upcoming-item"
+                        className="dashboard-upcoming-item"
                         onClick={() => {
                           if (deadline.status === "upcoming") {
                             onUpdateDeadline(deadline.id, {
@@ -427,16 +427,16 @@ export function Dashboard({
                           type="checkbox"
                           checked={deadline.status === "completed"}
                           onChange={() => {}}
-                          className="upcoming-item__checkbox"
+                          className="dashboard-upcoming-item__checkbox"
                         />
-                        <div className="upcoming-item__content">
-                          <h3 className="upcoming-item__title">
+                        <div className="dashboard-upcoming-item__content">
+                          <h3 className="dashboard-upcoming-item__title">
                             {deadline.taskName}
                           </h3>
-                          <div className="upcoming-item__details">
+                          <div className="dashboard-upcoming-item__details">
                             {course && (
                               <span
-                                className="upcoming-item__course"
+                                className="dashboard-upcoming-item__course"
                                 style={{
                                   backgroundColor: `${course.color}20`,
                                   color: course.color,
@@ -445,7 +445,7 @@ export function Dashboard({
                                 {course.title}
                               </span>
                             )}
-                            <span className="upcoming-item__date">
+                            <span className="dashboard-upcoming-item__date">
                               {new Date(deadline.dueDate).toLocaleDateString(
                                 "en-US",
                                 {
@@ -467,21 +467,21 @@ export function Dashboard({
             </div>
 
             {/* Right Column */}
-            <div className="sidebar-column">
+            <div className="dashboard-sidebar-column">
               {/* Overdue Tasks Warning */}
               {overdueDeadlines.length > 0 && (
-                <div className="warning-card">
-                  <div className="warning-card__header">
-                    <span className="warning-card__icon">⚠️</span>
-                    <h3 className="warning-card__title">Overdue Tasks</h3>
+                <div className="dashboard-warning-card">
+                  <div className="dashboard-warning-card__header">
+                    <span className="dashboard-warning-card__icon">⚠️</span>
+                    <h3 className="dashboard-warning-card__title">Overdue Tasks</h3>
                   </div>
-                  <p className="warning-card__text">
+                  <p className="dashboard-warning-card__text">
                     You have {overdueDeadlines.length} overdue{" "}
                     {overdueDeadlines.length === 1 ? "task" : "tasks"}
                   </p>
                   <button
                     onClick={() => onNavigate("deadlines")}
-                    className="warning-card__link"
+                    className="dashboard-warning-card__link"
                   >
                     View all →
                   </button>
@@ -489,37 +489,37 @@ export function Dashboard({
               )}
 
               {/* This Week Overview Chart */}
-              <div className="chart-card">
-                <div className="chart-card__header">
-                  <span className="chart-card__icon">📈</span>
-                  <h3 className="chart-card__title">This Week Overview</h3>
+              <div className="dashboard-chart-card">
+                <div className="dashboard-chart-card__header">
+                  <span className="dashboard-chart-card__icon">📈</span>
+                  <h3 className="dashboard-chart-card__title">This Week Overview</h3>
                 </div>
                 <SimpleBarChart data={chartData} />
               </div>
 
               {/* Quick Stats */}
-              <div className="stats-summary">
-                <h3 className="stats-summary__title">Quick Stats</h3>
-                <div className="stats-summary__list">
-                  <div className="stats-summary__item">
-                    <span className="stats-summary__label">Total Courses</span>
-                    <span className="stats-summary__value">
+              <div className="dashboard-stats-summary">
+                <h3 className="dashboard-stats-summary__title">Quick Stats</h3>
+                <div className="dashboard-stats-summary__list">
+                  <div className="dashboard-stats-summary__item">
+                    <span className="dashboard-stats-summary__label">Total Courses</span>
+                    <span className="dashboard-stats-summary__value">
                       {courses.length}
                     </span>
                   </div>
-                  <div className="stats-summary__item">
-                    <span className="stats-summary__label">
+                  <div className="dashboard-stats-summary__item">
+                    <span className="dashboard-stats-summary__label">
                       Total Deadlines
                     </span>
-                    <span className="stats-summary__value">
+                    <span className="dashboard-stats-summary__value">
                       {deadlines.length}
                     </span>
                   </div>
-                  <div className="stats-summary__item">
-                    <span className="stats-summary__label">
+                  <div className="dashboard-stats-summary__item">
+                    <span className="dashboard-stats-summary__label">
                       Completion Rate
                     </span>
-                    <span className="stats-summary__value">
+                    <span className="dashboard-stats-summary__value">
                       {deadlines.length > 0
                         ? Math.round((completedCount / deadlines.length) * 100)
                         : 0}

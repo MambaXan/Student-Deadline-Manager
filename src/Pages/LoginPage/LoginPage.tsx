@@ -16,79 +16,79 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="login-page-container">
+      <div className="login-page-wrapper">
         {/* Back Button */}
-        <button onClick={() => onNavigate("landing")} className="back-btn">
-          <span className="back-btn__icon">←</span>
+        <button onClick={() => onNavigate("landing")} className="login-page-back-btn">
+          <span className="login-page-back-btn__icon">←</span>
           Back to home
         </button>
 
         {/* Login Card */}
-        <div className="login-card">
+        <div className="login-page-card">
           {/* Logo */}
-          <div className="login-logo">
-            <div className="logo-icon">📅</div>
+          <div className="login-page-logo">
+            <div className="login-page-logo-icon">📅</div>
           </div>
 
-          <h1 className="login-title">Welcome Back</h1>
-          <p className="login-subtitle">Log in to manage your deadlines</p>
+          <h1 className="login-page-title">Welcome Back</h1>
+          <p className="login-page-subtitle">Log in to manage your deadlines</p>
 
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-page-form">
             {/* Email Field */}
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
-              <div className="input-with-icon">
+            <div className="login-page-form-group">
+              <label className="login-page-form-label">Email Address</label>
+              <div className="login-page-input-with-icon">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="form-input"
+                  className="login-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Password Field */}
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div className="input-with-icon">
+            <div className="login-page-form-group">
+              <label className="login-page-form-label">Password</label>
+              <div className="login-page-input-with-icon">
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="form-input"
+                  className="login-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Forgot Password Link */}
-            <div className="forgot-password">
-              <button type="button" className="forgot-password-btn">
+            <div className="login-page-forgot-password">
+              <button type="button" className="login-page-forgot-password-btn">
                 Forgot password?
               </button>
             </div>
 
             {/* Login Button */}
-            <button type="submit" className="btn btn--login">
+            <button type="submit" className="login-page-btn login-page-btn--login">
               Log In
             </button>
           </form>
 
           {/* Sign Up Link */}
-          <p className="signup-link">
+          <p className="login-page-signup-link">
             Don't have an account?{" "}
-            <button onClick={() => onNavigate("signup")} className="signup-btn">
+            <button onClick={() => onNavigate("signup")} className="login-page-signup-btn">
               Sign Up
             </button>
           </p>
         </div>
 
         {/* Additional Info */}
-        <p className="terms-info">
+        <p className="login-page-terms-info">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>

@@ -3,6 +3,7 @@ import "./CalendarPage.scss";
 import { Course } from "../../Types/course";
 import { Deadline as ImportedDeadline } from "../../Types/deadline";
 import { Sidebar } from "../../сomponents/Sidebar";
+import { MobileNav } from "../../сomponents/MobileNav";
 
 interface Deadline {
   id: string;
@@ -24,11 +25,13 @@ interface CalendarPageProps {
 // Components
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
-    <div className="topbar">
-      <div className="topbar__content">
-        <h1 className="topbar__title">Academic Calendar</h1>
-        <div className="topbar__user">
-          <span className="topbar__user-name">Welcome {userName}!</span>
+    <div className="calendar-topbar">
+      <div className="calendar-topbar__content">
+        <h1 className="calendar-topbar__title">Academic Calendar</h1>
+        <div className="calendar-topbar__user">
+          <span className="calendar-topbar__user-name">
+            Welcome {userName}!
+          </span>
         </div>
       </div>
     </div>
@@ -58,32 +61,32 @@ const DeadlineModal: React.FC<{
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal__header">
-          <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">
+    <div className="calendar-modal-overlay" onClick={onClose}>
+      <div className="calendar-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="calendar-modal__header">
+          <h3 className="calendar-modal__title">Add New Deadline</h3>
+          <button onClick={onClose} className="calendar-modal__close-btn">
             ×
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="modal__form">
-          <div className="form-group">
-            <label className="form-label">Task Name</label>
+        <form onSubmit={handleSubmit} className="calendar-modal__form">
+          <div className="calendar-form-group">
+            <label className="calendar-form-label">Task Name</label>
             <input
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
-              className="form-input"
+              className="calendar-form-input"
               required
               placeholder="Enter task name"
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Course</label>
+          <div className="calendar-form-group">
+            <label className="calendar-form-label">Course</label>
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="form-select"
+              className="calendar-form-select"
               required
             >
               <option value="">Select a course</option>
@@ -94,25 +97,28 @@ const DeadlineModal: React.FC<{
               ))}
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Due Date</label>
+          <div className="calendar-form-group">
+            <label className="calendar-form-label">Due Date</label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="form-input"
+              className="calendar-form-input"
               required
             />
           </div>
-          <div className="modal__actions">
+          <div className="calendar-modal__actions">
             <button
               type="button"
-              className="btn btn--secondary"
+              className="calendar-btn calendar-btn--secondary"
               onClick={onClose}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
+            <button
+              type="submit"
+              className="calendar-btn calendar-btn--primary"
+            >
               Save Deadline
             </button>
           </div>
@@ -132,6 +138,7 @@ export function CalendarPage({
 }: CalendarPageProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getCourseById = (courseId: string) => {
     return courses.find((c) => c.id === courseId);
@@ -237,179 +244,218 @@ export function CalendarPage({
         onLogout={onLogout}
       />
 
-      <div className="main-content">
-        <TopBar userName="" />
+      <MobileNav
+        currentPage="calendar"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
 
-        <main className="content">
-          <div className="calendar-container">
-            <div className="calendar">
-              <div className="calendar__header">
-                <h2 className="calendar__title">
-                  {monthNames[currentDate.getMonth()]}{" "}
-                  {currentDate.getFullYear()}
-                </h2>
-                <div className="calendar__controls">
-                  <button onClick={previousMonth} className="calendar__nav-btn">
-                    ‹
-                  </button>
-                  <button
-                    onClick={() => setCurrentDate(new Date())}
-                    className="btn btn--today"
-                  >
-                    Today
-                  </button>
-                  <button onClick={nextMonth} className="calendar__nav-btn">
-                    ›
-                  </button>
-                  <button
-                    onClick={() => setShowAddModal(true)}
-                    className="btn btn--add"
-                  >
-                    + Add Deadline
-                  </button>
-                </div>
-              </div>
-
-              <div className="calendar__grid">
-                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-                  (day) => (
-                    <div key={day} className="calendar__day-header">
-                      {day}
-                    </div>
-                  )
-                )}
-
-                {days.map((day, index) => {
-                  if (day === null) {
-                    return (
-                      <div
-                        key={`empty-${index}`}
-                        className="calendar__day calendar__day--empty"
-                      />
-                    );
-                  }
-
-                  const dayDeadlines = getDeadlinesForDate(day);
-                  const isTodayDate = isToday(day);
-
-                  return (
-                    <div
-                      key={day}
-                      className={`calendar__day ${
-                        isTodayDate ? "calendar__day--today" : ""
-                      }`}
-                    >
-                      <div
-                        className={`calendar__day-number ${
-                          isTodayDate ? "calendar__day-number--today" : ""
-                        }`}
-                      >
-                        {day}
-                      </div>
-                      <div className="calendar__deadlines">
-                        {dayDeadlines.slice(0, 3).map((deadline) => {
-                          const course = getCourseById(deadline.courseId);
-                          return (
-                            <div
-                              key={deadline.id}
-                              className="calendar__deadline-item"
-                              style={{
-                                backgroundColor: course?.color
-                                  ? `${course.color}20`
-                                  : "#f3f4f6",
-                                color: course?.color || "#6b7280",
-                                borderLeft: `3px solid ${
-                                  course?.color || "#6b7280"
-                                }`,
-                              }}
-                              title={deadline.taskName}
-                            >
-                              {deadline.taskName}
-                            </div>
-                          );
-                        })}
-                        {dayDeadlines.length > 3 && (
-                          <div className="calendar__deadline-more">
-                            +{dayDeadlines.length - 3} more
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+      <div className="calendar-main-content">
+        <div className="calendar-topbar">
+          <div className="calendar-topbar__content">
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="calendar-topbar__menu-btn"
+              >
+                ☰
+              </button>
+              <h1 className="calendar-topbar__title">Academic Calendar</h1>
             </div>
-
-            <div className="sidebar-content">
-              <div className="sidebar-card">
-                <h3 className="sidebar-card__title">This Week</h3>
-
-                {thisWeekDeadlines.length === 0 ? (
-                  <p className="sidebar-card__empty">No deadlines this week</p>
-                ) : (
-                  <div className="deadlines-list">
-                    {thisWeekDeadlines.map((deadline) => {
-                      const course = getCourseById(deadline.courseId);
-                      return (
-                        <div key={deadline.id} className="deadline-card">
-                          <div className="deadline-card__title">
-                            {deadline.taskName}
-                          </div>
-                          <div className="deadline-card__details">
-                            {course && (
-                              <span
-                                className="deadline-card__course"
-                                style={{
-                                  backgroundColor: `${course.color}20`,
-                                  color: course.color,
-                                }}
-                              >
-                                {course.title.split(" ")[0]}
-                              </span>
-                            )}
-                            <span className="deadline-card__date">
-                              {new Date(deadline.dueDate).toLocaleDateString(
-                                "en-US",
-                                {
-                                  month: "short",
-                                  day: "numeric",
-                                }
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              <div className="sidebar-card">
-                <h3 className="sidebar-card__title">Courses</h3>
-                <div className="courses-list">
-                  {courses.slice(0, 5).map((course) => (
-                    <div key={course.id} className="course-item">
-                      <div
-                        className="course-item__color"
-                        style={{ backgroundColor: course.color }}
-                      />
-                      <span className="course-item__title">{course.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="calendar-topbar__user">
+              <span className="calendar-topbar__user-name">Welcome!</span>
             </div>
           </div>
-        </main>
-      </div>
+          <TopBar userName="" />
 
-      {showAddModal && (
-        <DeadlineModal
-          courses={courses}
-          onSave={onAddDeadline}
-          onClose={() => setShowAddModal(false)}
-        />
-      )}
+          <main className="calendar-content">
+            <div className="calendar-container">
+              <div className="calendar-widget">
+                <div className="calendar-widget__header">
+                  <h2 className="calendar-widget__title">
+                    {monthNames[currentDate.getMonth()]}{" "}
+                    {currentDate.getFullYear()}
+                  </h2>
+                  <div className="calendar-widget__controls">
+                    <button
+                      onClick={previousMonth}
+                      className="calendar-widget__nav-btn"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      onClick={() => setCurrentDate(new Date())}
+                      className="calendar-btn calendar-btn--today"
+                    >
+                      Today
+                    </button>
+                    <button
+                      onClick={nextMonth}
+                      className="calendar-widget__nav-btn"
+                    >
+                      ›
+                    </button>
+                    <button
+                      onClick={() => setShowAddModal(true)}
+                      className="calendar-btn calendar-btn--add"
+                    >
+                      + Add Deadline
+                    </button>
+                  </div>
+                </div>
+
+                <div className="calendar-widget__grid">
+                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                    (day) => (
+                      <div key={day} className="calendar-widget__day-header">
+                        {day}
+                      </div>
+                    )
+                  )}
+
+                  {days.map((day, index) => {
+                    if (day === null) {
+                      return (
+                        <div
+                          key={`empty-${index}`}
+                          className="calendar-widget__day calendar-widget__day--empty"
+                        />
+                      );
+                    }
+
+                    const dayDeadlines = getDeadlinesForDate(day);
+                    const isTodayDate = isToday(day);
+
+                    return (
+                      <div
+                        key={day}
+                        className={`calendar-widget__day ${
+                          isTodayDate ? "calendar-widget__day--today" : ""
+                        }`}
+                      >
+                        <div
+                          className={`calendar-widget__day-number ${
+                            isTodayDate
+                              ? "calendar-widget__day-number--today"
+                              : ""
+                          }`}
+                        >
+                          {day}
+                        </div>
+                        <div className="calendar-widget__deadlines">
+                          {dayDeadlines.slice(0, 3).map((deadline) => {
+                            const course = getCourseById(deadline.courseId);
+                            return (
+                              <div
+                                key={deadline.id}
+                                className="calendar-widget__deadline-item"
+                                style={{
+                                  backgroundColor: course?.color
+                                    ? `${course.color}20`
+                                    : "#f3f4f6",
+                                  color: course?.color || "#6b7280",
+                                  borderLeft: `3px solid ${
+                                    course?.color || "#6b7280"
+                                  }`,
+                                }}
+                                title={deadline.taskName}
+                              >
+                                {deadline.taskName}
+                              </div>
+                            );
+                          })}
+                          {dayDeadlines.length > 3 && (
+                            <div className="calendar-widget__deadline-more">
+                              +{dayDeadlines.length - 3} more
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="calendar-sidebar-content">
+                <div className="calendar-sidebar-card">
+                  <h3 className="calendar-sidebar-card__title">This Week</h3>
+
+                  {thisWeekDeadlines.length === 0 ? (
+                    <p className="calendar-sidebar-card__empty">
+                      No deadlines this week
+                    </p>
+                  ) : (
+                    <div className="calendar-deadlines-list">
+                      {thisWeekDeadlines.map((deadline) => {
+                        const course = getCourseById(deadline.courseId);
+                        return (
+                          <div
+                            key={deadline.id}
+                            className="calendar-deadline-card"
+                          >
+                            <div className="calendar-deadline-card__title">
+                              {deadline.taskName}
+                            </div>
+                            <div className="calendar-deadline-card__details">
+                              {course && (
+                                <span
+                                  className="calendar-deadline-card__course"
+                                  style={{
+                                    backgroundColor: `${course.color}20`,
+                                    color: course.color,
+                                  }}
+                                >
+                                  {course.title.split(" ")[0]}
+                                </span>
+                              )}
+                              <span className="calendar-deadline-card__date">
+                                {new Date(deadline.dueDate).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="calendar-sidebar-card">
+                  <h3 className="calendar-sidebar-card__title">Courses</h3>
+                  <div className="calendar-courses-list">
+                    {courses.slice(0, 5).map((course) => (
+                      <div key={course.id} className="calendar-course-item">
+                        <div
+                          className="calendar-course-item__color"
+                          style={{ backgroundColor: course.color }}
+                        />
+                        <span className="calendar-course-item__title">
+                          {course.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+
+        {showAddModal && (
+          <DeadlineModal
+            courses={courses}
+            onSave={onAddDeadline}
+            onClose={() => setShowAddModal(false)}
+          />
+        )}
+      </div>
     </div>
   );
 }

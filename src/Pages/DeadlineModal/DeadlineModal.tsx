@@ -70,59 +70,57 @@ export function DeadlineModal({
 
   return (
     <div className="deadline-modal-overlay" onClick={onClose}>
-      <div className="deadline-modal" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="deadline-modal__header">
-          <h2 className="deadline-modal__title">
+      <div className="deadline-modal-container" onClick={(e) => e.stopPropagation()}>
+        <div className="deadline-modal-container__header">
+          <h2 className="deadline-modal-container__title">
             {deadline ? "Edit Deadline" : "Add New Deadline"}
           </h2>
-          <button onClick={onClose} className="deadline-modal__close-btn">
+          <button className="deadline-modal-container__close-btn" onClick={onClose}>
             ×
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="deadline-modal__form">
+        <form className="deadline-modal-container__form" onSubmit={handleSubmit}>
           {/* Task Name */}
-          <div className="form-group">
-            <label className="form-label">Task Name *</label>
+          <div className="deadline-modal-field">
+            <label className="deadline-modal-label">Task Name *</label>
             <input
+              className="deadline-modal-input"
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
-              placeholder="e.g., Lab Report #3"
-              className="form-input"
+              placeholder="Enter task name"
               required
             />
           </div>
 
-          {/* Course and Type Row */}
-          <div className="form-row">
-            {/* Course */}
-            <div className="form-group">
-              <label className="form-label">Course *</label>
-              <select
-                value={courseId}
-                onChange={(e) => setCourseId(e.target.value)}
-                className="form-select"
-                required
-              >
-                <option value="">Select a course</option>
-                {courses.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.title}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* Course Selector */}
+          <div className="deadline-modal-field">
+            <label className="deadline-modal-label">Course *</label>
+            <select
+              className="deadline-modal-select"
+              value={courseId}
+              onChange={(e) => setCourseId(e.target.value)}
+              required
+            >
+              <option value="">Select a course</option>
+              {courses.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            {/* Type */}
-            <div className="form-group">
-              <label className="form-label">Type *</label>
+          {/* Type and Priority Row */}
+          <div className="deadline-modal-field deadline-modal-field--row">
+            {/* Task Type */}
+            <div>
+              <label className="deadline-modal-label">Task Type</label>
               <select
+                className="deadline-modal-select"
                 value={type}
                 onChange={(e) => setType(e.target.value as any)}
-                className="form-select"
               >
                 <option value="assignment">Assignment</option>
                 <option value="quiz">Quiz</option>
@@ -130,56 +128,35 @@ export function DeadlineModal({
                 <option value="project">Project</option>
               </select>
             </div>
-          </div>
-
-          {/* Due Date and Priority Row */}
-          <div className="form-row">
-            {/* Due Date */}
-            <div className="form-group">
-              <label className="form-label">Due Date *</label>
-              <input
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="form-input"
-                required
-              />
-            </div>
 
             {/* Priority */}
-            <div className="form-group">
-              <label className="form-label">Priority *</label>
-              <div className="priority-buttons">
+            <div>
+              <label className="deadline-modal-label">Priority</label>
+              <div className="deadline-modal-priority-buttons">
                 <button
                   type="button"
-                  onClick={() => setPriority("low")}
-                  className={`priority-btn ${
-                    priority === "low"
-                      ? "priority-btn--low priority-btn--selected"
-                      : ""
+                  className={`deadline-modal-priority-btn deadline-modal-priority-btn--low ${
+                    priority === "low" ? "deadline-modal-priority-btn--selected" : ""
                   }`}
+                  onClick={() => setPriority("low")}
                 >
                   Low
                 </button>
                 <button
                   type="button"
-                  onClick={() => setPriority("medium")}
-                  className={`priority-btn ${
-                    priority === "medium"
-                      ? "priority-btn--medium priority-btn--selected"
-                      : ""
+                  className={`deadline-modal-priority-btn deadline-modal-priority-btn--medium ${
+                    priority === "medium" ? "deadline-modal-priority-btn--selected" : ""
                   }`}
+                  onClick={() => setPriority("medium")}
                 >
-                  Med
+                  Medium
                 </button>
                 <button
                   type="button"
-                  onClick={() => setPriority("high")}
-                  className={`priority-btn ${
-                    priority === "high"
-                      ? "priority-btn--high priority-btn--selected"
-                      : ""
+                  className={`deadline-modal-priority-btn deadline-modal-priority-btn--high ${
+                    priority === "high" ? "deadline-modal-priority-btn--selected" : ""
                   }`}
+                  onClick={() => setPriority("high")}
                 >
                   High
                 </button>
@@ -187,29 +164,41 @@ export function DeadlineModal({
             </div>
           </div>
 
+          {/* Due Date */}
+          <div className="deadline-modal-field">
+            <label className="deadline-modal-label">Due Date *</label>
+            <input
+              className="deadline-modal-input"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              required
+            />
+          </div>
+
           {/* Description */}
-          <div className="form-group">
-            <label className="form-label">Description</label>
+          <div className="deadline-modal-field">
+            <label className="deadline-modal-label">Description</label>
             <textarea
+              className="deadline-modal-textarea"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Add notes or details about this task..."
+              placeholder="Optional description or notes..."
               rows={4}
-              className="form-textarea"
             />
           </div>
 
           {/* Actions */}
-          <div className="deadline-modal__actions">
+          <div className="deadline-modal-container__actions">
             <button
               type="button"
+              className="deadline-modal-btn deadline-modal-btn--secondary"
               onClick={onClose}
-              className="btn btn--secondary"
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
-              {deadline ? "Save Changes" : "Add Deadline"}
+            <button type="submit" className="deadline-modal-btn deadline-modal-btn--primary">
+              {deadline ? "Update Deadline" : "Add Deadline"}
             </button>
           </div>
         </form>

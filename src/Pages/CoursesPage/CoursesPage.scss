@@ -1,54 +1,56 @@
-// Variables
-$primary-color: #4f46e5;
-$primary-light: #eef2ff;
-$secondary-color: #6b7280;
-$light-gray: #f9fafb;
-$medium-gray: #e5e7eb;
-$dark-gray: #374151;
-$white: #ffffff;
-$card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-$card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+// Courses Page Variables
+$courses-page-primary-color: #4f46e5;
+$courses-page-primary-light: #eef2ff;
+$courses-page-secondary-color: #6b7280;
+$courses-page-light-gray: #f9fafb;
+$courses-page-medium-gray: #e5e7eb;
+$courses-page-dark-gray: #374151;
+$courses-page-white: #ffffff;
+$courses-page-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1),
+  0 1px 2px rgba(0, 0, 0, 0.06);
+$courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-// Mixins
-@mixin flex-center {
+// Courses Page Mixins
+@mixin courses-page-flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-@mixin flex-between {
+@mixin courses-page-flex-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-// Base styles
-.courses-page {
+// Courses Page base styles
+.courses-page-container {
   display: flex;
   min-height: 100vh;
-  background-color: $light-gray;
+  background-color: $courses-page-light-gray;
 
-  .main-content {
+  .courses-page-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    min-width: 0;
   }
 
-  .content {
+  .courses-page-content {
     flex: 1;
     overflow-y: auto;
     padding: 24px;
   }
 }
 
-// Header
-.courses-header {
+// Courses Page header
+.courses-page-header {
   margin-bottom: 32px;
 
   &__content {
-    @include flex-between;
+    @include courses-page-flex-between;
     gap: 20px;
   }
 
@@ -59,14 +61,14 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   &__title {
     font-size: 32px;
     font-weight: 700;
-    color: $dark-gray;
+    color: $courses-page-dark-gray;
     margin-bottom: 8px;
     line-height: 1.2;
   }
 
   &__subtitle {
     font-size: 16px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
   }
 
   &__actions {
@@ -76,41 +78,41 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-// Add course button
-.btn--add-course {
-  background-color: $primary-color;
-  color: $white;
+// Courses Page add course button
+.courses-page-btn--add-course {
+  background-color: $courses-page-primary-color;
+  color: $courses-page-white;
   font-weight: 500;
   padding: 12px 24px;
   border-radius: 12px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  @include flex-center;
+  @include courses-page-flex-center;
   gap: 8px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken($courses-page-primary-color, 10%);
     transform: translateY(-1px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
-  .btn__icon {
+  .courses-page-btn__icon {
     font-size: 16px;
   }
 }
 
-// Empty state
-.empty-state {
+// Courses Page empty state
+.courses-page-empty-state {
   text-align: center;
   padding: 80px 20px;
 
   &__icon {
     font-size: 64px;
-    color: $medium-gray;
+    color: $courses-page-medium-gray;
     margin-bottom: 20px;
     display: inline-block;
   }
@@ -118,45 +120,49 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   &__title {
     font-size: 24px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $courses-page-dark-gray;
     margin-bottom: 8px;
   }
 
   &__text {
     font-size: 16px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
     margin-bottom: 32px;
   }
 }
 
-// Courses grid
-.courses-grid {
+// Courses Page grid
+.courses-page-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  @media (max-width: 640px) {
     grid-template-columns: 1fr;
   }
 }
 
-// Course card
-.course-card {
-  background-color: $white;
+// Courses Page card
+.courses-page-card {
+  background-color: $courses-page-white;
   border-radius: 16px;
-  border: 1px solid $medium-gray;
+  border: 1px solid $courses-page-medium-gray;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: $card-shadow;
+  box-shadow: $courses-page-card-shadow;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $card-shadow-hover;
+    box-shadow: $courses-page-card-shadow-hover;
 
-    .course-card__view-btn {
-      background-color: $primary-light;
-      color: $primary-color;
+    .courses-page-card__view-btn {
+      background-color: $courses-page-primary-light;
+      color: $courses-page-primary-color;
     }
   }
 
@@ -177,12 +183,12 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     right: 16px;
     width: 48px;
     height: 48px;
-    background-color: rgba($white, 0.2);
+    background-color: rgba($courses-page-white, 0.2);
     backdrop-filter: blur(8px);
     border-radius: 12px;
-    @include flex-center;
+    @include courses-page-flex-center;
     font-size: 24px;
-    color: $white;
+    color: $courses-page-white;
   }
 
   &__content {
@@ -192,7 +198,7 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $courses-page-dark-gray;
     margin-bottom: 16px;
     line-height: 1.4;
   }
@@ -212,24 +218,24 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
 
   &__detail-icon {
     font-size: 16px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
   }
 
   &__detail-text {
     font-size: 14px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
   }
 
   &__footer {
-    @include flex-between;
+    @include courses-page-flex-between;
     padding-top: 20px;
-    border-top: 1px solid $medium-gray;
+    border-top: 1px solid $courses-page-medium-gray;
     margin-bottom: 16px;
   }
 
   &__tasks-label {
     font-size: 14px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
   }
 
   &__tasks-count {
@@ -243,8 +249,8 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     width: 100%;
     padding: 12px;
     border: none;
-    background-color: $light-gray;
-    color: $secondary-color;
+    background-color: $courses-page-light-gray;
+    color: $courses-page-secondary-color;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 500;
@@ -252,13 +258,13 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $medium-gray;
+      background-color: $courses-page-medium-gray;
     }
   }
 }
 
-// Buttons
-.btn {
+// Courses Page buttons
+.courses-page-btn {
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
@@ -266,145 +272,47 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  @include flex-center;
+  @include courses-page-flex-center;
   gap: 8px;
 
   &--primary {
-    background-color: $primary-color;
-    color: $white;
+    background-color: $courses-page-primary-color;
+    color: $courses-page-white;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: darken($courses-page-primary-color, 10%);
     }
   }
 
   &--secondary {
-    background-color: $light-gray;
-    color: $dark-gray;
-    border: 1px solid $medium-gray;
+    background-color: $courses-page-light-gray;
+    color: $courses-page-dark-gray;
+    border: 1px solid $courses-page-medium-gray;
 
     &:hover {
-      background-color: darken($light-gray, 5%);
+      background-color: darken($courses-page-light-gray, 5%);
     }
   }
 
-  .btn__icon {
+  .courses-page-btn__icon {
     font-size: 14px;
   }
 }
 
-// Sidebar and Topbar
-.sidebar {
-  width: 240px;
-  background-color: $white;
-  border-right: 1px solid $medium-gray;
-  display: flex;
-  flex-direction: column;
-
-  &__content {
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__title {
-    font-size: 18px;
-    font-weight: 600;
-    color: $primary-color;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid $medium-gray;
-  }
-
-  &__nav {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__nav-item {
-    padding: 12px 16px;
-    border: none;
-    background: none;
-    text-align: left;
-    border-radius: 8px;
-    font-size: 14px;
-    color: $secondary-color;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $light-gray;
-      color: $primary-color;
-    }
-
-    &--active {
-      background-color: $primary-light;
-      color: $primary-color;
-      font-weight: 500;
-    }
-  }
-
-  &__logout-btn {
-    margin-top: auto;
-    padding: 12px 16px;
-    border: 1px solid $medium-gray;
-    background-color: $white;
-    border-radius: 8px;
-    font-size: 14px;
-    color: $dark-gray;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $light-gray;
-    }
-  }
-}
-
-.topbar {
-  background-color: $white;
-  border-bottom: 1px solid $medium-gray;
-  padding: 16px 20px;
-
-  &__content {
-    @include flex-between;
-  }
-
-  &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: $dark-gray;
-  }
-
-  &__user {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__user-name {
-    font-size: 14px;
-    color: $secondary-color;
-  }
-}
-
-// Modal
-.modal-overlay {
+// Courses Page modal
+.courses-page-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  @include flex-center;
+  @include courses-page-flex-center;
   z-index: 1000;
 }
 
-.modal {
-  background-color: $white;
+.courses-page-modal {
+  background-color: $courses-page-white;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
@@ -412,15 +320,15 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   overflow-y: auto;
 
   &__header {
-    @include flex-between;
+    @include courses-page-flex-between;
     padding: 20px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $courses-page-medium-gray;
   }
 
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $courses-page-dark-gray;
   }
 
   &__close-btn {
@@ -429,13 +337,13 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     border: none;
     background: none;
     font-size: 24px;
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
     cursor: pointer;
-    @include flex-center;
+    @include courses-page-flex-center;
     border-radius: 4px;
 
     &:hover {
-      background-color: $light-gray;
+      background-color: $courses-page-light-gray;
     }
   }
 
@@ -451,43 +359,44 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-// Form elements
-.form-group {
+// Courses Page form elements
+.courses-page-form-group {
   margin-bottom: 20px;
 }
 
-.form-label {
+.courses-page-form-label {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: $dark-gray;
+  color: $courses-page-dark-gray;
   margin-bottom: 8px;
 }
 
-.form-input {
+.courses-page-form-input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid $medium-gray;
+  border: 1px solid $courses-page-medium-gray;
   border-radius: 8px;
   font-size: 14px;
-  color: $dark-gray;
-  background-color: $white;
+  color: $courses-page-dark-gray;
+  background-color: $courses-page-white;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    border-color: $courses-page-primary-color;
+    box-shadow: 0 0 0 3px rgba($courses-page-primary-color, 0.1);
   }
 
   &::placeholder {
-    color: $secondary-color;
+    color: $courses-page-secondary-color;
     opacity: 0.6;
   }
 }
 
-// Color picker
-.color-picker {
+// Courses Page color picker
+.courses-page-color-picker {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -507,14 +416,15 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
 
     &--selected {
       transform: scale(1.1);
-      box-shadow: 0 0 0 3px $white, 0 0 0 6px $medium-gray;
+      box-shadow: 0 0 0 3px $courses-page-white,
+        0 0 0 6px $courses-page-medium-gray;
     }
   }
 }
 
-// Responsive
+// Courses Page responsive
 @media (max-width: 768px) {
-  .courses-header {
+  .courses-page-header {
     &__content {
       flex-direction: column;
       align-items: flex-start;
@@ -526,18 +436,18 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     }
   }
 
-  .btn--add-course {
+  .courses-page-btn--add-course {
     width: auto;
     padding: 10px 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .content {
+  .courses-page-content {
     padding: 16px;
   }
 
-  .courses-header {
+  .courses-page-header {
     &__title {
       font-size: 24px;
     }
@@ -547,7 +457,7 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     }
   }
 
-  .empty-state {
+  .courses-page-empty-state {
     padding: 40px 20px;
 
     &__icon {
@@ -561,5 +471,71 @@ $card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     &__text {
       font-size: 14px;
     }
+  }
+}
+
+@media (max-width: 360px) {
+  .courses-page-grid {
+    gap: 16px;
+  }
+
+  .courses-page-card {
+    &__content {
+      padding: 16px;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+
+  .courses-page-btn--add-course {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// Courses Page topbar
+.courses-page-topbar {
+  background-color: $courses-page-white;
+  border-bottom: 1px solid $courses-page-medium-gray;
+  padding: 16px 20px;
+
+  &__menu-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid $courses-page-medium-gray;
+    background: none;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: 1200px) {
+      display: none;
+    }
+  }
+
+  &__content {
+    @include courses-page-flex-between;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $courses-page-dark-gray;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__user-name {
+    font-size: 14px;
+    color: $courses-page-secondary-color;
   }
 }

@@ -34,11 +34,11 @@ interface CourseDetailsPageProps {
 // Components
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
-    <div className="topbar">
-      <div className="topbar__content">
-        <h1 className="topbar__title">Course Details</h1>
-        <div className="topbar__user">
-          <span className="topbar__user-name">Welcome {userName}</span>
+    <div className="course-details-topbar">
+      <div className="course-details-topbar__content">
+        <h1 className="course-details-topbar__title">Course Details</h1>
+        <div className="course-details-topbar__user">
+          <span className="course-details-topbar__user-name">Welcome {userName}</span>
         </div>
       </div>
     </div>
@@ -73,32 +73,32 @@ const DeadlineModal: React.FC<{
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal__header">
-          <h3 className="modal__title">Add New Deadline</h3>
-          <button onClick={onClose} className="modal__close-btn">
+    <div className="course-details-modal-overlay" onClick={onClose}>
+      <div className="course-details-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="course-details-modal__header">
+          <h3 className="course-details-modal__title">Add New Deadline</h3>
+          <button onClick={onClose} className="course-details-modal__close-btn">
             ×
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="modal__form">
-          <div className="form-group">
-            <label className="form-label">Task Name</label>
+        <form onSubmit={handleSubmit} className="course-details-modal__form">
+          <div className="course-details-form-group">
+            <label className="course-details-form-label">Task Name</label>
             <input
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
-              className="form-input"
+              className="course-details-form-input"
               required
               placeholder="Enter task name"
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Course</label>
+          <div className="course-details-form-group">
+            <label className="course-details-form-label">Course</label>
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="form-select"
+              className="course-details-form-select"
               required
             >
               {courses.map((course) => (
@@ -108,12 +108,12 @@ const DeadlineModal: React.FC<{
               ))}
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Type</label>
+          <div className="course-details-form-group">
+            <label className="course-details-form-label">Type</label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="form-select"
+              className="course-details-form-select"
               required
             >
               <option value="assignment">Assignment</option>
@@ -122,12 +122,12 @@ const DeadlineModal: React.FC<{
               <option value="project">Project</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Priority</label>
+          <div className="course-details-form-group">
+            <label className="course-details-form-label">Priority</label>
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="form-select"
+              className="course-details-form-select"
               required
             >
               <option value="low">Low</option>
@@ -135,25 +135,25 @@ const DeadlineModal: React.FC<{
               <option value="high">High</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Due Date</label>
+          <div className="course-details-form-group">
+            <label className="course-details-form-label">Due Date</label>
             <input
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="form-input"
+              className="course-details-form-input"
               required
             />
           </div>
-          <div className="modal__actions">
+          <div className="course-details-modal__actions">
             <button
               type="button"
-              className="btn btn--secondary"
+              className="course-details-btn course-details-btn--secondary"
               onClick={onClose}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
+            <button type="submit" className="course-details-btn course-details-btn--primary">
               Save Deadline
             </button>
           </div>
@@ -177,26 +177,26 @@ export function CourseDetailsPage({
   const getPriorityClass = (priority: string) => {
     switch (priority) {
       case "high":
-        return "badge badge--high";
+        return "course-details-badge course-details-badge--high";
       case "medium":
-        return "badge badge--medium";
+        return "course-details-badge course-details-badge--medium";
       case "low":
-        return "badge badge--low";
+        return "course-details-badge course-details-badge--low";
       default:
-        return "badge";
+        return "course-details-badge";
     }
   };
 
   const getStatusClass = (status: string) => {
     switch (status) {
       case "completed":
-        return "badge badge--completed";
+        return "course-details-badge course-details-badge--completed";
       case "overdue":
-        return "badge badge--overdue";
+        return "course-details-badge course-details-badge--overdue";
       case "upcoming":
-        return "badge badge--upcoming";
+        return "course-details-badge course-details-badge--upcoming";
       default:
-        return "badge";
+        return "course-details-badge";
     }
   };
 
@@ -233,35 +233,35 @@ export function CourseDetailsPage({
         onLogout={onLogout}
       />
 
-      <div className="main-content">
+      <div className="course-details-main-content">
         <TopBar userName="Alex" />
 
-        <main className="content">
+        <main className="course-details-content">
           {/* Back Button */}
-          <button onClick={onBack} className="back-btn">
+          <button onClick={onBack} className="course-details-back-btn">
             ← Back to Courses
           </button>
 
           {/* Course Header */}
-          <div className="course-header">
+          <div className="course-details-header">
             <div
-              className="course-header__banner"
+              className="course-details-header__banner"
               style={{ backgroundColor: course.color }}
             >
-              <div className="course-header__overlay" />
-              <div className="course-header__info">
-                <div className="course-header__left">
-                  <h1 className="course-header__title">{course.title}</h1>
-                  <div className="course-header__meta">
-                    <div className="course-header__meta-item">
-                      <span className="course-header__meta-icon">👤</span>
-                      <span className="course-header__meta-text">
+              <div className="course-details-header__overlay" />
+              <div className="course-details-header__info">
+                <div className="course-details-header__left">
+                  <h1 className="course-details-header__title">{course.title}</h1>
+                  <div className="course-details-header__meta">
+                    <div className="course-details-header__meta-item">
+                      <span className="course-details-header__meta-icon">👤</span>
+                      <span className="course-details-header__meta-text">
                         {course.instructor}
                       </span>
                     </div>
-                    <div className="course-header__meta-item">
-                      <span className="course-header__meta-icon">⏰</span>
-                      <span className="course-header__meta-text">
+                    <div className="course-details-header__meta-item">
+                      <span className="course-details-header__meta-icon">⏰</span>
+                      <span className="course-details-header__meta-text">
                         {course.semester}
                       </span>
                     </div>
@@ -269,100 +269,100 @@ export function CourseDetailsPage({
                 </div>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className="btn btn--add-deadline"
+                  className="course-details-btn course-details-btn--add-deadline"
                 >
-                  <span className="btn__icon">+</span>
+                  <span className="course-details-btn__icon">+</span>
                   Add Deadline
                 </button>
               </div>
             </div>
 
             {/* Stats */}
-            <div className="course-stats">
-              <div className="course-stats__item">
-                <div className="course-stats__value">{upcomingDeadlines}</div>
-                <div className="course-stats__label">Upcoming</div>
+            <div className="course-details-stats">
+              <div className="course-details-stats__item">
+                <div className="course-details-stats__value">{upcomingDeadlines}</div>
+                <div className="course-details-stats__label">Upcoming</div>
               </div>
-              <div className="course-stats__item course-stats__item--border">
-                <div className="course-stats__value">{overdueDeadlines}</div>
-                <div className="course-stats__label">Overdue</div>
+              <div className="course-details-stats__item course-details-stats__item--border">
+                <div className="course-details-stats__value">{overdueDeadlines}</div>
+                <div className="course-details-stats__label">Overdue</div>
               </div>
-              <div className="course-stats__item">
-                <div className="course-stats__value">{completedDeadlines}</div>
-                <div className="course-stats__label">Completed</div>
+              <div className="course-details-stats__item">
+                <div className="course-details-stats__value">{completedDeadlines}</div>
+                <div className="course-details-stats__label">Completed</div>
               </div>
             </div>
           </div>
 
           {/* Deadlines Section */}
-          <div className="deadlines-section">
-            <div className="deadlines-section__header">
-              <h2 className="deadlines-section__title">Course Deadlines</h2>
+          <div className="course-details-deadlines-section">
+            <div className="course-details-deadlines-section__header">
+              <h2 className="course-details-deadlines-section__title">Course Deadlines</h2>
             </div>
 
             {deadlines.length === 0 ? (
-              <div className="empty-state">
-                <span className="empty-state__icon">📅</span>
-                <p className="empty-state__text">
+              <div className="course-details-empty-state">
+                <span className="course-details-empty-state__icon">📅</span>
+                <p className="course-details-empty-state__text">
                   No deadlines for this course yet
                 </p>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className="btn btn--primary"
+                  className="course-details-btn course-details-btn--primary"
                 >
-                  <span className="btn__icon">+</span>
+                  <span className="course-details-btn__icon">+</span>
                   Add First Deadline
                 </button>
               </div>
             ) : (
-              <div className="deadlines-table-container">
-                <table className="deadlines-table">
-                  <thead className="deadlines-table__head">
+              <div className="course-details-table-container">
+                <table className="course-details-deadlines-table">
+                  <thead className="course-details-deadlines-table__head">
                     <tr>
-                      <th className="deadlines-table__header">Task</th>
-                      <th className="deadlines-table__header">Type</th>
-                      <th className="deadlines-table__header">Due Date</th>
-                      <th className="deadlines-table__header">Status</th>
-                      <th className="deadlines-table__header">Priority</th>
+                      <th className="course-details-deadlines-table__header">Task</th>
+                      <th className="course-details-deadlines-table__header">Type</th>
+                      <th className="course-details-deadlines-table__header">Due Date</th>
+                      <th className="course-details-deadlines-table__header">Status</th>
+                      <th className="course-details-deadlines-table__header">Priority</th>
                     </tr>
                   </thead>
-                  <tbody className="deadlines-table__body">
+                  <tbody className="course-details-deadlines-table__body">
                     {deadlines.map((deadline) => (
-                      <tr key={deadline.id} className="deadlines-table__row">
-                        <td className="deadlines-table__cell">
+                      <tr key={deadline.id} className="course-details-deadlines-table__row">
+                        <td className="course-details-deadlines-table__cell">
                           <span
-                            className={`deadlines-table__task ${
+                            className={`course-details-deadlines-table__task ${
                               deadline.status === "completed"
-                                ? "deadlines-table__task--completed"
+                                ? "course-details-deadlines-table__task--completed"
                                 : ""
                             }`}
                           >
                             {deadline.taskName}
                           </span>
                         </td>
-                        <td className="deadlines-table__cell">
-                          <span className="deadlines-table__type">
-                            <span className="deadlines-table__type-icon">
+                        <td className="course-details-deadlines-table__cell">
+                          <span className="course-details-deadlines-table__type">
+                            <span className="course-details-deadlines-table__type-icon">
                               {getTypeIcon(deadline.type)}
                             </span>
-                            <span className="deadlines-table__type-text">
+                            <span className="course-details-deadlines-table__type-text">
                               {deadline.type}
                             </span>
                           </span>
                         </td>
-                        <td className="deadlines-table__cell deadlines-table__cell--date">
+                        <td className="course-details-deadlines-table__cell course-details-deadlines-table__cell--date">
                           {deadline.dueDate.toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
                             year: "numeric",
                           })}
                         </td>
-                        <td className="deadlines-table__cell">
+                        <td className="course-details-deadlines-table__cell">
                           <span className={getStatusClass(deadline.status)}>
                             {deadline.status}
                           </span>
                         </td>
-                        <td className="deadlines-table__cell">
+                        <td className="course-details-deadlines-table__cell">
                           <span className={getPriorityClass(deadline.priority)}>
                             {deadline.priority}
                           </span>

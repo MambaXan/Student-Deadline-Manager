@@ -31,106 +31,106 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
   };
 
   return (
-    <div className="signup-page">
-      <div className="signup-container">
+    <div className="signup-page-container">
+      <div className="signup-page-wrapper">
         {/* Back Button */}
-        <button onClick={() => onNavigate("landing")} className="back-btn">
-          <span className="back-btn__icon">←</span>
+        <button onClick={() => onNavigate("landing")} className="signup-page-back-btn">
+          <span className="signup-page-back-btn__icon">←</span>
           Back to home
         </button>
 
         {/* Signup Card */}
-        <div className="signup-card">
+        <div className="signup-page-card">
           {/* Logo */}
-          <div className="signup-logo">
-            <div className="logo-icon">📅</div>
+          <div className="signup-page-logo">
+            <div className="signup-page-logo-icon">📅</div>
           </div>
 
-          <h1 className="signup-title">Create Account</h1>
-          <p className="signup-subtitle">
+          <h1 className="signup-page-title">Create Account</h1>
+          <p className="signup-page-subtitle">
             Join thousands of organized students
           </p>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="signup-page-error-message">{error}</div>}
 
-          <form onSubmit={handleSubmit} className="signup-form">
+          <form onSubmit={handleSubmit} className="signup-page-form">
             {/* Name Field */}
-            <div className="form-group">
-              <label className="form-label">Full Name</label>
-              <div className="input-with-icon">
+            <div className="signup-page-form-group">
+              <label className="signup-page-form-label">Full Name</label>
+              <div className="signup-page-input-with-icon">
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your full name"
-                  className="form-input"
+                  className="signup-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Email Field */}
-            <div className="form-group">
-              <label className="form-label">Email Address</label>
-              <div className="input-with-icon">
+            <div className="signup-page-form-group">
+              <label className="signup-page-form-label">Email Address</label>
+              <div className="signup-page-input-with-icon">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="form-input"
+                  className="signup-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Password Field */}
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <div className="input-with-icon">
+            <div className="signup-page-form-group">
+              <label className="signup-page-form-label">Password</label>
+              <div className="signup-page-input-with-icon">
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create a password"
-                  className="form-input"
+                  className="signup-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Confirm Password Field */}
-            <div className="form-group">
-              <label className="form-label">Confirm Password</label>
-              <div className="input-with-icon">
+            <div className="signup-page-form-group">
+              <label className="signup-page-form-label">Confirm Password</label>
+              <div className="signup-page-input-with-icon">
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm the password"
-                  className="form-input"
+                  className="signup-page-form-input"
                   required
                 />
               </div>
             </div>
 
             {/* Sign Up Button */}
-            <button type="submit" className="btn btn--signup">
+            <button type="submit" className="signup-page-btn signup-page-btn--signup">
               Create Account
             </button>
           </form>
 
           {/* Login Link */}
-          <p className="login-link">
+          <p className="signup-page-login-link">
             Already have an account?{" "}
-            <button onClick={() => onNavigate("login")} className="login-btn">
+            <button onClick={() => onNavigate("login")} className="signup-page-login-btn">
               Log In
             </button>
           </p>
         </div>
 
         {/* Additional Info */}
-        <p className="terms-info">
+        <p className="signup-page-terms-info">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>

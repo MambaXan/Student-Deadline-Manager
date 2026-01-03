@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import "./CoursesPage.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
+import { MobileNav } from "../../сomponents/MobileNav";
 
 // Interfaces
 interface Course {
@@ -34,11 +35,13 @@ interface CoursesPageProps {
 // Components
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
-    <div className="topbar">
-      <div className="topbar__content">
-        <h1 className="topbar__title">My Courses</h1>
-        <div className="topbar__user">
-          <span className="topbar__user-name">Welcome {userName}</span>
+    <div className="courses-page-topbar">
+      <div className="courses-page-topbar__content">
+        <h1 className="courses-page-topbar__title">My Courses</h1>
+        <div className="courses-page-topbar__user">
+          <span className="courses-page-topbar__user-name">
+            Welcome {userName}
+          </span>
         </div>
       </div>
     </div>
@@ -70,51 +73,51 @@ const CourseModal: React.FC<{
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal__header">
-          <h3 className="modal__title">Add New Course</h3>
-          <button onClick={onClose} className="modal__close-btn">
+    <div className="courses-page-modal-overlay" onClick={onClose}>
+      <div className="courses-page-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="courses-page-modal__header">
+          <h3 className="courses-page-modal__title">Add New Course</h3>
+          <button onClick={onClose} className="courses-page-modal__close-btn">
             ×
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="modal__form">
-          <div className="form-group">
-            <label className="form-label">Course Title</label>
+        <form onSubmit={handleSubmit} className="courses-page-modal__form">
+          <div className="courses-page-form-group">
+            <label className="courses-page-form-label">Course Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="form-input"
+              className="courses-page-form-input"
               placeholder="e.g., Computer Science 101"
               required
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Instructor Name</label>
+          <div className="courses-page-form-group">
+            <label className="courses-page-form-label">Instructor Name</label>
             <input
               type="text"
               value={instructor}
               onChange={(e) => setInstructor(e.target.value)}
-              className="form-input"
+              className="courses-page-form-input"
               placeholder="e.g., Dr. Smith"
               required
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Semester</label>
+          <div className="courses-page-form-group">
+            <label className="courses-page-form-label">Semester</label>
             <input
               type="text"
               value={semester}
               onChange={(e) => setSemester(e.target.value)}
-              className="form-input"
+              className="courses-page-form-input"
               placeholder="e.g., Fall 2024"
               required
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Course Color</label>
-            <div className="color-picker">
+          <div className="courses-page-form-group">
+            <label className="courses-page-form-label">Course Color</label>
+            <div className="courses-page-color-picker">
               {[
                 "#3B82F6",
                 "#10B981",
@@ -129,23 +132,28 @@ const CourseModal: React.FC<{
                   key={colorOption}
                   type="button"
                   onClick={() => setColor(colorOption)}
-                  className={`color-picker__item ${
-                    color === colorOption ? "color-picker__item--selected" : ""
+                  className={`courses-page-color-picker__item ${
+                    color === colorOption
+                      ? "courses-page-color-picker__item--selected"
+                      : ""
                   }`}
                   style={{ backgroundColor: colorOption }}
                 />
               ))}
             </div>
           </div>
-          <div className="modal__actions">
+          <div className="courses-page-modal__actions">
             <button
               type="button"
-              className="btn btn--secondary"
+              className="courses-page-btn courses-page-btn--secondary"
               onClick={onClose}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
+            <button
+              type="submit"
+              className="courses-page-btn courses-page-btn--primary"
+            >
               Add Course
             </button>
           </div>
@@ -165,6 +173,7 @@ export function CoursesPage({
   onAddCourse,
 }: CoursesPageProps) {
   const [showAddModal, setShowAddModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getUpcomingTasksCount = (courseId: string) => {
     return deadlines.filter(
@@ -173,31 +182,56 @@ export function CoursesPage({
   };
 
   return (
-    <div className="courses-page">
+    <div className="courses-page-container">
       <Sidebar
         currentPage={currentPage}
         onNavigate={onNavigate}
         onLogout={onLogout}
       />
 
-      <div className="main-content">
-        <TopBar userName="Alex" />
+      <MobileNav
+        currentPage="courses"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
 
-        <main className="content">
-          <div className="courses-header">
-            <div className="courses-header__content">
-              <div className="courses-header__text">
-                <h1 className="courses-header__title">My Courses</h1>
-                <p className="courses-header__subtitle">
+      <div className="courses-page-main-content">
+        <div className="courses-page-topbar">
+          <div className="courses-page-topbar__content">
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <button
+                className="courses-page-topbar__menu-btn"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                ☰
+              </button>
+              <h1 className="courses-page-topbar__title">My Courses</h1>
+            </div>
+            <div className="courses-page-topbar__user">
+              <span className="courses-page-topbar__user-name">
+                Welcome!
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <main className="courses-page-content">
+          <div className="courses-page-header">
+            <div className="courses-page-header__content">
+              <div className="courses-page-header__text">
+                <h1 className="courses-page-header__title">My Courses</h1>
+                <p className="courses-page-header__subtitle">
                   Organize and track all your university courses
                 </p>
               </div>
-              <div className="courses-header__actions">
+              <div className="courses-page-header__actions">
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className="btn btn--add-course"
+                  className="courses-page-btn courses-page-btn--add-course"
                 >
-                  <span className="btn__icon">+</span>
+                  <span className="courses-page-btn__icon">+</span>
                   Add Course
                 </button>
               </div>
@@ -205,63 +239,64 @@ export function CoursesPage({
           </div>
 
           {courses.length === 0 ? (
-            <div className="empty-state">
-              <span className="empty-state__icon">📚</span>
-              <h3 className="empty-state__title">No courses yet</h3>
-              <p className="empty-state__text">
+            <div className="courses-page-empty-state">
+              <span className="courses-page-empty-state__icon">📚</span>
+              <h3 className="courses-page-empty-state__title">
+                No courses yet
+              </h3>
+              <p className="courses-page-empty-state__text">
                 Add your first course to get started
               </p>
-              <button
-                onClick={() => setShowAddModal(true)}
-                className="btn btn--primary"
-              >
-                <span className="btn__icon">+</span>
-                Add Course
-              </button>
             </div>
           ) : (
-            <div className="courses-grid">
+            <div className="courses-page-grid">
               {courses.map((course) => {
                 const upcomingCount = getUpcomingTasksCount(course.id);
 
                 return (
                   <div
                     key={course.id}
-                    className="course-card"
+                    className="courses-page-card"
                     onClick={() => onViewCourse(course.id)}
                   >
                     <div
-                      className="course-card__banner"
+                      className="courses-page-card__banner"
                       style={{ backgroundColor: course.color }}
                     >
-                      <div className="course-card__overlay" />
-                      <div className="course-card__icon">📚</div>
+                      <div className="courses-page-card__overlay" />
+                      <div className="courses-page-card__icon">📚</div>
                     </div>
 
-                    <div className="course-card__content">
-                      <h3 className="course-card__title">{course.title}</h3>
+                    <div className="courses-page-card__content">
+                      <h3 className="courses-page-card__title">
+                        {course.title}
+                      </h3>
 
-                      <div className="course-card__details">
-                        <div className="course-card__detail">
-                          <span className="course-card__detail-icon">👤</span>
-                          <span className="course-card__detail-text">
+                      <div className="courses-page-card__details">
+                        <div className="courses-page-card__detail">
+                          <span className="courses-page-card__detail-icon">
+                            👤
+                          </span>
+                          <span className="courses-page-card__detail-text">
                             {course.instructor}
                           </span>
                         </div>
-                        <div className="course-card__detail">
-                          <span className="course-card__detail-icon">⏰</span>
-                          <span className="course-card__detail-text">
+                        <div className="courses-page-card__detail">
+                          <span className="courses-page-card__detail-icon">
+                            ⏰
+                          </span>
+                          <span className="courses-page-card__detail-text">
                             {course.semester}
                           </span>
                         </div>
                       </div>
 
-                      <div className="course-card__footer">
-                        <span className="course-card__tasks-label">
+                      <div className="courses-page-card__footer">
+                        <span className="courses-page-card__tasks-label">
                           Upcoming tasks
                         </span>
                         <span
-                          className="course-card__tasks-count"
+                          className="courses-page-card__tasks-count"
                           style={{
                             backgroundColor:
                               upcomingCount > 0
@@ -274,7 +309,7 @@ export function CoursesPage({
                         </span>
                       </div>
 
-                      <button className="course-card__view-btn">
+                      <button className="courses-page-card__view-btn">
                         View Details →
                       </button>
                     </div>

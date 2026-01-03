@@ -1,16 +1,16 @@
-// Variables
-$primary-color: #4f46e5;
-$primary-light: #eef2ff;
-$secondary-color: #6b7280;
-$light-gray: #f9fafb;
-$medium-gray: #e5e7eb;
-$dark-gray: #374151;
-$white: #ffffff;
-$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+// Course Modal Variables
+$course-modal-primary-color: #4f46e5;
+$course-modal-primary-light: #eef2ff;
+$course-modal-secondary-color: #6b7280;
+$course-modal-light-gray: #f9fafb;
+$course-modal-medium-gray: #e5e7eb;
+$course-modal-dark-gray: #374151;
+$course-modal-white: #ffffff;
+$course-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-// Animations
-@keyframes fadeIn {
+// Course Modal Animations
+@keyframes course-modal-fadeIn {
   from {
     opacity: 0;
   }
@@ -19,7 +19,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-@keyframes slideUp {
+@keyframes course-modal-slideUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -30,7 +30,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-// Course Modal
+// Course Modal overlay
 .course-modal-overlay {
   position: fixed;
   top: 0;
@@ -43,16 +43,17 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   justify-content: center;
   padding: 24px;
   z-index: 1000;
-  animation: fadeIn 0.2s ease-out;
+  animation: course-modal-fadeIn 0.2s ease-out;
 }
 
-.course-modal {
-  background-color: $white;
+// Course Modal container
+.course-modal-window {
+  background-color: $course-modal-white;
   border-radius: 16px;
   max-width: 500px;
   width: 100%;
-  animation: slideUp 0.3s ease-out;
-  box-shadow: $modal-shadow;
+  animation: course-modal-slideUp 0.3s ease-out;
+  box-shadow: $course-modal-shadow;
   overflow: hidden;
 
   &__header {
@@ -60,13 +61,13 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     align-items: center;
     justify-content: space-between;
     padding: 24px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $course-modal-medium-gray;
   }
 
   &__title {
     font-size: 24px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $course-modal-dark-gray;
     margin: 0;
   }
 
@@ -76,7 +77,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     border: none;
     background: none;
     font-size: 28px;
-    color: $secondary-color;
+    color: $course-modal-secondary-color;
     cursor: pointer;
     border-radius: 8px;
     display: flex;
@@ -85,8 +86,8 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: $light-gray;
-      color: $dark-gray;
+      background-color: $course-modal-light-gray;
+      color: $course-modal-dark-gray;
     }
   }
 
@@ -101,16 +102,16 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-// Form elements
-.form-group {
+// Course Modal form elements
+.course-modal-form-group {
   margin-bottom: 20px;
 }
 
-.form-label {
+.course-modal-form-label {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: $dark-gray;
+  color: $course-modal-dark-gray;
   margin-bottom: 8px;
 
   &::after {
@@ -120,30 +121,30 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 }
 
-.form-input {
+.course-modal-form-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid $medium-gray;
+  border: 1px solid $course-modal-medium-gray;
   border-radius: 12px;
   font-size: 14px;
-  color: $dark-gray;
-  background-color: $white;
+  color: $course-modal-dark-gray;
+  background-color: $course-modal-white;
   transition: all 0.2s ease;
 
   &:focus {
     outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    border-color: $course-modal-primary-color;
+    box-shadow: 0 0 0 3px rgba($course-modal-primary-color, 0.1);
   }
 
   &::placeholder {
-    color: $secondary-color;
+    color: $course-modal-secondary-color;
     opacity: 0.6;
   }
 }
 
-// Color picker
-.color-picker {
+// Course Modal color picker
+.course-modal-color-picker {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 12px;
@@ -163,16 +164,16 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 
     &--selected {
       transform: scale(1.1);
-      box-shadow: 0 0 0 3px $white, 0 0 0 6px $medium-gray;
+      box-shadow: 0 0 0 3px $course-modal-white, 0 0 0 6px $course-modal-medium-gray;
     }
   }
 }
 
-// Preview
-.preview {
+// Course Modal preview
+.course-modal-preview {
   margin-top: 8px;
 
-  .form-label {
+  .course-modal-form-label {
     margin-bottom: 12px;
 
     &::after {
@@ -182,7 +183,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 
   &__card {
-    border: 1px solid $medium-gray;
+    border: 1px solid $course-modal-medium-gray;
     border-radius: 12px;
     overflow: hidden;
   }
@@ -193,25 +194,25 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 
   &__content {
     padding: 16px;
-    background-color: $white;
+    background-color: $course-modal-white;
   }
 
   &__title {
     font-size: 16px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $course-modal-dark-gray;
     margin: 0 0 4px 0;
   }
 
   &__instructor {
     font-size: 14px;
-    color: $secondary-color;
+    color: $course-modal-secondary-color;
     margin: 0;
   }
 }
 
-// Buttons
-.btn {
+// Course Modal buttons
+.course-modal-btn {
   flex: 1;
   padding: 12px 24px;
   border: none;
@@ -222,13 +223,13 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   transition: all 0.2s ease;
 
   &--primary {
-    background-color: $primary-color;
-    color: $white;
+    background-color: $course-modal-primary-color;
+    color: $course-modal-white;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: darken($course-modal-primary-color, 10%);
       transform: translateY(-1px);
     }
 
@@ -238,23 +239,23 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
   }
 
   &--secondary {
-    background-color: $light-gray;
-    color: $dark-gray;
-    border: 1px solid $medium-gray;
+    background-color: $course-modal-light-gray;
+    color: $course-modal-dark-gray;
+    border: 1px solid $course-modal-medium-gray;
 
     &:hover {
-      background-color: darken($light-gray, 5%);
+      background-color: darken($course-modal-light-gray, 5%);
     }
   }
 }
 
-// Responsive
+// Course Modal responsive
 @media (max-width: 640px) {
   .course-modal-overlay {
     padding: 16px;
   }
 
-  .course-modal {
+  .course-modal-window {
     &__header {
       padding: 20px;
     }
@@ -268,7 +269,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     }
   }
 
-  .color-picker {
+  .course-modal-color-picker {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 
@@ -278,7 +279,7 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     }
   }
 
-  .preview {
+  .course-modal-preview {
     &__banner {
       height: 80px;
     }
@@ -286,11 +287,32 @@ $modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 }
 
 @media (max-width: 480px) {
-  .course-modal__actions {
+  .course-modal-window__actions {
     flex-direction: column;
   }
 
-  .btn {
+  .course-modal-btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .course-modal-color-picker {
+    grid-template-columns: repeat(3, 1fr);
+    
+    &__item {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  .course-modal-window {
+    &__header {
+      padding: 16px;
+    }
+    
+    &__form {
+      padding: 16px;
+    }
   }
 }

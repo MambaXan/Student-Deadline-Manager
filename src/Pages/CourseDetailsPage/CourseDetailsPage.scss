@@ -1,66 +1,66 @@
-// Variables
-$primary-color: #4f46e5;
-$primary-light: #eef2ff;
-$secondary-color: #6b7280;
-$light-gray: #f9fafb;
-$medium-gray: #e5e7eb;
-$dark-gray: #374151;
-$white: #ffffff;
-$success-color: #10b981;
-$success-light: #d1fae5;
-$danger-color: #ef4444;
-$danger-light: #fee2e2;
-$warning-color: #f59e0b;
-$warning-light: #fef3c7;
-$info-color: #3b82f6;
-$info-light: #dbeafe;
+// Course Details Variables
+$course-details-primary-color: #4f46e5;
+$course-details-primary-light: #eef2ff;
+$course-details-secondary-color: #6b7280;
+$course-details-light-gray: #f9fafb;
+$course-details-medium-gray: #e5e7eb;
+$course-details-dark-gray: #374151;
+$course-details-white: #ffffff;
+$course-details-success-color: #10b981;
+$course-details-success-light: #d1fae5;
+$course-details-danger-color: #ef4444;
+$course-details-danger-light: #fee2e2;
+$course-details-warning-color: #f59e0b;
+$course-details-warning-light: #fef3c7;
+$course-details-info-color: #3b82f6;
+$course-details-info-light: #dbeafe;
 
-// Mixins
-@mixin flex-center {
+// Course Details Mixins
+@mixin course-details-flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-@mixin flex-between {
+@mixin course-details-flex-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-@mixin card-shadow {
+@mixin course-details-card-shadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-// Base styles
+// Course Details base styles
 .course-details-page {
   display: flex;
   min-height: 100vh;
-  background-color: $light-gray;
+  background-color: $course-details-light-gray;
 
-  .main-content {
+  .course-details-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
 
-  .content {
+  .course-details-content {
     flex: 1;
     overflow-y: auto;
     padding: 20px;
   }
 }
 
-// Back button
-.back-btn {
+// Course Details back button
+.course-details-back-btn {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
   border: none;
   background: none;
-  color: $secondary-color;
+  color: $course-details-secondary-color;
   font-size: 14px;
   cursor: pointer;
   border-radius: 6px;
@@ -68,19 +68,19 @@ $info-light: #dbeafe;
   transition: all 0.2s ease;
 
   &:hover {
-    color: $dark-gray;
-    background-color: $medium-gray;
+    color: $course-details-dark-gray;
+    background-color: $course-details-medium-gray;
   }
 }
 
-// Course header
-.course-header {
-  background-color: $white;
+// Course Details header
+.course-details-header {
+  background-color: $course-details-white;
   border-radius: 12px;
-  border: 1px solid $medium-gray;
+  border: 1px solid $course-details-medium-gray;
   overflow: hidden;
   margin-bottom: 20px;
-  @include card-shadow;
+  @include course-details-card-shadow;
 
   &__banner {
     height: 160px;
@@ -99,7 +99,7 @@ $info-light: #dbeafe;
     left: 0;
     right: 0;
     padding: 24px;
-    @include flex-between;
+    @include course-details-flex-between;
     align-items: flex-end;
   }
 
@@ -110,7 +110,7 @@ $info-light: #dbeafe;
   &__title {
     font-size: 28px;
     font-weight: 700;
-    color: $white;
+    color: $course-details-white;
     margin-bottom: 8px;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
@@ -125,7 +125,7 @@ $info-light: #dbeafe;
     display: flex;
     align-items: center;
     gap: 6px;
-    color: rgba($white, 0.9);
+    color: rgba($course-details-white, 0.9);
   }
 
   &__meta-icon {
@@ -137,31 +137,31 @@ $info-light: #dbeafe;
   }
 }
 
-// Add deadline button
-.btn--add-deadline {
-  background-color: $white;
-  color: $dark-gray;
+// Course Details add deadline button
+.course-details-btn--add-deadline {
+  background-color: $course-details-white;
+  color: $course-details-dark-gray;
   font-weight: 500;
   padding: 12px 20px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  @include flex-center;
+  @include course-details-flex-center;
   gap: 8px;
 
   &:hover {
-    background-color: $light-gray;
+    background-color: $course-details-light-gray;
     transform: translateY(-1px);
   }
 
-  .btn__icon {
+  .course-details-btn__icon {
     font-size: 16px;
   }
 }
 
-// Course stats
-.course-stats {
+// Course Details stats
+.course-details-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -171,73 +171,73 @@ $info-light: #dbeafe;
     text-align: center;
 
     &--border {
-      border-left: 1px solid $medium-gray;
-      border-right: 1px solid $medium-gray;
+      border-left: 1px solid $course-details-medium-gray;
+      border-right: 1px solid $course-details-medium-gray;
     }
   }
 
   &__value {
     font-size: 32px;
     font-weight: 700;
-    color: $dark-gray;
+    color: $course-details-dark-gray;
     margin-bottom: 4px;
   }
 
   &__label {
     font-size: 14px;
-    color: $secondary-color;
+    color: $course-details-secondary-color;
   }
 }
 
-// Deadlines section
-.deadlines-section {
-  background-color: $white;
+// Course Details deadlines section
+.course-details-deadlines-section {
+  background-color: $course-details-white;
   border-radius: 12px;
-  border: 1px solid $medium-gray;
-  @include card-shadow;
+  border: 1px solid $course-details-medium-gray;
+  @include course-details-card-shadow;
 
   &__header {
     padding: 20px 24px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $course-details-medium-gray;
   }
 
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $course-details-dark-gray;
   }
 }
 
-// Empty state
-.empty-state {
+// Course Details empty state
+.course-details-empty-state {
   padding: 60px 20px;
   text-align: center;
 
   &__icon {
     font-size: 48px;
-    color: $medium-gray;
+    color: $course-details-medium-gray;
     margin-bottom: 16px;
     display: inline-block;
   }
 
   &__text {
-    color: $secondary-color;
+    color: $course-details-secondary-color;
     margin-bottom: 24px;
     font-size: 16px;
   }
 }
 
-// Deadlines table
-.deadlines-table-container {
+// Course Details deadlines table
+.course-details-table-container {
   overflow-x: auto;
 }
 
-.deadlines-table {
+.course-details-deadlines-table {
   width: 100%;
   border-collapse: collapse;
 
   &__head {
-    background-color: $light-gray;
+    background-color: $course-details-light-gray;
   }
 
   &__header {
@@ -245,24 +245,24 @@ $info-light: #dbeafe;
     text-align: left;
     font-size: 14px;
     font-weight: 600;
-    color: $secondary-color;
-    border-bottom: 1px solid $medium-gray;
+    color: $course-details-secondary-color;
+    border-bottom: 1px solid $course-details-medium-gray;
     white-space: nowrap;
   }
 
   &__body {
-    .deadlines-table__row {
+    .course-details-deadlines-table__row {
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: $light-gray;
+        background-color: $course-details-light-gray;
       }
     }
   }
 
   &__cell {
     padding: 16px 24px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $course-details-medium-gray;
     vertical-align: middle;
 
     &--date {
@@ -271,12 +271,12 @@ $info-light: #dbeafe;
   }
 
   &__task {
-    color: $dark-gray;
+    color: $course-details-dark-gray;
     font-weight: 500;
 
     &--completed {
       text-decoration: line-through;
-      color: $secondary-color;
+      color: $course-details-secondary-color;
     }
   }
 
@@ -284,7 +284,7 @@ $info-light: #dbeafe;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: $dark-gray;
+    color: $course-details-dark-gray;
   }
 
   &__type-icon {
@@ -296,8 +296,8 @@ $info-light: #dbeafe;
   }
 }
 
-// Badges
-.badge {
+// Course Details badges
+.course-details-badge {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;
@@ -306,50 +306,50 @@ $info-light: #dbeafe;
   text-transform: capitalize;
 
   &--high {
-    background-color: $danger-light;
-    color: $danger-color;
+    background-color: $course-details-danger-light;
+    color: $course-details-danger-color;
   }
 
   &--medium {
-    background-color: $warning-light;
-    color: $warning-color;
+    background-color: $course-details-warning-light;
+    color: $course-details-warning-color;
   }
 
   &--low {
-    background-color: $success-light;
-    color: $success-color;
+    background-color: $course-details-success-light;
+    color: $course-details-success-color;
   }
 
   &--completed {
-    background-color: $success-light;
-    color: $success-color;
+    background-color: $course-details-success-light;
+    color: $course-details-success-color;
   }
 
   &--overdue {
-    background-color: $danger-light;
-    color: $danger-color;
+    background-color: $course-details-danger-light;
+    color: $course-details-danger-color;
   }
 
   &--upcoming {
-    background-color: $info-light;
-    color: $info-color;
+    background-color: $course-details-info-light;
+    color: $course-details-info-color;
   }
 }
 
-// Modal
-.modal-overlay {
+// Course Details modal
+.course-details-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  @include flex-center;
+  @include course-details-flex-center;
   z-index: 1000;
 }
 
-.modal {
-  background-color: $white;
+.course-details-modal {
+  background-color: $course-details-white;
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
@@ -357,15 +357,15 @@ $info-light: #dbeafe;
   overflow-y: auto;
 
   &__header {
-    @include flex-between;
+    @include course-details-flex-between;
     padding: 20px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid $course-details-medium-gray;
   }
 
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $course-details-dark-gray;
   }
 
   &__close-btn {
@@ -374,13 +374,13 @@ $info-light: #dbeafe;
     border: none;
     background: none;
     font-size: 24px;
-    color: $secondary-color;
+    color: $course-details-secondary-color;
     cursor: pointer;
-    @include flex-center;
+    @include course-details-flex-center;
     border-radius: 4px;
 
     &:hover {
-      background-color: $light-gray;
+      background-color: $course-details-light-gray;
     }
   }
 
@@ -396,38 +396,39 @@ $info-light: #dbeafe;
   }
 }
 
-// Form elements
-.form-group {
+// Course Details form elements
+.course-details-form-group {
   margin-bottom: 20px;
 }
 
-.form-label {
+.course-details-form-label {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: $dark-gray;
+  color: $course-details-dark-gray;
   margin-bottom: 8px;
 }
 
-.form-input,
-.form-select {
+.course-details-form-input,
+.course-details-form-select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid $medium-gray;
+  border: 1px solid $course-details-medium-gray;
   border-radius: 8px;
   font-size: 14px;
-  color: $dark-gray;
-  background-color: $white;
+  color: $course-details-dark-gray;
+  background-color: $course-details-white;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    border-color: $course-details-primary-color;
+    box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
   }
 }
 
-.form-select {
+.course-details-form-select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -435,8 +436,8 @@ $info-light: #dbeafe;
   padding-right: 40px;
 }
 
-// Buttons
-.btn {
+// Course Details buttons
+.course-details-btn {
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
@@ -444,36 +445,36 @@ $info-light: #dbeafe;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  @include flex-center;
+  @include course-details-flex-center;
   gap: 8px;
 
   &--primary {
-    background-color: $primary-color;
-    color: $white;
+    background-color: $course-details-primary-color;
+    color: $course-details-white;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: darken($course-details-primary-color, 10%);
     }
   }
 
   &--secondary {
-    background-color: $light-gray;
-    color: $dark-gray;
-    border: 1px solid $medium-gray;
+    background-color: $course-details-light-gray;
+    color: $course-details-dark-gray;
+    border: 1px solid $course-details-medium-gray;
 
     &:hover {
-      background-color: darken($light-gray, 5%);
+      background-color: darken($course-details-light-gray, 5%);
     }
   }
 
-  .btn__icon {
+  .course-details-btn__icon {
     font-size: 14px;
   }
 }
 
-// Responsive
+// Course Details responsive
 @media (max-width: 768px) {
-  .course-header {
+  .course-details-header {
     &__banner {
       height: 140px;
     }
@@ -489,19 +490,19 @@ $info-light: #dbeafe;
     }
   }
 
-  .course-stats {
+  .course-details-stats {
     grid-template-columns: 1fr;
     gap: 16px;
 
     &__item--border {
       border: none;
-      border-top: 1px solid $medium-gray;
-      border-bottom: 1px solid $medium-gray;
+      border-top: 1px solid $course-details-medium-gray;
+      border-bottom: 1px solid $course-details-medium-gray;
       padding: 16px 0;
     }
   }
 
-  .deadlines-table {
+  .course-details-deadlines-table {
     &__header,
     &__cell {
       padding: 12px 16px;
@@ -509,92 +510,20 @@ $info-light: #dbeafe;
   }
 }
 
-// Sidebar and Topbar
-.sidebar {
-  width: 240px;
-  background-color: $white;
-  border-right: 1px solid $medium-gray;
-  display: flex;
-  flex-direction: column;
-
-  &__content {
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__title {
-    font-size: 18px;
-    font-weight: 600;
-    color: $primary-color;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid $medium-gray;
-  }
-
-  &__nav {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__nav-item {
-    padding: 12px 16px;
-    border: none;
-    background: none;
-    text-align: left;
-    border-radius: 8px;
-    font-size: 14px;
-    color: $secondary-color;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $light-gray;
-      color: $primary-color;
-    }
-
-    &--active {
-      background-color: $primary-light;
-      color: $primary-color;
-      font-weight: 500;
-    }
-  }
-
-  &__logout-btn {
-    margin-top: auto;
-    padding: 12px 16px;
-    border: 1px solid $medium-gray;
-    background-color: $white;
-    border-radius: 8px;
-    font-size: 14px;
-    color: $dark-gray;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: $light-gray;
-      border-color: $danger-color;
-      color: $danger-color;
-    }
-  }
-}
-
-.topbar {
-  background-color: $white;
-  border-bottom: 1px solid $medium-gray;
+// Course Details topbar
+.course-details-topbar {
+  background-color: $course-details-white;
+  border-bottom: 1px solid $course-details-medium-gray;
   padding: 16px 20px;
 
   &__content {
-    @include flex-between;
+    @include course-details-flex-between;
   }
 
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $dark-gray;
+    color: $course-details-dark-gray;
   }
 
   &__user {
@@ -605,6 +534,48 @@ $info-light: #dbeafe;
 
   &__user-name {
     font-size: 14px;
-    color: $secondary-color;
+    color: $course-details-secondary-color;
+  }
+}
+
+// Course Details mobile optimizations
+@media (max-width: 480px) {
+  .course-details-content {
+    padding: 10px;
+  }
+  
+  .course-details-header__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .course-details-deadlines-table {
+    font-size: 12px;
+    
+    &__header,
+    &__cell {
+      padding: 8px 12px;
+    }
+  }
+  
+  .course-details-modal {
+    width: 95%;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .course-details-stats__value {
+    font-size: 24px;
+  }
+  
+  .course-details-header__title {
+    font-size: 20px;
+  }
+  
+  .course-details-btn--add-deadline {
+    width: 100%;
+    justify-content: center;
   }
 }

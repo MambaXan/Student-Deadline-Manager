@@ -49,67 +49,67 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
 
   return (
     <div className="course-modal-overlay" onClick={onClose}>
-      <div className="course-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="course-modal-window" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="course-modal__header">
-          <h2 className="course-modal__title">Add New Course</h2>
-          <button onClick={onClose} className="course-modal__close-btn">
+        <div className="course-modal-window__header">
+          <h2 className="course-modal-window__title">Add New Course</h2>
+          <button onClick={onClose} className="course-modal-window__close-btn">
             ×
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="course-modal__form">
+        <form onSubmit={handleSubmit} className="course-modal-window__form">
           {/* Course Title */}
-          <div className="form-group">
-            <label className="form-label">Course Title *</label>
+          <div className="course-modal-form-group">
+            <label className="course-modal-form-label">Course Title *</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., Computer Science 101"
-              className="form-input"
+              className="course-modal-form-input"
               required
             />
           </div>
 
           {/* Instructor */}
-          <div className="form-group">
-            <label className="form-label">Instructor Name *</label>
+          <div className="course-modal-form-group">
+            <label className="course-modal-form-label">Instructor Name *</label>
             <input
               type="text"
               value={instructor}
               onChange={(e) => setInstructor(e.target.value)}
               placeholder="e.g., Dr. Smith"
-              className="form-input"
+              className="course-modal-form-input"
               required
             />
           </div>
 
           {/* Semester */}
-          <div className="form-group">
-            <label className="form-label">Semester *</label>
+          <div className="course-modal-form-group">
+            <label className="course-modal-form-label">Semester *</label>
             <input
               type="text"
               value={semester}
               onChange={(e) => setSemester(e.target.value)}
               placeholder="e.g., Fall 2024"
-              className="form-input"
+              className="course-modal-form-input"
               required
             />
           </div>
 
           {/* Color Picker */}
-          <div className="form-group">
-            <label className="form-label">Course Color *</label>
-            <div className="color-picker">
+          <div className="course-modal-form-group">
+            <label className="course-modal-form-label">Course Color *</label>
+            <div className="course-modal-color-picker">
               {PRESET_COLORS.map((presetColor) => (
                 <button
                   key={presetColor}
                   type="button"
                   onClick={() => setColor(presetColor)}
-                  className={`color-picker__item ${
-                    color === presetColor ? "color-picker__item--selected" : ""
+                  className={`course-modal-color-picker__item ${
+                    color === presetColor ? "course-modal-color-picker__item--selected" : ""
                   }`}
                   style={{ backgroundColor: presetColor }}
                   title={presetColor}
@@ -119,16 +119,16 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
           </div>
 
           {/* Preview */}
-          <div className="preview">
-            <label className="form-label">Preview</label>
-            <div className="preview__card">
+          <div className="course-modal-preview">
+            <label className="course-modal-form-label">Preview</label>
+            <div className="course-modal-preview__card">
               <div
-                className="preview__banner"
+                className="course-modal-preview__banner"
                 style={{ backgroundColor: color }}
               />
-              <div className="preview__content">
-                <p className="preview__title">{title || "Course Title"}</p>
-                <p className="preview__instructor">
+              <div className="course-modal-preview__content">
+                <p className="course-modal-preview__title">{title || "Course Title"}</p>
+                <p className="course-modal-preview__instructor">
                   {instructor || "Instructor Name"}
                 </p>
               </div>
@@ -136,15 +136,15 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
           </div>
 
           {/* Actions */}
-          <div className="course-modal__actions">
+          <div className="course-modal-window__actions">
             <button
               type="button"
               onClick={onClose}
-              className="btn btn--secondary"
+              className="course-modal-btn course-modal-btn--secondary"
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn--primary">
+            <button type="submit" className="course-modal-btn course-modal-btn--primary">
               Add Course
             </button>
           </div>
