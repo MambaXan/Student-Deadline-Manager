@@ -23,11 +23,22 @@ interface CalendarPageProps {
 }
 
 // Components
-const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+const TopBar: React.FC<{
+  userName: string;
+  onMenuClick?: () => void;
+}> = ({ userName, onMenuClick }) => {
   return (
     <div className="calendar-topbar">
       <div className="calendar-topbar__content">
-        <h1 className="calendar-topbar__title">Academic Calendar</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* Добавляем кнопку бургера в общий компонент */}
+          {onMenuClick && (
+            <button onClick={onMenuClick} className="calendar-topbar__menu-btn">
+              ☰
+            </button>
+          )}
+          <h1 className="calendar-topbar__title">Academic Calendar</h1>
+        </div>
         <div className="calendar-topbar__user">
           <span className="calendar-topbar__user-name">
             Welcome {userName}!
@@ -253,200 +264,184 @@ export function CalendarPage({
       />
 
       <div className="calendar-main-content">
-        <div className="calendar-topbar">
-          <div className="calendar-topbar__content">
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className="calendar-topbar__menu-btn"
-              >
-                ☰
-              </button>
-              <h1 className="calendar-topbar__title">Academic Calendar</h1>
-            </div>
-            <div className="calendar-topbar__user">
-              <span className="calendar-topbar__user-name">Welcome!</span>
-            </div>
-          </div>
-          <TopBar userName="" />
+        <TopBar userName="Marlen" onMenuClick={() => setMobileMenuOpen(true)} />
 
-          <main className="calendar-content">
-            <div className="calendar-container">
-              <div className="calendar-widget">
-                <div className="calendar-widget__header">
-                  <h2 className="calendar-widget__title">
-                    {monthNames[currentDate.getMonth()]}{" "}
-                    {currentDate.getFullYear()}
-                  </h2>
-                  <div className="calendar-widget__controls">
-                    <button
-                      onClick={previousMonth}
-                      className="calendar-widget__nav-btn"
-                    >
-                      ‹
-                    </button>
-                    <button
-                      onClick={() => setCurrentDate(new Date())}
-                      className="calendar-btn calendar-btn--today"
-                    >
-                      Today
-                    </button>
-                    <button
-                      onClick={nextMonth}
-                      className="calendar-widget__nav-btn"
-                    >
-                      ›
-                    </button>
-                    <button
-                      onClick={() => setShowAddModal(true)}
-                      className="calendar-btn calendar-btn--add"
-                    >
-                      + Add Deadline
-                    </button>
-                  </div>
+        <main className="calendar-content">
+          <div className="calendar-container">
+            <div className="calendar-widget">
+              <div className="calendar-widget__header">
+                <h2 className="calendar-widget__title">
+                  {monthNames[currentDate.getMonth()]}{" "}
+                  {currentDate.getFullYear()}
+                </h2>
+                <div className="calendar-widget__controls">
+                  <button
+                    onClick={previousMonth}
+                    className="calendar-widget__nav-btn"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={() => setCurrentDate(new Date())}
+                    className="calendar-btn calendar-btn--today"
+                  >
+                    Today
+                  </button>
+                  <button
+                    onClick={nextMonth}
+                    className="calendar-widget__nav-btn"
+                  >
+                    ›
+                  </button>
+                  <button
+                    onClick={() => setShowAddModal(true)}
+                    className="calendar-btn calendar-btn--add"
+                  >
+                    + Add Deadline
+                  </button>
                 </div>
+              </div>
 
-                <div className="calendar-widget__grid">
-                  {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-                    (day) => (
-                      <div key={day} className="calendar-widget__day-header">
-                        {day}
-                      </div>
-                    )
-                  )}
+              <div className="calendar-widget__grid">
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                  (day) => (
+                    <div key={day} className="calendar-widget__day-header">
+                      {day}
+                    </div>
+                  )
+                )}
 
-                  {days.map((day, index) => {
-                    if (day === null) {
-                      return (
-                        <div
-                          key={`empty-${index}`}
-                          className="calendar-widget__day calendar-widget__day--empty"
-                        />
-                      );
-                    }
-
-                    const dayDeadlines = getDeadlinesForDate(day);
-                    const isTodayDate = isToday(day);
-
+                {days.map((day, index) => {
+                  if (day === null) {
                     return (
                       <div
-                        key={day}
-                        className={`calendar-widget__day ${
-                          isTodayDate ? "calendar-widget__day--today" : ""
+                        key={`empty-${index}`}
+                        className="calendar-widget__day calendar-widget__day--empty"
+                      />
+                    );
+                  }
+
+                  const dayDeadlines = getDeadlinesForDate(day);
+                  const isTodayDate = isToday(day);
+
+                  return (
+                    <div
+                      key={day}
+                      className={`calendar-widget__day ${
+                        isTodayDate ? "calendar-widget__day--today" : ""
+                      }`}
+                    >
+                      <div
+                        className={`calendar-widget__day-number ${
+                          isTodayDate
+                            ? "calendar-widget__day-number--today"
+                            : ""
                         }`}
                       >
-                        <div
-                          className={`calendar-widget__day-number ${
-                            isTodayDate
-                              ? "calendar-widget__day-number--today"
-                              : ""
-                          }`}
-                        >
-                          {day}
-                        </div>
-                        <div className="calendar-widget__deadlines">
-                          {dayDeadlines.slice(0, 3).map((deadline) => {
-                            const course = getCourseById(deadline.courseId);
-                            return (
-                              <div
-                                key={deadline.id}
-                                className="calendar-widget__deadline-item"
-                                style={{
-                                  backgroundColor: course?.color
-                                    ? `${course.color}20`
-                                    : "#f3f4f6",
-                                  color: course?.color || "#6b7280",
-                                  borderLeft: `3px solid ${
-                                    course?.color || "#6b7280"
-                                  }`,
-                                }}
-                                title={deadline.taskName}
-                              >
-                                {deadline.taskName}
-                              </div>
-                            );
-                          })}
-                          {dayDeadlines.length > 3 && (
-                            <div className="calendar-widget__deadline-more">
-                              +{dayDeadlines.length - 3} more
-                            </div>
-                          )}
-                        </div>
+                        {day}
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="calendar-sidebar-content">
-                <div className="calendar-sidebar-card">
-                  <h3 className="calendar-sidebar-card__title">This Week</h3>
-
-                  {thisWeekDeadlines.length === 0 ? (
-                    <p className="calendar-sidebar-card__empty">
-                      No deadlines this week
-                    </p>
-                  ) : (
-                    <div className="calendar-deadlines-list">
-                      {thisWeekDeadlines.map((deadline) => {
-                        const course = getCourseById(deadline.courseId);
-                        return (
-                          <div
-                            key={deadline.id}
-                            className="calendar-deadline-card"
-                          >
-                            <div className="calendar-deadline-card__title">
+                      <div className="calendar-widget__deadlines">
+                        {dayDeadlines.slice(0, 3).map((deadline) => {
+                          const course = getCourseById(deadline.courseId);
+                          return (
+                            <div
+                              key={deadline.id}
+                              className="calendar-widget__deadline-item"
+                              style={{
+                                backgroundColor: course?.color
+                                  ? `${course.color}20`
+                                  : "#f3f4f6",
+                                color: course?.color || "#6b7280",
+                                borderLeft: `3px solid ${
+                                  course?.color || "#6b7280"
+                                }`,
+                              }}
+                              title={deadline.taskName}
+                            >
                               {deadline.taskName}
                             </div>
-                            <div className="calendar-deadline-card__details">
-                              {course && (
-                                <span
-                                  className="calendar-deadline-card__course"
-                                  style={{
-                                    backgroundColor: `${course.color}20`,
-                                    color: course.color,
-                                  }}
-                                >
-                                  {course.title.split(" ")[0]}
-                                </span>
-                              )}
-                              <span className="calendar-deadline-card__date">
-                                {new Date(deadline.dueDate).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    month: "short",
-                                    day: "numeric",
-                                  }
-                                )}
-                              </span>
-                            </div>
+                          );
+                        })}
+                        {dayDeadlines.length > 3 && (
+                          <div className="calendar-widget__deadline-more">
+                            +{dayDeadlines.length - 3} more
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-
-                <div className="calendar-sidebar-card">
-                  <h3 className="calendar-sidebar-card__title">Courses</h3>
-                  <div className="calendar-courses-list">
-                    {courses.slice(0, 5).map((course) => (
-                      <div key={course.id} className="calendar-course-item">
-                        <div
-                          className="calendar-course-item__color"
-                          style={{ backgroundColor: course.color }}
-                        />
-                        <span className="calendar-course-item__title">
-                          {course.title}
-                        </span>
+                        )}
                       </div>
-                    ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="calendar-sidebar-content">
+              <div className="calendar-sidebar-card">
+                <h3 className="calendar-sidebar-card__title">This Week</h3>
+
+                {thisWeekDeadlines.length === 0 ? (
+                  <p className="calendar-sidebar-card__empty">
+                    No deadlines this week
+                  </p>
+                ) : (
+                  <div className="calendar-deadlines-list">
+                    {thisWeekDeadlines.map((deadline) => {
+                      const course = getCourseById(deadline.courseId);
+                      return (
+                        <div
+                          key={deadline.id}
+                          className="calendar-deadline-card"
+                        >
+                          <div className="calendar-deadline-card__title">
+                            {deadline.taskName}
+                          </div>
+                          <div className="calendar-deadline-card__details">
+                            {course && (
+                              <span
+                                className="calendar-deadline-card__course"
+                                style={{
+                                  backgroundColor: `${course.color}20`,
+                                  color: course.color,
+                                }}
+                              >
+                                {course.title.split(" ")[0]}
+                              </span>
+                            )}
+                            <span className="calendar-deadline-card__date">
+                              {new Date(deadline.dueDate).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                }
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+                )}
+              </div>
+
+              <div className="calendar-sidebar-card">
+                <h3 className="calendar-sidebar-card__title">Courses</h3>
+                <div className="calendar-courses-list">
+                  {courses.slice(0, 5).map((course) => (
+                    <div key={course.id} className="calendar-course-item">
+                      <div
+                        className="calendar-course-item__color"
+                        style={{ backgroundColor: course.color }}
+                      />
+                      <span className="calendar-course-item__title">
+                        {course.title}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
 
         {showAddModal && (
           <DeadlineModal
