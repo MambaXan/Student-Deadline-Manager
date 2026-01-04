@@ -9,6 +9,12 @@ $white: #ffffff;
 $danger-color: #ef4444;
 $danger-light: #fee2e2;
 
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 // Sidebar
 .sidebar {
   width: 260px;

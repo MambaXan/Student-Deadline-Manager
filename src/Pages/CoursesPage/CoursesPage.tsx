@@ -24,6 +24,7 @@ interface Deadline {
 
 interface CoursesPageProps {
   currentPage: string;
+  userName: string;
   courses: Course[];
   deadlines: Deadline[];
   onNavigate: (page: string) => void;
@@ -33,14 +34,27 @@ interface CoursesPageProps {
 }
 
 // Components
-const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+const TopBar: React.FC<{
+  userName: string;
+  onMenuClick?: () => void;
+}> = ({ userName, onMenuClick }) => {
   return (
     <div className="courses-page-topbar">
       <div className="courses-page-topbar__content">
-        <h1 className="courses-page-topbar__title">My Courses</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {onMenuClick && (
+            <button
+              className="courses-page-topbar__menu-btn"
+              onClick={onMenuClick}
+            >
+              ☰
+            </button>
+          )}
+          <h1 className="courses-page-topbar__title">My Courses</h1>
+        </div>
         <div className="courses-page-topbar__user">
           <span className="courses-page-topbar__user-name">
-            Welcome {userName}
+            Welcome {userName}!
           </span>
         </div>
       </div>
@@ -166,6 +180,7 @@ const CourseModal: React.FC<{
 export function CoursesPage({
   currentPage,
   courses,
+  userName,
   deadlines,
   onNavigate,
   onLogout,
@@ -198,24 +213,10 @@ export function CoursesPage({
       />
 
       <div className="courses-page-main-content">
-        <div className="courses-page-topbar">
-          <div className="courses-page-topbar__content">
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-              <button
-                className="courses-page-topbar__menu-btn"
-                onClick={() => setMobileMenuOpen(true)}
-              >
-                ☰
-              </button>
-              <h1 className="courses-page-topbar__title">My Courses</h1>
-            </div>
-            <div className="courses-page-topbar__user">
-              <span className="courses-page-topbar__user-name">
-                Welcome!
-              </span>
-            </div>
-          </div>
-        </div>
+        <TopBar
+          userName={userName}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
 
         <main className="courses-page-content">
           <div className="courses-page-header">

@@ -21,6 +21,7 @@ interface Deadline {
 
 interface DeadlinesPageProps {
   currentPage: string;
+  userName: string;
   deadlines: Deadline[];
   courses: Course[];
   onNavigate: (page: string) => void;
@@ -47,7 +48,7 @@ const TopBar: React.FC<{
           <h1 className="deadlines-page-topbar__title">Deadlines</h1>
         </div>
         <div className="deadlines-page-topbar__user">
-          <span className="deadlines-page-topbar__user-name">Welcome {userName}</span>
+          <span className="deadlines-page-topbar__user-name">Welcome {userName}!</span>
         </div>
       </div>
     </div>
@@ -259,6 +260,7 @@ const MobileNav: React.FC<{
 
 export function DeadlinesPage({
   currentPage,
+  userName,
   deadlines,
   courses,
   onNavigate,
@@ -363,7 +365,7 @@ export function DeadlinesPage({
       />
 
       <div className="deadlines-page-main-content">
-        <TopBar userName="Alex" onMenuClick={() => setMobileMenuOpen(true)} />
+        <TopBar userName={userName} onMenuClick={() => setMobileMenuOpen(true)} />
 
         <main className="deadlines-page-content">
           {/* Header */}

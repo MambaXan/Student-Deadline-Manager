@@ -165,6 +165,7 @@ export default function App() {
       case "deadlines":
         return (
           <DeadlinesPage
+            userName={userName}
             currentPage={currentPage}
             deadlines={deadlines}
             courses={courses}
@@ -178,6 +179,7 @@ export default function App() {
       case "courses":
         return (
           <CoursesPage
+            userName={userName}
             currentPage={currentPage}
             courses={courses}
             deadlines={deadlines}

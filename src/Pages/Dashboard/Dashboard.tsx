@@ -46,7 +46,7 @@ const TopBar: React.FC<{
           <h1 className="dashboard-topbar__title">Dashboard</h1>
         </div>
         <div className="dashboard-topbar__user">
-          <span className="dashboard-topbar__user-name">Welcome {userName}</span>
+          <span className="dashboard-topbar__user-name">Welcome {userName}!</span>
         </div>
       </div>
     </div>
