@@ -19,7 +19,7 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
         <h1 className="settings-page-topbar__title">Settings</h1>
         <div className="settings-page-topbar__user">
           <span className="settings-page-topbar__user-name">
-            Welcome {userName}
+            Welcome {userName}!
           </span>
         </div>
       </div>
@@ -102,7 +102,7 @@ export function SettingsPage({
             </div>
             <div className="settings-page-topbar__user">
               <span className="settings-page-topbar__user-name">
-                Welcome {userName}
+                Welcome {userName}!
               </span>
             </div>
           </div>
