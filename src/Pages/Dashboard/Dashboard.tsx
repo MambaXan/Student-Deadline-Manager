@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Dashboard.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
+import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
 
 // Interfaces
 interface Course {
@@ -39,14 +40,19 @@ const TopBar: React.FC<{
       <div className="dashboard-topbar__content">
         <div className="dashboard-topbar__left">
           {onMenuClick && (
-            <button onClick={onMenuClick} className="dashboard-topbar__menu-btn">
+            <button
+              onClick={onMenuClick}
+              className="dashboard-topbar__menu-btn"
+            >
               ☰
             </button>
           )}
           <h1 className="dashboard-topbar__title">Dashboard</h1>
         </div>
         <div className="dashboard-topbar__user">
-          <span className="dashboard-topbar__user-name">Welcome {userName}!</span>
+          <span className="dashboard-topbar__user-name">
+            Welcome {userName}!
+          </span>
         </div>
       </div>
     </div>
@@ -100,19 +106,15 @@ const DeadlineModal: React.FC<{
           </div>
           <div className="dashboard-form-group">
             <label className="dashboard-form-label">Course</label>
-            <select
+            <CustomDropdown
               value={selectedCourseId}
-              onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="dashboard-form-select"
-              required
-            >
-              <option value="">Select a course</option>
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.title}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedCourseId}
+              options={courses.map((course) => ({
+                value: course.id,
+                label: course.title,
+              }))}
+              placeholder="Select a course"
+            />
           </div>
           <div className="dashboard-form-group">
             <label className="dashboard-form-label">Priority</label>
@@ -145,7 +147,10 @@ const DeadlineModal: React.FC<{
             >
               Cancel
             </button>
-            <button type="submit" className="dashboard-btn dashboard-btn--primary">
+            <button
+              type="submit"
+              className="dashboard-btn dashboard-btn--primary"
+            >
               Save Deadline
             </button>
           </div>
@@ -166,7 +171,10 @@ const MobileNav: React.FC<{
 
   return (
     <div className="dashboard-mobile-nav-overlay" onClick={onClose}>
-      <div className="dashboard-mobile-nav" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="dashboard-mobile-nav"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="dashboard-mobile-nav__header">
           <h3 className="dashboard-mobile-nav__title">Menu</h3>
           <button onClick={onClose} className="dashboard-mobile-nav__close-btn">
@@ -180,7 +188,9 @@ const MobileNav: React.FC<{
               onClose();
             }}
             className={`dashboard-mobile-nav__item ${
-              currentPage === "dashboard" ? "dashboard-mobile-nav__item--active" : ""
+              currentPage === "dashboard"
+                ? "dashboard-mobile-nav__item--active"
+                : ""
             }`}
           >
             📊 Dashboard
@@ -355,7 +365,9 @@ export function Dashboard({
                   📅
                 </div>
               </div>
-              <p className="dashboard-stats-card__description">Tasks due soon</p>
+              <p className="dashboard-stats-card__description">
+                Tasks due soon
+              </p>
             </div>
 
             {/* Overdue Card */}
@@ -363,11 +375,17 @@ export function Dashboard({
               <div className="dashboard-stats-card__header">
                 <div>
                   <p className="dashboard-stats-card__label">Overdue</p>
-                  <p className="dashboard-stats-card__value">{overdueDeadlines.length}</p>
+                  <p className="dashboard-stats-card__value">
+                    {overdueDeadlines.length}
+                  </p>
                 </div>
-                <div className="dashboard-stats-card__icon dashboard-stats-card__icon--red">⚠️</div>
+                <div className="dashboard-stats-card__icon dashboard-stats-card__icon--red">
+                  ⚠️
+                </div>
               </div>
-              <p className="dashboard-stats-card__description">Need attention</p>
+              <p className="dashboard-stats-card__description">
+                Need attention
+              </p>
             </div>
 
             {/* Completed Card */}
@@ -375,13 +393,17 @@ export function Dashboard({
               <div className="dashboard-stats-card__header">
                 <div>
                   <p className="dashboard-stats-card__label">Completed</p>
-                  <p className="dashboard-stats-card__value">{completedCount}</p>
+                  <p className="dashboard-stats-card__value">
+                    {completedCount}
+                  </p>
                 </div>
                 <div className="dashboard-stats-card__icon dashboard-stats-card__icon--green">
                   ✅
                 </div>
               </div>
-              <p className="dashboard-stats-card__description">Tasks finished</p>
+              <p className="dashboard-stats-card__description">
+                Tasks finished
+              </p>
             </div>
           </div>
 
@@ -389,7 +411,9 @@ export function Dashboard({
             {/* Upcoming Deadlines List */}
             <div className="dashboard-upcoming-card">
               <div className="dashboard-upcoming-card__header">
-                <h2 className="dashboard-upcoming-card__title">Upcoming Deadlines</h2>
+                <h2 className="dashboard-upcoming-card__title">
+                  Upcoming Deadlines
+                </h2>
                 <button
                   onClick={() => setShowAddModal(true)}
                   className="dashboard-btn dashboard-btn--primary dashboard-btn--small"
@@ -403,7 +427,9 @@ export function Dashboard({
                 {upcomingDeadlines.length === 0 ? (
                   <div className="dashboard-empty-state">
                     <span className="dashboard-empty-state__icon">📅</span>
-                    <p className="dashboard-empty-state__text">No upcoming deadlines</p>
+                    <p className="dashboard-empty-state__text">
+                      No upcoming deadlines
+                    </p>
                     <p className="dashboard-empty-state__subtext">
                       Add your first deadline to get started
                     </p>
@@ -473,7 +499,9 @@ export function Dashboard({
                 <div className="dashboard-warning-card">
                   <div className="dashboard-warning-card__header">
                     <span className="dashboard-warning-card__icon">⚠️</span>
-                    <h3 className="dashboard-warning-card__title">Overdue Tasks</h3>
+                    <h3 className="dashboard-warning-card__title">
+                      Overdue Tasks
+                    </h3>
                   </div>
                   <p className="dashboard-warning-card__text">
                     You have {overdueDeadlines.length} overdue{" "}
@@ -492,7 +520,9 @@ export function Dashboard({
               <div className="dashboard-chart-card">
                 <div className="dashboard-chart-card__header">
                   <span className="dashboard-chart-card__icon">📈</span>
-                  <h3 className="dashboard-chart-card__title">This Week Overview</h3>
+                  <h3 className="dashboard-chart-card__title">
+                    This Week Overview
+                  </h3>
                 </div>
                 <SimpleBarChart data={chartData} />
               </div>
@@ -502,7 +532,9 @@ export function Dashboard({
                 <h3 className="dashboard-stats-summary__title">Quick Stats</h3>
                 <div className="dashboard-stats-summary__list">
                   <div className="dashboard-stats-summary__item">
-                    <span className="dashboard-stats-summary__label">Total Courses</span>
+                    <span className="dashboard-stats-summary__label">
+                      Total Courses
+                    </span>
                     <span className="dashboard-stats-summary__value">
                       {courses.length}
                     </span>

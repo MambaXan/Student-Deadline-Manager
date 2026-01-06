@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Styles/globals.scss";
 
-// import { LandingPage } from "./Pages/LandingPage/LandingPage";
-// import { LoginPage } from "./Pages/LoginPage/LoginPage";
-// import { SignupPage } from "./Pages/SignupPage/SignupPage";
-// // import { Dashboard } from "./Pages/Dashboard/Dashboard";
-// import { Dashboard } from "./Pages/Dashboard";
-// import { DeadlinesPage } from "./Pages/DeadlinesPage/DeadlinesPage";
-// import { CoursesPage } from "./Pages/CoursesPage/CoursesPage";
-// import { CourseDetailsPage } from "./Pages/CourseDetailsPage/CourseDetailsPage";
-// import { CalendarPage } from "./Pages/CalendarPage/CalendarPage";
-// import { SettingsPage } from "./Pages/SettingsPage/SettingsPage";
-// import { Course } from "./Types/course";
-// import { Deadline } from "./Types/deadline";
-
 import { LandingPage } from "./Pages/LandingPage";
 import { LoginPage } from "./Pages/LoginPage";
 import { SignupPage } from "./Pages/SignupPage";
