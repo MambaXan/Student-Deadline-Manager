@@ -69,6 +69,17 @@ const DeadlineModal: React.FC<{
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("medium");
 
+  const courseOptions = courses.map((course) => ({
+    value: course.id,
+    label: course.title,
+  }));
+
+  const priorityOptions = [
+    { value: "high", label: "High" },
+    { value: "medium", label: "Medium" },
+    { value: "low", label: "Low" },
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!taskName || !selectedCourseId || !dueDate) return;
@@ -93,7 +104,7 @@ const DeadlineModal: React.FC<{
           </button>
         </div>
         <form onSubmit={handleSubmit} className="dashboard-modal__form">
-          <div className="dashboard-form-group">
+        <div className="dashboard-form-group">
             <label className="dashboard-form-label">Task Name</label>
             <input
               type="text"
@@ -109,25 +120,18 @@ const DeadlineModal: React.FC<{
             <CustomDropdown
               value={selectedCourseId}
               onChange={setSelectedCourseId}
-              options={courses.map((course) => ({
-                value: course.id,
-                label: course.title,
-              }))}
+              options={courseOptions}
               placeholder="Select a course"
             />
           </div>
           <div className="dashboard-form-group">
             <label className="dashboard-form-label">Priority</label>
-            <select
+            <CustomDropdown
               value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="dashboard-form-select"
-              required
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+              onChange={(v) => setPriority(v as Deadline["priority"])}
+              options={priorityOptions}
+              placeholder="Select priority"
+            />
           </div>
           <div className="dashboard-form-group">
             <label className="dashboard-form-label">Due Date</label>

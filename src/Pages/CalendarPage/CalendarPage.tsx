@@ -4,6 +4,7 @@ import { Course } from "../../Types/course";
 import { Deadline as ImportedDeadline } from "../../Types/deadline";
 import { Sidebar } from "../../сomponents/Sidebar";
 import { MobileNav } from "../../сomponents/MobileNav";
+import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
 
 interface Deadline {
   id: string;
@@ -31,7 +32,6 @@ const TopBar: React.FC<{
     <div className="calendar-topbar">
       <div className="calendar-topbar__content">
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {/* Добавляем кнопку бургера в общий компонент */}
           {onMenuClick && (
             <button onClick={onMenuClick} className="calendar-topbar__menu-btn">
               ☰
@@ -57,6 +57,11 @@ const DeadlineModal: React.FC<{
   const [taskName, setTaskName] = useState("");
   const [selectedCourseId, setSelectedCourseId] = useState("");
   const [dueDate, setDueDate] = useState("");
+
+  const courseOptions = courses.map((course) => ({
+    value: course.id,
+    label: course.title,
+  }));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,21 +97,14 @@ const DeadlineModal: React.FC<{
               placeholder="Enter task name"
             />
           </div>
-          <div className="calendar-form-group">
-            <label className="calendar-form-label">Course</label>
-            <select
+          <div className="dashboard-form-group">
+            <label className="dashboard-form-label">Course</label>
+            <CustomDropdown
               value={selectedCourseId}
-              onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="calendar-form-select"
-              required
-            >
-              <option value="">Select a course</option>
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.title}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedCourseId}
+              options={courseOptions}
+              placeholder="Select a course"
+            />
           </div>
           <div className="calendar-form-group">
             <label className="calendar-form-label">Due Date</label>

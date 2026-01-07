@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./DeadlinesPage.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
+import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
 
 // Interface
 interface Course {
