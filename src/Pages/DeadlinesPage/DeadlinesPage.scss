@@ -141,8 +141,80 @@ $deadlines-page-info-light: #dbeafe;
 
 .deadlines-page-filters {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
+  width: 100%;
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $deadlines-page-dark-gray;
+    margin-right: 4px;
+  }
+
+  .custom-dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: inherit;
+
+    &__control {
+      padding: 8px 36px 8px 12px;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #6b7280;
+        pointer-events: none;
+      }
+
+      &:hover {
+        border-color: #4f46e5;
+      }
+    }
+
+    &__menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+
+    &__item {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f3f4f6;
+        color: #4f46e5;
+      }
+    }
+  }
 
   @media (min-width: 640px) {
     flex-direction: row;
@@ -154,6 +226,7 @@ $deadlines-page-info-light: #dbeafe;
     font-size: 14px;
     font-weight: 500;
     color: $deadlines-page-dark-gray;
+    margin-right: 4px;
 
     @media (min-width: 768px) {
       font-size: 16px;
@@ -172,6 +245,12 @@ $deadlines-page-info-light: #dbeafe;
 
     @media (min-width: 640px) {
       width: auto;
+    }
+
+    @media (max-width: 640px) {
+      margin-left: 0;
+      width: 100%;
+      margin-top: 8px;
     }
 
     &:focus {

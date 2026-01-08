@@ -36,7 +36,7 @@ export default function CustomDropdown({
   const selected = options.find((o) => o.value === value);
 
   return (
-    <div className="custom-dropdown" ref={ref}>
+    <div className={`custom-dropdown ${open ? 'custom-dropdown--open' : ''}`} ref={ref}>
       <div
         className="custom-dropdown__control"
         onClick={() => setOpen((v) => !v)}

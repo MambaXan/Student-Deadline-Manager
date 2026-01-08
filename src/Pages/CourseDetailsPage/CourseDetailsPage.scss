@@ -579,3 +579,72 @@ $course-details-info-light: #dbeafe;
     justify-content: center;
   }
 }
+.course-details-form-group {
+  margin-bottom: 20px;
+
+  .custom-dropdown {
+    // В модалке делаем их на всю ширину контейнера, 
+    // но ограничиваем, чтобы они не раздувались слишком сильно
+    width: 100%; 
+    max-width: 100%; 
+
+    &__control {
+      height: 42px;
+      padding: 8px 36px 8px 12px;
+      background-color: $course-details-white;
+      border: 1px solid $course-details-medium-gray;
+      border-radius: 8px;
+      font-size: 14px;
+      color: $course-details-dark-gray;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease; // Плавность для свечения
+      position: relative;
+
+      // Та самая стрелочка
+      &::after {
+        content: "";
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid $course-details-secondary-color;
+        pointer-events: none;
+      }
+
+      // Эффект свечения при наведении
+      &:hover {
+        border-color: $course-details-primary-color;
+        box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
+      }
+    }
+
+    // Если список открыт, тоже подсвечиваем рамку
+    &--open .custom-dropdown__control {
+        border-color: $course-details-primary-color;
+        box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
+    }
+
+    &__menu {
+      width: 100%;
+      background-color: $course-details-white;
+      border: 1px solid $course-details-medium-gray;
+      border-radius: 8px;
+      margin-top: 4px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    &__item {
+      padding: 10px 12px;
+      transition: background 0.2s;
+      
+      &:hover {
+        background-color: $course-details-primary-light;
+        color: $course-details-primary-color;
+      }
+    }
+  }
+}

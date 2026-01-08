@@ -42,14 +42,19 @@ const TopBar: React.FC<{
       <div className="deadlines-page-topbar__content">
         <div className="deadlines-page-topbar__left">
           {onMenuClick && (
-            <button onClick={onMenuClick} className="deadlines-page-topbar__menu-btn">
+            <button
+              onClick={onMenuClick}
+              className="deadlines-page-topbar__menu-btn"
+            >
               ☰
             </button>
           )}
           <h1 className="deadlines-page-topbar__title">Deadlines</h1>
         </div>
         <div className="deadlines-page-topbar__user">
-          <span className="deadlines-page-topbar__user-name">Welcome {userName}!</span>
+          <span className="deadlines-page-topbar__user-name">
+            Welcome {userName}!
+          </span>
         </div>
       </div>
     </div>
@@ -95,7 +100,10 @@ const DeadlineModal: React.FC<{
 
   return (
     <div className="deadlines-page-modal-overlay" onClick={onClose}>
-      <div className="deadlines-page-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="deadlines-page-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="deadlines-page-modal__header">
           <h3 className="deadlines-page-modal__title">
             {deadline ? "Edit Deadline" : "Add New Deadline"}
@@ -177,7 +185,10 @@ const DeadlineModal: React.FC<{
             >
               Cancel
             </button>
-            <button type="submit" className="deadlines-page-btn deadlines-page-btn--primary">
+            <button
+              type="submit"
+              className="deadlines-page-btn deadlines-page-btn--primary"
+            >
               {deadline ? "Save Changes" : "Add Deadline"}
             </button>
           </div>
@@ -198,10 +209,16 @@ const MobileNav: React.FC<{
 
   return (
     <div className="deadlines-page-mobile-nav-overlay" onClick={onClose}>
-      <div className="deadlines-page-mobile-nav" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="deadlines-page-mobile-nav"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="deadlines-page-mobile-nav__header">
           <h3 className="deadlines-page-mobile-nav__title">Menu</h3>
-          <button onClick={onClose} className="deadlines-page-mobile-nav__close-btn">
+          <button
+            onClick={onClose}
+            className="deadlines-page-mobile-nav__close-btn"
+          >
             ×
           </button>
         </div>
@@ -239,7 +256,9 @@ const MobileNav: React.FC<{
               onClose();
             }}
             className={`deadlines-page-mobile-nav__item ${
-              currentPage === "deadlines" ? "deadlines-page-mobile-nav__item--active" : ""
+              currentPage === "deadlines"
+                ? "deadlines-page-mobile-nav__item--active"
+                : ""
             }`}
           >
             📝 Deadlines
@@ -276,6 +295,18 @@ export function DeadlinesPage({
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const courseFilterOptions = [
+    { value: "all", label: "All Courses" },
+    ...courses.map((c) => ({ value: c.id, label: c.title })),
+  ];
+
+  const statusFilterOptions = [
+    { value: "all", label: "All Status" },
+    { value: "upcoming", label: "Upcoming" },
+    { value: "overdue", label: "Overdue" },
+    { value: "completed", label: "Completed" },
+  ];
 
   const getCourseById = (courseId: string) => {
     return courses.find((c) => c.id === courseId);
@@ -366,7 +397,10 @@ export function DeadlinesPage({
       />
 
       <div className="deadlines-page-main-content">
-        <TopBar userName={userName} onMenuClick={() => setMobileMenuOpen(true)} />
+        <TopBar
+          userName={userName}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
 
         <main className="deadlines-page-content">
           {/* Header */}
@@ -391,31 +425,18 @@ export function DeadlinesPage({
             <div className="deadlines-page-filters">
               <span className="deadlines-page-filters__label">Filters:</span>
 
-              {/* Course Filter */}
-              <select
+              <CustomDropdown
                 value={filterCourse}
-                onChange={(e) => setFilterCourse(e.target.value)}
-                className="deadlines-page-filters__select"
-              >
-                <option value="all">All Courses</option>
-                {courses.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.title}
-                  </option>
-                ))}
-              </select>
+                onChange={setFilterCourse}
+                options={courseFilterOptions}
+              />
 
-              {/* Status Filter */}
-              <select
+              {/* Кастомный фильтр статусов */}
+              <CustomDropdown
                 value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="deadlines-page-filters__select"
-              >
-                <option value="all">All Status</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="overdue">Overdue</option>
-                <option value="completed">Completed</option>
-              </select>
+                onChange={setFilterStatus}
+                options={statusFilterOptions}
+              />
 
               <span className="deadlines-page-filters__count">
                 {filteredDeadlines.length}{" "}
@@ -450,7 +471,10 @@ export function DeadlinesPage({
                     filteredDeadlines.map((deadline) => {
                       const course = getCourseById(deadline.courseId);
                       return (
-                        <tr key={deadline.id} className="deadlines-page-table__row">
+                        <tr
+                          key={deadline.id}
+                          className="deadlines-page-table__row"
+                        >
                           <td className="deadlines-page-table__cell deadlines-page-table__cell--task">
                             <div className="deadlines-page-task-cell">
                               <input

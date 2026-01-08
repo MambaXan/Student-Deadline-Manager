@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./CourseDetailsPage.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
+import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
 
 // Interfaces
 interface Course {
@@ -38,7 +39,9 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
       <div className="course-details-topbar__content">
         <h1 className="course-details-topbar__title">Course Details</h1>
         <div className="course-details-topbar__user">
-          <span className="course-details-topbar__user-name">Welcome {userName}</span>
+          <span className="course-details-topbar__user-name">
+            Welcome {userName}
+          </span>
         </div>
       </div>
     </div>
@@ -57,6 +60,21 @@ const DeadlineModal: React.FC<{
   const [type, setType] = useState("assignment");
   const [priority, setPriority] = useState("medium");
 
+  const courseOptions = courses.map((c) => ({ value: c.id, label: c.title }));
+
+  const typeOptions = [
+    { value: "assignment", label: "Assignment" },
+    { value: "quiz", label: "Quiz" },
+    { value: "exam", label: "Exam" },
+    { value: "project", label: "Project" },
+  ];
+
+  const priorityOptions = [
+    { value: "low", label: "Low" },
+    { value: "medium", label: "Medium" },
+    { value: "high", label: "High" },
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!taskName || !selectedCourseId || !dueDate) return;
@@ -74,7 +92,10 @@ const DeadlineModal: React.FC<{
 
   return (
     <div className="course-details-modal-overlay" onClick={onClose}>
-      <div className="course-details-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="course-details-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="course-details-modal__header">
           <h3 className="course-details-modal__title">Add New Deadline</h3>
           <button onClick={onClose} className="course-details-modal__close-btn">
@@ -93,47 +114,34 @@ const DeadlineModal: React.FC<{
               placeholder="Enter task name"
             />
           </div>
+          {/* Заменяем селект Курса */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Course</label>
-            <select
+            <CustomDropdown
               value={selectedCourseId}
-              onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="course-details-form-select"
-              required
-            >
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.title}
-                </option>
-              ))}
-            </select>
+              onChange={setSelectedCourseId}
+              options={courseOptions}
+            />
           </div>
+
+          {/* Заменяем селект Типа */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Type</label>
-            <select
+            <CustomDropdown
               value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="course-details-form-select"
-              required
-            >
-              <option value="assignment">Assignment</option>
-              <option value="quiz">Quiz</option>
-              <option value="exam">Exam</option>
-              <option value="project">Project</option>
-            </select>
+              onChange={setType}
+              options={typeOptions}
+            />
           </div>
+
+          {/* Заменяем селект Приоритета */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Priority</label>
-            <select
+            <CustomDropdown
               value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="course-details-form-select"
-              required
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+              onChange={setPriority}
+              options={priorityOptions}
+            />
           </div>
           <div className="course-details-form-group">
             <label className="course-details-form-label">Due Date</label>
@@ -153,7 +161,10 @@ const DeadlineModal: React.FC<{
             >
               Cancel
             </button>
-            <button type="submit" className="course-details-btn course-details-btn--primary">
+            <button
+              type="submit"
+              className="course-details-btn course-details-btn--primary"
+            >
               Save Deadline
             </button>
           </div>
@@ -251,16 +262,22 @@ export function CourseDetailsPage({
               <div className="course-details-header__overlay" />
               <div className="course-details-header__info">
                 <div className="course-details-header__left">
-                  <h1 className="course-details-header__title">{course.title}</h1>
+                  <h1 className="course-details-header__title">
+                    {course.title}
+                  </h1>
                   <div className="course-details-header__meta">
                     <div className="course-details-header__meta-item">
-                      <span className="course-details-header__meta-icon">👤</span>
+                      <span className="course-details-header__meta-icon">
+                        👤
+                      </span>
                       <span className="course-details-header__meta-text">
                         {course.instructor}
                       </span>
                     </div>
                     <div className="course-details-header__meta-item">
-                      <span className="course-details-header__meta-icon">⏰</span>
+                      <span className="course-details-header__meta-icon">
+                        ⏰
+                      </span>
                       <span className="course-details-header__meta-text">
                         {course.semester}
                       </span>
@@ -280,15 +297,21 @@ export function CourseDetailsPage({
             {/* Stats */}
             <div className="course-details-stats">
               <div className="course-details-stats__item">
-                <div className="course-details-stats__value">{upcomingDeadlines}</div>
+                <div className="course-details-stats__value">
+                  {upcomingDeadlines}
+                </div>
                 <div className="course-details-stats__label">Upcoming</div>
               </div>
               <div className="course-details-stats__item course-details-stats__item--border">
-                <div className="course-details-stats__value">{overdueDeadlines}</div>
+                <div className="course-details-stats__value">
+                  {overdueDeadlines}
+                </div>
                 <div className="course-details-stats__label">Overdue</div>
               </div>
               <div className="course-details-stats__item">
-                <div className="course-details-stats__value">{completedDeadlines}</div>
+                <div className="course-details-stats__value">
+                  {completedDeadlines}
+                </div>
                 <div className="course-details-stats__label">Completed</div>
               </div>
             </div>
@@ -297,7 +320,9 @@ export function CourseDetailsPage({
           {/* Deadlines Section */}
           <div className="course-details-deadlines-section">
             <div className="course-details-deadlines-section__header">
-              <h2 className="course-details-deadlines-section__title">Course Deadlines</h2>
+              <h2 className="course-details-deadlines-section__title">
+                Course Deadlines
+              </h2>
             </div>
 
             {deadlines.length === 0 ? (
@@ -319,16 +344,29 @@ export function CourseDetailsPage({
                 <table className="course-details-deadlines-table">
                   <thead className="course-details-deadlines-table__head">
                     <tr>
-                      <th className="course-details-deadlines-table__header">Task</th>
-                      <th className="course-details-deadlines-table__header">Type</th>
-                      <th className="course-details-deadlines-table__header">Due Date</th>
-                      <th className="course-details-deadlines-table__header">Status</th>
-                      <th className="course-details-deadlines-table__header">Priority</th>
+                      <th className="course-details-deadlines-table__header">
+                        Task
+                      </th>
+                      <th className="course-details-deadlines-table__header">
+                        Type
+                      </th>
+                      <th className="course-details-deadlines-table__header">
+                        Due Date
+                      </th>
+                      <th className="course-details-deadlines-table__header">
+                        Status
+                      </th>
+                      <th className="course-details-deadlines-table__header">
+                        Priority
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="course-details-deadlines-table__body">
                     {deadlines.map((deadline) => (
-                      <tr key={deadline.id} className="course-details-deadlines-table__row">
+                      <tr
+                        key={deadline.id}
+                        className="course-details-deadlines-table__row"
+                      >
                         <td className="course-details-deadlines-table__cell">
                           <span
                             className={`course-details-deadlines-table__task ${
