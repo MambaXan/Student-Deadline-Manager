@@ -24,6 +24,7 @@ interface Deadline {
 
 interface CourseDetailsPageProps {
   currentPage: string;
+  userName: string;
   course: Course;
   deadlines: Deadline[];
   onNavigate: (page: string) => void;
@@ -40,7 +41,7 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
         <h1 className="course-details-topbar__title">Course Details</h1>
         <div className="course-details-topbar__user">
           <span className="course-details-topbar__user-name">
-            Welcome {userName}
+            Welcome {userName}!
           </span>
         </div>
       </div>
@@ -114,7 +115,6 @@ const DeadlineModal: React.FC<{
               placeholder="Enter task name"
             />
           </div>
-          {/* Заменяем селект Курса */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Course</label>
             <CustomDropdown
@@ -123,8 +123,6 @@ const DeadlineModal: React.FC<{
               options={courseOptions}
             />
           </div>
-
-          {/* Заменяем селект Типа */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Type</label>
             <CustomDropdown
@@ -133,8 +131,6 @@ const DeadlineModal: React.FC<{
               options={typeOptions}
             />
           </div>
-
-          {/* Заменяем селект Приоритета */}
           <div className="course-details-form-group">
             <label className="course-details-form-label">Priority</label>
             <CustomDropdown
@@ -177,6 +173,7 @@ const DeadlineModal: React.FC<{
 export function CourseDetailsPage({
   currentPage,
   course,
+  userName,
   deadlines,
   onNavigate,
   onLogout,
@@ -245,7 +242,7 @@ export function CourseDetailsPage({
       />
 
       <div className="course-details-main-content">
-        <TopBar userName="Alex" />
+        <TopBar userName={userName} />
 
         <main className="course-details-content">
           {/* Back Button */}

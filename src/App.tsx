@@ -181,6 +181,7 @@ export default function App() {
         return selectedCourse ? (
           <CourseDetailsPage
             currentPage={currentPage}
+            userName={userName}
             course={selectedCourse}
             deadlines={deadlines.filter((d) => d.courseId === selectedCourseId)}
             onNavigate={navigateTo}
