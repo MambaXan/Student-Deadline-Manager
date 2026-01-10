@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import "./DeadlinesPage.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
 import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
@@ -296,6 +296,18 @@ export function DeadlinesPage({
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Если меню открыто и клик был не по кнопке меню — закрываем его
+      if (openMenuId && !(event.target as Element).closest('.deadlines-page-actions-cell')) {
+        setOpenMenuId(null);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [openMenuId]);
+
   const courseFilterOptions = [
     { value: "all", label: "All Courses" },
     ...courses.map((c) => ({ value: c.id, label: c.title })),
@@ -430,8 +442,6 @@ export function DeadlinesPage({
                 onChange={setFilterCourse}
                 options={courseFilterOptions}
               />
-
-              {/* Кастомный фильтр статусов */}
               <CustomDropdown
                 value={filterStatus}
                 onChange={setFilterStatus}

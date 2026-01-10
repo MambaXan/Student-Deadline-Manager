@@ -274,11 +274,14 @@ $deadlines-page-info-light: #dbeafe;
   border: 1px solid $deadlines-page-medium-gray;
   @include deadlines-page-card-shadow;
   margin-bottom: 24px;
+  overflow: visible;
 }
 
 .deadlines-page-table-wrapper {
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-y: visible;
+  padding-bottom: 0px;
+  margin-bottom: -121px;
 
   &::-webkit-scrollbar {
     height: 6px;
@@ -293,6 +296,7 @@ $deadlines-page-info-light: #dbeafe;
   width: 100%;
   min-width: 850px;
   border-collapse: collapse;
+  margin-bottom: 120px;
 
   &__head {
     background-color: $deadlines-page-light-gray;
@@ -337,7 +341,7 @@ $deadlines-page-info-light: #dbeafe;
 
     &--actions {
       position: relative;
-      width: 80px;
+      overflow: visible;
     }
   }
 
@@ -454,17 +458,15 @@ $deadlines-page-info-light: #dbeafe;
 // Deadlines Page actions menu
 .deadlines-page-actions-menu {
   position: absolute;
-  right: 0;
-  top: 100%;
-  margin-top: 8px;
+  right: 24px;
+  top: 70%;
   width: 160px;
   background-color: $deadlines-page-white;
   border-radius: 12px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   border: 1px solid $deadlines-page-medium-gray;
   padding: 8px;
-  z-index: 100;
+  z-index: 999;
 
   &__item {
     display: flex;
