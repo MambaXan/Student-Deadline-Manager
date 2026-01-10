@@ -11,12 +11,10 @@ import { CourseDetailsPage } from "./Pages/CourseDetailsPage";
 import { CalendarPage } from "./Pages/CalendarPage";
 import { SettingsPage } from "./Pages/SettingsPage";
 
-import { Sidebar } from "./сomponents/Sidebar";
-import { TopBar } from "./сomponents/Topbar";
-import { MobileNav } from "./сomponents/MobileNav";
-
 import { Course } from "./Types/course";
 import { Deadline } from "./Types/deadline";
+
+import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
   // --- LocalStorage Checked States ---
@@ -64,6 +62,7 @@ export default function App() {
   const handleLogin = (email: string, password: string) => {
     setIsAuthenticated(true);
     setCurrentPage("dashboard");
+    toast(`Welcome back!`, { icon: "👋" });
   };
 
   const handleSignup = (name: string, email: string, password: string) => {
@@ -95,6 +94,7 @@ export default function App() {
   const addDeadline = (deadline: Omit<Deadline, "id">) => {
     const newDeadline = { ...deadline, id: Date.now().toString() };
     setDeadlines([...deadlines, newDeadline as Deadline]);
+    toast.success("Deadline added!");
   };
 
   const updateDeadline = (id: string, updatedDeadline: Partial<Deadline>) => {
@@ -105,11 +105,13 @@ export default function App() {
 
   const deleteDeadline = (id: string) => {
     setDeadlines(deadlines.filter((d) => d.id !== id));
+    toast.error("Deadline deleted");
   };
 
   const addCourse = (course: Omit<Course, "id">) => {
     const newCourse = { ...course, id: Date.now().toString() };
     setCourses([...courses, newCourse]);
+    toast.success("New course created!");
   };
 
   const updateUserName = (name: string) => {
@@ -227,5 +229,10 @@ export default function App() {
     }
   };
 
-  return <div className="app">{renderPage()}</div>;
+  return (
+    <div className="app">
+      <Toaster position="top-right" reverseOrder={false} />
+      {renderPage()}
+    </div>
+  );
 }
