@@ -31,6 +31,7 @@ interface CoursesPageProps {
   onLogout: () => void;
   onViewCourse: (courseId: string) => void;
   onAddCourse: (course: Omit<Course, "id">) => void;
+  onDeleteCourse: (courseId: string) => void;
 }
 
 // Components
@@ -186,6 +187,7 @@ export function CoursesPage({
   onLogout,
   onViewCourse,
   onAddCourse,
+  onDeleteCourse,
 }: CoursesPageProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -266,6 +268,21 @@ export function CoursesPage({
                     >
                       <div className="courses-page-card__overlay" />
                       <div className="courses-page-card__icon">📚</div>
+                      <button
+                        className="courses-page-card__delete-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (
+                            window.confirm(
+                              "Are you sure you want to delete this course?"
+                            )
+                          ) {
+                            onDeleteCourse(course.id);
+                          }
+                        }}
+                      >
+                        🗑️
+                      </button>
                     </div>
 
                     <div className="courses-page-card__content">

@@ -281,13 +281,13 @@ export function CourseDetailsPage({
                     </div>
                   </div>
                 </div>
-                <button
+                {/* <button
                   onClick={() => setShowAddModal(true)}
                   className="course-details-btn course-details-btn--add-deadline"
                 >
                   <span className="course-details-btn__icon">+</span>
                   Add Deadline
-                </button>
+                </button> */}
               </div>
             </div>
 

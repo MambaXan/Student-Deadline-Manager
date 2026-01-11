@@ -30,17 +30,32 @@ export default function App() {
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
 
   const [courses, setCourses] = useState<Course[]>(() => {
-    const saved = localStorage.getItem("my_courses");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("my_courses");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Failed to parse courses", e);
+      return [];
+    }
   });
 
   const [deadlines, setDeadlines] = useState<Deadline[]>(() => {
-    const saved = localStorage.getItem("my_deadlines");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      return parsed.map((d: any) => ({ ...d, dueDate: new Date(d.dueDate) }));
+    try {
+      const saved = localStorage.getItem("my_deadlines");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.map((d: any) => ({
+            ...d,
+            dueDate: new Date(d.dueDate),
+          }));
+        }
+      }
+      return [];
+    } catch (e) {
+      console.error("Failed to parse deadlines", e);
+      return [];
     }
-    return [];
   });
 
   // --- Save effects (do not change appearance, only write to memory) ---
@@ -118,6 +133,15 @@ export default function App() {
     setUserName(name);
   };
 
+  // Добавь это в App.tsx
+  const deleteCourse = (id: string) => {
+    // Мы оставляем в списке только те курсы, id которых НЕ совпадает с удаляемым
+    setCourses(courses.filter((c) => c.id !== id));
+
+    // А еще удаляем все задачи, которые относились к этому курсу, чтобы не было "мусора"
+    setDeadlines(deadlines.filter((d) => d.courseId !== id));
+  };
+
   // --- Original rendering ---
   const renderPage = () => {
     if (!isAuthenticated) {
@@ -168,6 +192,7 @@ export default function App() {
       case "courses":
         return (
           <CoursesPage
+            onDeleteCourse={deleteCourse}
             userName={userName}
             currentPage={currentPage}
             courses={courses}
