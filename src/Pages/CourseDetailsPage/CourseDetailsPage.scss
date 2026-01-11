@@ -543,22 +543,22 @@ $course-details-info-light: #dbeafe;
   .course-details-content {
     padding: 10px;
   }
-  
+
   .course-details-header__meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .course-details-deadlines-table {
     font-size: 12px;
-    
+
     &__header,
     &__cell {
       padding: 8px 12px;
     }
   }
-  
+
   .course-details-modal {
     width: 95%;
     margin: 10px;
@@ -569,11 +569,11 @@ $course-details-info-light: #dbeafe;
   .course-details-stats__value {
     font-size: 24px;
   }
-  
+
   .course-details-header__title {
     font-size: 20px;
   }
-  
+
   .course-details-btn--add-deadline {
     width: 100%;
     justify-content: center;
@@ -583,10 +583,8 @@ $course-details-info-light: #dbeafe;
   margin-bottom: 20px;
 
   .custom-dropdown {
-    // В модалке делаем их на всю ширину контейнера, 
-    // но ограничиваем, чтобы они не раздувались слишком сильно
-    width: 100%; 
-    max-width: 100%; 
+    width: 100%;
+    max-width: 100%;
 
     &__control {
       height: 42px;
@@ -598,10 +596,9 @@ $course-details-info-light: #dbeafe;
       color: $course-details-dark-gray;
       display: flex;
       align-items: center;
-      transition: all 0.2s ease; // Плавность для свечения
+      transition: all 0.2s ease;
       position: relative;
 
-      // Та самая стрелочка
       &::after {
         content: "";
         position: absolute;
@@ -614,17 +611,15 @@ $course-details-info-light: #dbeafe;
         pointer-events: none;
       }
 
-      // Эффект свечения при наведении
       &:hover {
         border-color: $course-details-primary-color;
         box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
       }
     }
 
-    // Если список открыт, тоже подсвечиваем рамку
     &--open .custom-dropdown__control {
-        border-color: $course-details-primary-color;
-        box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
+      border-color: $course-details-primary-color;
+      box-shadow: 0 0 0 3px rgba($course-details-primary-color, 0.1);
     }
 
     &__menu {
@@ -640,7 +635,7 @@ $course-details-info-light: #dbeafe;
     &__item {
       padding: 10px 12px;
       transition: background 0.2s;
-      
+
       &:hover {
         background-color: $course-details-primary-light;
         color: $course-details-primary-color;
