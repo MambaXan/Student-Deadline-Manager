@@ -121,7 +121,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           <div className="landing-features-grid">
             {/* Feature 1 */}
             <div className="landing-feature-card">
-              <div className="landing-feature-icon landing-feature-icon--blue">🎯</div>
+              <div className="landing-feature-icon landing-feature-icon--blue">
+                🎯
+              </div>
               <h3 className="landing-feature-title">Dashboard Overview</h3>
               <p className="landing-feature-description">
                 Get a clear view of all your upcoming deadlines, overdue tasks,
@@ -132,7 +134,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
 
             {/* Feature 2 */}
             <div className="landing-feature-card">
-              <div className="landing-feature-icon landing-feature-icon--green">🔔</div>
+              <div className="landing-feature-icon landing-feature-icon--green">
+                🔔
+              </div>
               <h3 className="landing-feature-title">Smart Reminders</h3>
               <p className="landing-feature-description">
                 Never miss a deadline with customizable email reminders. Get
@@ -142,7 +146,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
 
             {/* Feature 3 */}
             <div className="landing-feature-card">
-              <div className="landing-feature-icon landing-feature-icon--purple">📚</div>
+              <div className="landing-feature-icon landing-feature-icon--purple">
+                📚
+              </div>
               <h3 className="landing-feature-title">Course Organizer</h3>
               <p className="landing-feature-description">
                 Organize all your courses in one place. Track assignments,
@@ -212,10 +218,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 haven't missed a deadline since I started using it!"
               </p>
               <div className="landing-testimonial-author">
-                <div className="landing-author-avatar landing-author-avatar--blue">👤</div>
+                <div className="landing-author-avatar landing-author-avatar--blue">
+                  👤
+                </div>
                 <div>
                   <div className="landing-author-name">Sarah Johnson</div>
-                  <div className="landing-author-role">Computer Science Major</div>
+                  <div className="landing-author-role">
+                    Computer Science Major
+                  </div>
                 </div>
               </div>
             </div>
@@ -233,7 +243,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 helps me plan my study schedule perfectly."
               </p>
               <div className="landing-testimonial-author">
-                <div className="landing-author-avatar landing-author-avatar--green">👤</div>
+                <div className="landing-author-avatar landing-author-avatar--green">
+                  👤
+                </div>
                 <div>
                   <div className="landing-author-name">Michael Chen</div>
                   <div className="landing-author-role">Engineering Student</div>
@@ -254,7 +266,9 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 attention first. Highly recommend!"
               </p>
               <div className="landing-testimonial-author">
-                <div className="landing-author-avatar landing-author-avatar--purple">👤</div>
+                <div className="landing-author-avatar landing-author-avatar--purple">
+                  👤
+                </div>
                 <div>
                   <div className="landing-author-name">Emma Davis</div>
                   <div className="landing-author-role">Business Major</div>

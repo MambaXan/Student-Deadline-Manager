@@ -164,7 +164,8 @@ $course-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 
     &--selected {
       transform: scale(1.1);
-      box-shadow: 0 0 0 3px $course-modal-white, 0 0 0 6px $course-modal-medium-gray;
+      box-shadow: 0 0 0 3px $course-modal-white,
+        0 0 0 6px $course-modal-medium-gray;
     }
   }
 }
@@ -299,18 +300,18 @@ $course-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 @media (max-width: 360px) {
   .course-modal-color-picker {
     grid-template-columns: repeat(3, 1fr);
-    
+
     &__item {
       width: 32px;
       height: 32px;
     }
   }
-  
+
   .course-modal-window {
     &__header {
       padding: 16px;
     }
-    
+
     &__form {
       padding: 16px;
     }

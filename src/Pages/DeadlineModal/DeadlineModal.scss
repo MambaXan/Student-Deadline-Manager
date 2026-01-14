@@ -337,12 +337,12 @@ $deadline-modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
 @media (max-width: 360px) {
   .deadline-modal-container {
     padding: 16px;
-    
+
     &__title {
       font-size: 18px;
     }
   }
-  
+
   .deadline-modal-field--row {
     grid-template-columns: 1fr;
   }

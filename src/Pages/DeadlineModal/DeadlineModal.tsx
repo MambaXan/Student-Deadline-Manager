@@ -70,17 +70,26 @@ export function DeadlineModal({
 
   return (
     <div className="deadline-modal-overlay" onClick={onClose}>
-      <div className="deadline-modal-container" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="deadline-modal-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="deadline-modal-container__header">
           <h2 className="deadline-modal-container__title">
             {deadline ? "Edit Deadline" : "Add New Deadline"}
           </h2>
-          <button className="deadline-modal-container__close-btn" onClick={onClose}>
+          <button
+            className="deadline-modal-container__close-btn"
+            onClick={onClose}
+          >
             ×
           </button>
         </div>
 
-        <form className="deadline-modal-container__form" onSubmit={handleSubmit}>
+        <form
+          className="deadline-modal-container__form"
+          onSubmit={handleSubmit}
+        >
           {/* Task Name */}
           <div className="deadline-modal-field">
             <label className="deadline-modal-label">Task Name *</label>
@@ -136,7 +145,9 @@ export function DeadlineModal({
                 <button
                   type="button"
                   className={`deadline-modal-priority-btn deadline-modal-priority-btn--low ${
-                    priority === "low" ? "deadline-modal-priority-btn--selected" : ""
+                    priority === "low"
+                      ? "deadline-modal-priority-btn--selected"
+                      : ""
                   }`}
                   onClick={() => setPriority("low")}
                 >
@@ -145,7 +156,9 @@ export function DeadlineModal({
                 <button
                   type="button"
                   className={`deadline-modal-priority-btn deadline-modal-priority-btn--medium ${
-                    priority === "medium" ? "deadline-modal-priority-btn--selected" : ""
+                    priority === "medium"
+                      ? "deadline-modal-priority-btn--selected"
+                      : ""
                   }`}
                   onClick={() => setPriority("medium")}
                 >
@@ -154,7 +167,9 @@ export function DeadlineModal({
                 <button
                   type="button"
                   className={`deadline-modal-priority-btn deadline-modal-priority-btn--high ${
-                    priority === "high" ? "deadline-modal-priority-btn--selected" : ""
+                    priority === "high"
+                      ? "deadline-modal-priority-btn--selected"
+                      : ""
                   }`}
                   onClick={() => setPriority("high")}
                 >
@@ -197,7 +212,10 @@ export function DeadlineModal({
             >
               Cancel
             </button>
-            <button type="submit" className="deadline-modal-btn deadline-modal-btn--primary">
+            <button
+              type="submit"
+              className="deadline-modal-btn deadline-modal-btn--primary"
+            >
               {deadline ? "Update Deadline" : "Add Deadline"}
             </button>
           </div>

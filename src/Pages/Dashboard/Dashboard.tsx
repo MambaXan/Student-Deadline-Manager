@@ -104,7 +104,7 @@ const DeadlineModal: React.FC<{
           </button>
         </div>
         <form onSubmit={handleSubmit} className="dashboard-modal__form">
-        <div className="dashboard-form-group">
+          <div className="dashboard-form-group">
             <label className="dashboard-form-label">Task Name</label>
             <input
               type="text"

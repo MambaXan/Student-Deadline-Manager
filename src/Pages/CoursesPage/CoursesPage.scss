@@ -172,10 +172,10 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   &__delete-btn {
     position: absolute;
     top: 16px;
-    left: 16px; // Слева, так как иконка книги справа
+    left: 16px;
     width: 36px;
     height: 36px;
-    background-color: rgba(239, 68, 68, 0.9); // Красный цвет
+    background-color: rgba(239, 68, 68, 0.9);
     color: white;
     border: none;
     border-radius: 8px;
@@ -184,7 +184,7 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    opacity: 0; // Скрыта по умолчанию
+    opacity: 0;
     transition: all 0.2s ease;
     z-index: 10;
 

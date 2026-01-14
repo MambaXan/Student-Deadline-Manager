@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import "./DeadlinesPage.scss";
 import { Sidebar } from "../../сomponents/Sidebar";
 import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
@@ -298,14 +298,16 @@ export function DeadlinesPage({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Если меню открыто и клик был не по кнопке меню — закрываем его
-      if (openMenuId && !(event.target as Element).closest('.deadlines-page-actions-cell')) {
+      if (
+        openMenuId &&
+        !(event.target as Element).closest(".deadlines-page-actions-cell")
+      ) {
         setOpenMenuId(null);
       }
     };
-  
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [openMenuId]);
 
   const courseFilterOptions = [

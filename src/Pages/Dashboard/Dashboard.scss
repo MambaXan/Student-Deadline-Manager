@@ -45,7 +45,7 @@ $dashboard-info-light: #dbeafe;
     overflow: hidden;
     min-width: 0;
   }
-  
+
   .dashboard-content {
     flex: 1;
     overflow-y: auto;
@@ -618,7 +618,7 @@ $dashboard-info-light: #dbeafe;
     @include dashboard-flex-center;
     display: flex;
 
-    @media (min-width: 1200px) { 
+    @media (min-width: 1200px) {
       display: none;
     }
 
@@ -793,7 +793,7 @@ $dashboard-info-light: #dbeafe;
   .dashboard-badge {
     margin-left: auto;
   }
-  
+
   .dashboard-mobile-nav {
     width: 250px;
   }
@@ -803,19 +803,19 @@ $dashboard-info-light: #dbeafe;
   .dashboard-content {
     padding: 12px;
   }
-  
+
   .dashboard-stats-card {
     &__value {
       font-size: 24px;
     }
-    
+
     &__icon {
       width: 36px;
       height: 36px;
       font-size: 18px;
     }
   }
-  
+
   .dashboard-btn--small {
     padding: 6px 12px;
     font-size: 13px;

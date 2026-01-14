@@ -19,7 +19,10 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
     <div className="login-page-container">
       <div className="login-page-wrapper">
         {/* Back Button */}
-        <button onClick={() => onNavigate("landing")} className="login-page-back-btn">
+        <button
+          onClick={() => onNavigate("landing")}
+          className="login-page-back-btn"
+        >
           <span className="login-page-back-btn__icon">←</span>
           Back to home
         </button>
@@ -73,7 +76,10 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
             </div>
 
             {/* Login Button */}
-            <button type="submit" className="login-page-btn login-page-btn--login">
+            <button
+              type="submit"
+              className="login-page-btn login-page-btn--login"
+            >
               Log In
             </button>
           </form>
@@ -81,7 +87,10 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
           {/* Sign Up Link */}
           <p className="login-page-signup-link">
             Don't have an account?{" "}
-            <button onClick={() => onNavigate("signup")} className="login-page-signup-btn">
+            <button
+              onClick={() => onNavigate("signup")}
+              className="login-page-signup-btn"
+            >
               Sign Up
             </button>
           </p>

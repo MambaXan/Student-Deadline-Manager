@@ -109,7 +109,9 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
                   type="button"
                   onClick={() => setColor(presetColor)}
                   className={`course-modal-color-picker__item ${
-                    color === presetColor ? "course-modal-color-picker__item--selected" : ""
+                    color === presetColor
+                      ? "course-modal-color-picker__item--selected"
+                      : ""
                   }`}
                   style={{ backgroundColor: presetColor }}
                   title={presetColor}
@@ -127,7 +129,9 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
                 style={{ backgroundColor: color }}
               />
               <div className="course-modal-preview__content">
-                <p className="course-modal-preview__title">{title || "Course Title"}</p>
+                <p className="course-modal-preview__title">
+                  {title || "Course Title"}
+                </p>
                 <p className="course-modal-preview__instructor">
                   {instructor || "Instructor Name"}
                 </p>
@@ -144,7 +148,10 @@ export function CourseModal({ onSave, onClose }: CourseModalProps) {
             >
               Cancel
             </button>
-            <button type="submit" className="course-modal-btn course-modal-btn--primary">
+            <button
+              type="submit"
+              className="course-modal-btn course-modal-btn--primary"
+            >
               Add Course
             </button>
           </div>

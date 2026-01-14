@@ -32,7 +32,11 @@ $landing-footer-bg: #111827;
 // Landing Page base styles
 .landing-page-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom, $landing-primary-light, $landing-white);
+  background: linear-gradient(
+    to bottom,
+    $landing-primary-light,
+    $landing-white
+  );
 }
 
 .landing-container {
@@ -696,21 +700,21 @@ $landing-footer-bg: #111827;
   .landing-page-header {
     padding: 12px 0;
   }
-  
+
   .landing-logo-text {
     font-size: 16px;
   }
-  
+
   .landing-hero__title {
     font-size: 24px;
   }
-  
+
   .landing-feature-icon {
     width: 48px;
     height: 48px;
     font-size: 20px;
   }
-  
+
   .landing-step-number {
     width: 48px;
     height: 48px;

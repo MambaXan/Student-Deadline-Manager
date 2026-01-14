@@ -133,12 +133,8 @@ export default function App() {
     setUserName(name);
   };
 
-  // Добавь это в App.tsx
   const deleteCourse = (id: string) => {
-    // Мы оставляем в списке только те курсы, id которых НЕ совпадает с удаляемым
     setCourses(courses.filter((c) => c.id !== id));
-
-    // А еще удаляем все задачи, которые относились к этому курсу, чтобы не было "мусора"
     setDeadlines(deadlines.filter((d) => d.courseId !== id));
   };
 
