@@ -911,3 +911,57 @@ $deadlines-page-info-light: #dbeafe;
     min-width: 700px;
   }
 }
+.custom-dropdown {
+  position: relative;
+  margin-bottom: 20px;
+
+  &__control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+
+    &--open { border-color: #4f46e5; }
+  }
+
+  &__arrow {
+    font-size: 10px;
+    color: #6b7280;
+    transition: transform 0.2s;
+  }
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-top: 4px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  &__item {
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    &:hover { background: #f3f4f6; }
+    &--selected { background: #eef2ff; color: #4f46e5; font-weight: 600; }
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+  }
+}

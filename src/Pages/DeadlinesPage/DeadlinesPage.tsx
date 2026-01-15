@@ -81,11 +81,24 @@ const DeadlineModal: React.FC<{
     deadline?.priority || "medium"
   );
 
+  const courseOptions = courses.map((c) => ({ value: c.id, label: c.title }));
+
+  const typeOptions = [
+    { value: "assignment", label: "Assignment" },
+    { value: "quiz", label: "Quiz" },
+    { value: "exam", label: "Exam" },
+    { value: "project", label: "Project" },
+  ];
+
+  const priorityOptions = [
+    { value: "low", label: "Low Priority" },
+    { value: "medium", label: "Medium Priority" },
+    { value: "high", label: "High Priority" },
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!taskName || !courseId) return;
-
     onSave({
       taskName,
       courseId,
@@ -94,7 +107,6 @@ const DeadlineModal: React.FC<{
       priority,
       status: "upcoming",
     });
-
     onClose();
   };
 
@@ -126,47 +138,30 @@ const DeadlineModal: React.FC<{
           </div>
           <div className="deadlines-page-form-group">
             <label className="deadlines-page-form-label">Course</label>
-            <select
+            <CustomDropdown
               value={courseId}
-              onChange={(e) => setCourseId(e.target.value)}
-              className="deadlines-page-form-select"
-              required
-            >
-              <option value="">Select a course</option>
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.title}
-                </option>
-              ))}
-            </select>
+              onChange={setCourseId}
+              options={courseOptions}
+              placeholder="Select a course"
+            />
           </div>
           <div className="deadlines-page-form-group">
             <label className="deadlines-page-form-label">Type</label>
-            <select
+            <CustomDropdown
               value={type}
-              onChange={(e) => setType(e.target.value as any)}
-              className="deadlines-page-form-select"
-              required
-            >
-              <option value="assignment">Assignment</option>
-              <option value="quiz">Quiz</option>
-              <option value="exam">Exam</option>
-              <option value="project">Project</option>
-            </select>
+              onChange={(val) => setType(val as any)}
+              options={typeOptions}
+            />
           </div>
           <div className="deadlines-page-form-group">
             <label className="deadlines-page-form-label">Priority</label>
-            <select
+            <CustomDropdown
               value={priority}
-              onChange={(e) => setPriority(e.target.value as any)}
-              className="deadlines-page-form-select"
-              required
-            >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
-            </select>
+              onChange={(val) => setPriority(val as any)}
+              options={priorityOptions}
+            />
           </div>
+
           <div className="deadlines-page-form-group">
             <label className="deadlines-page-form-label">Due Date</label>
             <input
@@ -177,6 +172,7 @@ const DeadlineModal: React.FC<{
               required
             />
           </div>
+
           <div className="deadlines-page-modal__actions">
             <button
               type="button"
