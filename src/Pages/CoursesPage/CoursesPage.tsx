@@ -1,7 +1,7 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import "./CoursesPage.scss";
-import { Sidebar } from "../../сomponents/Sidebar";
-import { MobileNav } from "../../сomponents/MobileNav";
+import { Sidebar } from "../../components/Sidebar";
+import { MobileNav } from "../../components/MobileNav";
 
 // Interfaces
 interface Course {

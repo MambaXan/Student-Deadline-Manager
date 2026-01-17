@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./CalendarPage.scss";
 import { Course } from "../../Types/course";
 import { Deadline as ImportedDeadline } from "../../Types/deadline";
-import { Sidebar } from "../../сomponents/Sidebar";
-import { MobileNav } from "../../сomponents/MobileNav";
-import CustomDropdown from "../../сomponents/CustomDropdown/CustomDropdown";
+import { Sidebar } from "../../components/Sidebar";
+import { MobileNav } from "../../components/MobileNav";
+import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
 
 interface Deadline {
   id: string;

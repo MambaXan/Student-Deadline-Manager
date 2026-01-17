@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./SettingsPage.scss";
-import { Sidebar } from "../../сomponents/Sidebar";
-import { MobileNav } from "../../сomponents/MobileNav";
+import { Sidebar } from "../../components/Sidebar";
+import { MobileNav } from "../../components/MobileNav";
 
 interface SettingsPageProps {
   currentPage: string;

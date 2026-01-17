@@ -151,12 +151,6 @@ export default function App() {
       }
     }
 
-    const commonProps = {
-      currentPage,
-      onNavigate: navigateTo,
-      onLogout: handleLogout,
-    };
-
     switch (currentPage) {
       case "dashboard":
         return (
