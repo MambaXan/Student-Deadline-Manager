@@ -30,6 +30,59 @@ interface DashboardProps {
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
 }
 
+const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
+  percentage,
+  size = 80,
+}) => {
+  const strokeWidth = 8;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (percentage / 100) * circumference;
+  return (
+    <div
+      className="dashboard-progress-circle"
+      style={{
+        width: size,
+        height: size,
+        position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+        <circle
+          stroke="#e5e7eb"
+          strokeWidth={strokeWidth}
+          fill="transparent"
+          r={radius}
+          cx={size / 2}
+          cy={size / 2}
+        />
+        <circle
+          stroke="#4f46e5"
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          style={{
+            strokeDashoffset: offset,
+            transition: "stroke-dashoffset 0.8s ease-in-out",
+          }}
+          strokeLinecap="round"
+          fill="transparent"
+          r={radius}
+          cx={size / 2}
+          cy={size / 2}
+        />
+      </svg>
+      <span
+        style={{ position: "absolute", fontSize: "14px", fontWeight: "bold" }}
+      >
+        {Math.round(percentage)}%
+      </span>
+    </div>
+  );
+};
+
 // Components
 const TopBar: React.FC<{
   userName: string;
@@ -254,7 +307,7 @@ const SimpleBarChart: React.FC<{
             <div
               className="dashboard-bar-chart__bar"
               style={{
-                height: `${(item.tasks / maxTasks) * 140}px`,
+                height: `${(item.tasks / maxTasks) * 120}px`,
                 minHeight: item.tasks > 0 ? "4px" : "0",
               }}
               title={`${item.tasks} task${item.tasks !== 1 ? "s" : ""}`}
@@ -299,6 +352,11 @@ export function Dashboard({
   ).length;
 
   // Chart data - deadlines per day for the next 7 days
+  const completionRate =
+    deadlines.length > 0
+      ? Math.round((completedCount / deadlines.length) * 100)
+      : 0;
+
   const chartData = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date(now);
@@ -534,6 +592,16 @@ export function Dashboard({
               {/* Quick Stats */}
               <div className="dashboard-stats-summary">
                 <h3 className="dashboard-stats-summary__title">Quick Stats</h3>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "10px 0",
+                  }}
+                >
+                  <ProgressBar percentage={completionRate} size={100} />
+                </div>
+
                 <div className="dashboard-stats-summary__list">
                   <div className="dashboard-stats-summary__item">
                     <span className="dashboard-stats-summary__label">
@@ -553,13 +621,15 @@ export function Dashboard({
                   </div>
                   <div className="dashboard-stats-summary__item">
                     <span className="dashboard-stats-summary__label">
-                      Completion Rate
+                      Status
                     </span>
-                    <span className="dashboard-stats-summary__value">
-                      {deadlines.length > 0
-                        ? Math.round((completedCount / deadlines.length) * 100)
-                        : 0}
-                      %
+                    <span
+                      className="dashboard-stats-summary__value"
+                      style={{
+                        color: completionRate === 100 ? "#10b981" : "#4f46e5",
+                      }}
+                    >
+                      {completionRate === 100 ? "All done! 🎉" : "In progress"}
                     </span>
                   </div>
                 </div>
