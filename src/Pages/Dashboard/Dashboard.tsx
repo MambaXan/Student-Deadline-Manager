@@ -30,6 +30,7 @@ interface DashboardProps {
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
 }
 
+// Components
 const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   percentage,
   size = 80,
@@ -38,6 +39,13 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const offset = circumference - (percentage / 100) * circumference;
+
+  const getStrokeColor = () => {
+    if (percentage < 30) return "#ef4444";
+    if (percentage < 70) return "#f59e0b";
+    return "#10b981";
+  };
+
   return (
     <div
       className="dashboard-progress-circle"
@@ -60,12 +68,12 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
           cy={size / 2}
         />
         <circle
-          stroke="#4f46e5"
+          stroke={getStrokeColor()}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           style={{
             strokeDashoffset: offset,
-            transition: "stroke-dashoffset 0.8s ease-in-out",
+            transition: "stroke-dashoffset 0.8s ease-in-out, stroke 0.5s ease",
           }}
           strokeLinecap="round"
           fill="transparent"
@@ -75,7 +83,12 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
         />
       </svg>
       <span
-        style={{ position: "absolute", fontSize: "14px", fontWeight: "bold" }}
+        style={{
+          position: "absolute",
+          fontSize: "14px",
+          fontWeight: "bold",
+          color: getStrokeColor(),
+        }}
       >
         {Math.round(percentage)}%
       </span>
@@ -83,7 +96,6 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   );
 };
 
-// Components
 const TopBar: React.FC<{
   userName: string;
   onMenuClick?: () => void;
