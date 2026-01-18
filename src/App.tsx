@@ -153,11 +153,16 @@ export default function App() {
 
     switch (currentPage) {
       case "dashboard":
+        const sortedDeadlines = [...deadlines].sort(
+          (a, b) =>
+            new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+        );
+
         return (
           <Dashboard
             currentPage={currentPage}
             userName={userName}
-            deadlines={deadlines}
+            deadlines={sortedDeadlines}
             courses={courses}
             onNavigate={navigateTo}
             onLogout={handleLogout}
