@@ -33,11 +33,22 @@ const TopBar: React.FC<{
       <div className="calendar-topbar__content">
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           {onMenuClick && (
-            <button onClick={onMenuClick} className="calendar-topbar__menu-btn">
+            <button
+              onClick={onMenuClick}
+              className="calendar-topbar__menu-btn"
+              style={{
+                fontSize: "24px",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
               ☰
             </button>
           )}
-          <h1 className="calendar-topbar__title">Academic Calendar</h1>
+          <h1 className="calendar-topbar__title" style={{ margin: 0 }}>
+            Calendar
+          </h1>
         </div>
         <div className="calendar-topbar__user">
           <span className="calendar-topbar__user-name">
@@ -353,6 +364,14 @@ export function CalendarPage({
                                 borderLeft: `3px solid ${
                                   course?.color || "#6b7280"
                                 }`,
+                                fontSize: "10px",
+                                padding: "2px 4px",
+                                marginBottom: "2px",
+                                borderRadius: "4px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                display: "block",
                               }}
                               title={deadline.taskName}
                             >
@@ -360,11 +379,6 @@ export function CalendarPage({
                             </div>
                           );
                         })}
-                        {dayDeadlines.length > 3 && (
-                          <div className="calendar-widget__deadline-more">
-                            +{dayDeadlines.length - 3} more
-                          </div>
-                        )}
                       </div>
                     </div>
                   );

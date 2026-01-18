@@ -103,20 +103,31 @@ const TopBar: React.FC<{
   return (
     <div className="dashboard-topbar">
       <div className="dashboard-topbar__content">
-        <div className="dashboard-topbar__left">
+        <div
+          className="dashboard-topbar__left"
+          style={{ display: "flex", alignItems: "center", gap: "12px" }}
+        >
           {onMenuClick && (
             <button
               onClick={onMenuClick}
               className="dashboard-topbar__menu-btn"
+              style={{
+                fontSize: "24px",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
             >
               ☰
             </button>
           )}
-          <h1 className="dashboard-topbar__title">Dashboard</h1>
+          <h1 className="dashboard-topbar__title" style={{ margin: 0 }}>
+            Dashboard
+          </h1>
         </div>
         <div className="dashboard-topbar__user">
           <span className="dashboard-topbar__user-name">
-            Welcome {userName}!
+            Welcome {userName || "Student"}!
           </span>
         </div>
       </div>
@@ -238,11 +249,24 @@ const MobileNav: React.FC<{
 }> = ({ currentPage, onNavigate, onLogout, isOpen, onClose }) => {
   if (!isOpen) return null;
 
+  const menuItems = [
+    { id: "dashboard", label: "Dashboard", icon: "📊" },
+    { id: "calendar", label: "Calendar", icon: "📅" },
+    { id: "courses", label: "Courses", icon: "📚" },
+    { id: "deadlines", label: "Deadlines", icon: "📝" },
+    { id: "settings", label: "Settings", icon: "⚙️" }, // ДОБАВИЛИ НАСТРОЙКИ
+  ];
+
   return (
-    <div className="dashboard-mobile-nav-overlay" onClick={onClose}>
+    <div
+      className="dashboard-mobile-nav-overlay"
+      onClick={onClose}
+      style={{ zIndex: 1000 }}
+    >
       <div
         className="dashboard-mobile-nav"
         onClick={(e) => e.stopPropagation()}
+        style={{ animation: "slideIn 0.3s ease-out" }} // Добавляем плавность
       >
         <div className="dashboard-mobile-nav__header">
           <h3 className="dashboard-mobile-nav__title">Menu</h3>
@@ -251,55 +275,40 @@ const MobileNav: React.FC<{
           </button>
         </div>
         <nav className="dashboard-mobile-nav__list">
-          <button
-            onClick={() => {
-              onNavigate("dashboard");
-              onClose();
+          {menuItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                onNavigate(item.id);
+                onClose();
+              }}
+              className={`dashboard-mobile-nav__item ${
+                currentPage === item.id
+                  ? "dashboard-mobile-nav__item--active"
+                  : ""
+              }`}
+            >
+              <span style={{ marginRight: "10px" }}>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+          <div
+            style={{
+              marginTop: "auto",
+              borderTop: "1px solid #eee",
+              paddingTop: "10px",
             }}
-            className={`dashboard-mobile-nav__item ${
-              currentPage === "dashboard"
-                ? "dashboard-mobile-nav__item--active"
-                : ""
-            }`}
           >
-            📊 Dashboard
-          </button>
-          <button
-            onClick={() => {
-              onNavigate("calendar");
-              onClose();
-            }}
-            className="dashboard-mobile-nav__item"
-          >
-            📅 Calendar
-          </button>
-          <button
-            onClick={() => {
-              onNavigate("courses");
-              onClose();
-            }}
-            className="dashboard-mobile-nav__item"
-          >
-            📚 Courses
-          </button>
-          <button
-            onClick={() => {
-              onNavigate("deadlines");
-              onClose();
-            }}
-            className="dashboard-mobile-nav__item"
-          >
-            📝 Deadlines
-          </button>
-          <button
-            onClick={() => {
-              onLogout();
-              onClose();
-            }}
-            className="dashboard-mobile-nav__item dashboard-mobile-nav__item--logout"
-          >
-            👤 Logout
-          </button>
+            <button
+              onClick={() => {
+                onLogout();
+                onClose();
+              }}
+              className="dashboard-mobile-nav__item dashboard-mobile-nav__item--logout"
+            >
+              <span style={{ marginRight: "10px" }}>👤</span> Log Out
+            </button>
+          </div>
         </nav>
       </div>
     </div>
