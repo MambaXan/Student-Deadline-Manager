@@ -112,6 +112,12 @@ export default function App() {
     toast.success("Deadline added!");
   };
 
+  const clearCompletedDeadlines = () => {
+    const activeOnly = deadlines.filter((d) => d.status !== "completed");
+    setDeadlines(activeOnly);
+    toast.success("Completed tasks cleared!");
+  };
+
   const updateDeadline = (id: string, updatedDeadline: Partial<Deadline>) => {
     setDeadlines(
       deadlines.map((d) => (d.id === id ? { ...d, ...updatedDeadline } : d))
@@ -168,6 +174,7 @@ export default function App() {
             onLogout={handleLogout}
             onAddDeadline={addDeadline as any}
             onUpdateDeadline={updateDeadline}
+            onClearCompleted={clearCompletedDeadlines}
           />
         );
       case "deadlines":
@@ -244,6 +251,7 @@ export default function App() {
             onLogout={handleLogout}
             onAddDeadline={addDeadline as any}
             onUpdateDeadline={updateDeadline}
+            onClearCompleted={clearCompletedDeadlines}
           />
         );
     }

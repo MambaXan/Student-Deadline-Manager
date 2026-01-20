@@ -28,6 +28,7 @@ interface DashboardProps {
   onLogout: () => void;
   onAddDeadline: (deadline: Omit<Deadline, "id">) => void;
   onUpdateDeadline: (id: string, deadline: Partial<Deadline>) => void;
+  onClearCompleted: () => void;
 }
 
 // Components
@@ -254,7 +255,7 @@ const MobileNav: React.FC<{
     { id: "calendar", label: "Calendar", icon: "📅" },
     { id: "courses", label: "Courses", icon: "📚" },
     { id: "deadlines", label: "Deadlines", icon: "📝" },
-    { id: "settings", label: "Settings", icon: "⚙️" }, // ДОБАВИЛИ НАСТРОЙКИ
+    { id: "settings", label: "Settings", icon: "⚙️" },
   ];
 
   return (
@@ -266,7 +267,7 @@ const MobileNav: React.FC<{
       <div
         className="dashboard-mobile-nav"
         onClick={(e) => e.stopPropagation()}
-        style={{ animation: "slideIn 0.3s ease-out" }} // Добавляем плавность
+        style={{ animation: "slideIn 0.3s ease-out" }}
       >
         <div className="dashboard-mobile-nav__header">
           <h3 className="dashboard-mobile-nav__title">Menu</h3>
@@ -351,6 +352,7 @@ export function Dashboard({
   onLogout,
   onAddDeadline,
   onUpdateDeadline,
+  onClearCompleted,
 }: DashboardProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -503,6 +505,18 @@ export function Dashboard({
                 >
                   <span className="dashboard-btn__icon">+</span>
                   <span className="dashboard-btn__text">Add Deadline</span>
+                </button>
+                <button
+                  onClick={onClearCompleted}
+                  style={{
+                    fontSize: "12px",
+                    opacity: 0.6,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  🧹 Clear Done
                 </button>
               </div>
 
