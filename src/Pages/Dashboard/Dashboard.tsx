@@ -522,13 +522,39 @@ export function Dashboard({
 
               <div className="dashboard-upcoming-list">
                 {upcomingDeadlines.length === 0 ? (
-                  <div className="dashboard-empty-state">
-                    <span className="dashboard-empty-state__icon">📅</span>
-                    <p className="dashboard-empty-state__text">
-                      No upcoming deadlines
-                    </p>
-                    <p className="dashboard-empty-state__subtext">
-                      Add your first deadline to get started
+                  <div
+                    className="dashboard-empty-state"
+                    style={{
+                      textAlign: "center",
+                      padding: "40px 20px",
+                      background: "#f9fafb",
+                      borderRadius: "12px",
+                      border: "2px dashed #e5e7eb",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "48px",
+                        display: "block",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      🎉
+                    </span>
+                    <h3
+                      style={{
+                        fontSize: "18px",
+                        fontWeight: "600",
+                        color: "#111827",
+                        margin: "0 0 8px 0",
+                      }}
+                    >
+                      All clear!
+                    </h3>
+                    <p
+                      style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}
+                    >
+                      No deadlines for now. Go grab a coffee or rest!
                     </p>
                   </div>
                 ) : (
