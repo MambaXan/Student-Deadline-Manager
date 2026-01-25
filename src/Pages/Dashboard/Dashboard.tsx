@@ -568,6 +568,16 @@ export function Dashboard({
                       <div
                         key={deadline.id}
                         className="dashboard-upcoming-item"
+                        style={{
+                          borderLeft: `4px solid ${
+                            deadline.priority === "high"
+                              ? "#ef4444"
+                              : deadline.priority === "medium"
+                              ? "#f59e0b"
+                              : "#10b981"
+                          }`,
+                          paddingLeft: "12px",
+                        }}
                         onClick={() => {
                           if (deadline.status === "upcoming") {
                             onUpdateDeadline(deadline.id, {
