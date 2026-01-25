@@ -37,6 +37,10 @@ const TopBar: React.FC<{
   userName: string;
   onMenuClick?: () => void;
 }> = ({ userName, onMenuClick }) => {
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
   return (
     <div className="deadlines-page-topbar">
       <div className="deadlines-page-topbar__content">
@@ -53,7 +57,7 @@ const TopBar: React.FC<{
         </div>
         <div className="deadlines-page-topbar__user">
           <span className="deadlines-page-topbar__user-name">
-            Welcome {userName}!
+            {greeting}, {userName}!
           </span>
         </div>
       </div>

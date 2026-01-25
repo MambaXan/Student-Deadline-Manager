@@ -35,13 +35,17 @@ interface CourseDetailsPageProps {
 
 // Components
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
   return (
     <div className="course-details-topbar">
       <div className="course-details-topbar__content">
         <h1 className="course-details-topbar__title">Course Details</h1>
         <div className="course-details-topbar__user">
           <span className="course-details-topbar__user-name">
-            Welcome {userName}!
+            {greeting}, {userName}!
           </span>
         </div>
       </div>

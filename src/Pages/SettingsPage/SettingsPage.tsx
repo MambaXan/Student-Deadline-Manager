@@ -13,13 +13,17 @@ interface SettingsPageProps {
 
 // TopBar Component
 const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+
   return (
     <div className="settings-page-topbar">
       <div className="settings-page-topbar__content">
         <h1 className="settings-page-topbar__title">Settings</h1>
         <div className="settings-page-topbar__user">
           <span className="settings-page-topbar__user-name">
-            Welcome {userName}!
+            {greeting}, {userName}!
           </span>
         </div>
       </div>
