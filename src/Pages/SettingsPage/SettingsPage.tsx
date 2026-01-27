@@ -76,6 +76,25 @@ export function SettingsPage({
     setTimeout(() => setShowSuccessMessage(false), 3000);
   };
 
+  const handleExport = () => {
+    const data = {
+      courses: JSON.parse(localStorage.getItem("my_courses") || "[]"),
+      deadlines: JSON.parse(localStorage.getItem("my_deadlines") || "[]"),
+      userName: localStorage.getItem("userName"),
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `deadlines_backup_${new Date()
+      .toISOString()
+      .slice(0, 10)}.json`;
+    link.click();
+  };
+
   return (
     <div className="settings-page-container">
       <Sidebar
@@ -169,6 +188,9 @@ export function SettingsPage({
                   className="settings-page-btn settings-page-btn--primary"
                 >
                   Save Changes
+                </button>
+                <button onClick={handleExport} className="settings-btn--export">
+                  📥 Export My Data (Backup)
                 </button>
               </form>
             </div>
