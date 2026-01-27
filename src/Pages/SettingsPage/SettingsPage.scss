@@ -1,490 +1,186 @@
-// Settings Page Variables
-$settings-page-primary-color: #4f46e5;
-$settings-page-primary-light: #eef2ff;
-$settings-page-secondary-color: #6b7280;
-$settings-page-light-gray: #f9fafb;
-$settings-page-medium-gray: #e5e7eb;
-$settings-page-dark-gray: #374151;
-$settings-page-white: #ffffff;
-$settings-page-success-color: #10b981;
-$settings-page-success-light: #d1fae5;
-$settings-page-danger-color: #ef4444;
-$settings-page-danger-light: #fee2e2;
+$primary: #4f46e5;
+$danger: #ef4444;
+$bg: #f9fafb;
+$border: #e5e7eb;
+$text-dark: #1f2937;
+$text-gray: #6b7280;
 
-// Settings Page Mixins
-@mixin settings-page-flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin settings-page-card-shadow {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-// Settings page
 .settings-page-container {
   display: flex;
   min-height: 100vh;
-  background-color: $settings-page-light-gray;
+  background-color: $bg;
 
   .settings-page-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   .settings-page-content {
-    flex: 1;
-    overflow-y: auto;
     padding: 24px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
 
     @media (min-width: 768px) {
-      padding: 32px;
+      padding: 40px;
     }
   }
 }
 
-// Settings Page header
-.settings-page-header {
-  margin-bottom: 24px;
-}
-
-.settings-page-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: $settings-page-dark-gray;
-  margin-bottom: 8px;
-}
-
-.settings-page-subtitle {
-  font-size: 16px;
-  color: $settings-page-secondary-color;
-}
-
-// Settings Page success message
-.settings-page-success-message {
-  background-color: $settings-page-success-light;
-  border: 1px solid $settings-page-success-color;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-  animation: settings-page-slideIn 0.3s ease;
-
-  &__icon {
-    font-size: 18px;
-    color: $settings-page-success-color;
-    font-weight: bold;
-  }
-
-  &__text {
-    font-size: 14px;
-    color: $settings-page-success-color;
-    font-weight: 500;
-  }
-}
-
-@keyframes settings-page-slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Settings Page content
-.settings-page-content-wrapper {
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  @media (min-width: 1400px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-// Settings Page card
-.settings-page-card {
-  background-color: $settings-page-white;
-  border-radius: 16px;
-  padding: 24px;
-  border: 1px solid $settings-page-medium-gray;
-  @include settings-page-card-shadow;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-
-  &__icon {
-    font-size: 24px;
-  }
-
-  &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: $settings-page-dark-gray;
-  }
-}
-
-// Settings Page form
-.settings-page-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-// Settings Page form elements
-.settings-page-form-group {
-  margin-bottom: 8px;
-}
-
-.settings-page-form-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: $settings-page-dark-gray;
-  margin-bottom: 8px;
-}
-
-.settings-page-form-input,
-.settings-page-form-select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid $settings-page-medium-gray;
-  border-radius: 12px;
-  font-size: 14px;
-  color: $settings-page-dark-gray;
-  background-color: $settings-page-white;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border-color: $settings-page-primary-color;
-    box-shadow: 0 0 0 3px rgba($settings-page-primary-color, 0.1);
-  }
-
-  &::placeholder {
-    color: $settings-page-secondary-color;
-    opacity: 0.6;
-  }
-}
-
-.settings-page-form-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
-  cursor: pointer;
-}
-
-// Settings Page buttons
-.settings-page-btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  @include settings-page-flex-center;
-
-  &--primary {
-    background-color: $settings-page-primary-color;
-    color: $settings-page-white;
-    align-self: flex-start;
-
-    &:hover {
-      background-color: darken($settings-page-primary-color, 10%);
-      transform: translateY(-1px);
-    }
-  }
-
-  &--danger {
-    background-color: $settings-page-danger-color;
-    color: $settings-page-white;
-
-    &:hover {
-      background-color: darken($settings-page-danger-color, 10%);
-    }
-  }
-}
-
-// Settings Page notification settings
-.settings-page-notification-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.settings-page-toggle-settings {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
-  background-color: $settings-page-light-gray;
-  border-radius: 12px;
-
-  &__title {
-    font-size: 16px;
-    font-weight: 500;
-    color: $settings-page-dark-gray;
-    margin-bottom: 4px;
-  }
-
-  &__description {
-    font-size: 14px;
-    color: $settings-page-secondary-color;
-  }
-}
-
-.settings-page-toggle-switch {
-  width: 56px;
-  height: 32px;
-  border-radius: 999px;
-  background-color: $settings-page-medium-gray;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  transition: background-color 0.2s ease;
-
-  &--active {
-    background-color: $settings-page-primary-color;
-  }
-
-  &__handle {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 24px;
-    height: 24px;
-    background-color: $settings-page-white;
-    border-radius: 50%;
-    transition: transform 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  &--active &__handle {
-    transform: translateX(24px);
-  }
-}
-
-// Settings Page theme settings
-.settings-page-theme-settings {
-  &__description {
-    font-size: 14px;
-    color: $settings-page-secondary-color;
-    margin-bottom: 16px;
-  }
-}
-
-.settings-page-theme-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.settings-page-theme-option {
-  padding: 20px;
-  border: 2px solid $settings-page-medium-gray;
-  border-radius: 16px;
-  background: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-
-  &:hover {
-    border-color: $settings-page-primary-color;
-    transform: translateY(-2px);
-  }
-
-  &--selected {
-    border-color: $settings-page-primary-color;
-    background-color: $settings-page-primary-light;
-  }
-
-  &__icon {
-    font-size: 32px;
-    display: block;
-    margin-bottom: 12px;
-  }
-
-  &__title {
-    font-size: 16px;
-    font-weight: 600;
-    color: $settings-page-dark-gray;
-    margin-bottom: 4px;
-  }
-
-  &__subtitle {
-    font-size: 12px;
-    color: $settings-page-secondary-color;
-  }
-}
-
-// Settings Page danger zone
-.settings-page-danger-zone {
-  background-color: $settings-page-white;
-  border: 1px solid $settings-page-danger-light;
-  border-radius: 16px;
-  padding: 24px;
-  @include settings-page-card-shadow;
-
-  &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: $settings-page-danger-color;
-    margin-bottom: 12px;
-  }
-
-  &__description {
-    font-size: 14px;
-    color: $settings-page-secondary-color;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-}
-
-// Settings Page topbar
 .settings-page-topbar {
-  background-color: $settings-page-white;
-  border-bottom: 1px solid $settings-page-medium-gray;
-  padding: 16px 20px;
+  background: #fff;
+  border-bottom: 1px solid $border;
+  padding: 16px 24px;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+  }
 
   &__menu-btn {
-    width: 40px;
-    height: 40px;
-    border: 1px solid $settings-page-medium-gray;
+    display: block;
     background: none;
+    border: 1px solid $border;
     border-radius: 8px;
-    font-size: 20px;
+    padding: 8px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     @media (min-width: 1200px) {
       display: none;
     }
   }
 
-  &__content {
+  &__user-name {
+    color: $text-gray;
+    font-size: 14px;
+  }
+}
+
+.settings-page-header {
+  margin-bottom: 32px;
+  
+  .settings-page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .settings-page-subtitle {
+    color: $text-gray;
+  }
+}
+
+.settings-page-success-message {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 500;
+}
+
+.settings-page-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-page-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid $border;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
   }
 
   &__title {
-    font-size: 20px;
-    font-weight: 600;
-    color: $settings-page-dark-gray;
-  }
-
-  &__user {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &__user-name {
-    font-size: 14px;
-    color: $settings-page-secondary-color;
-  }
-}
-
-// Settings Page responsive
-@media (max-width: 768px) {
-  .settings-page-container {
-    flex-direction: column;
-  }
-
-  .settings-page-content-wrapper {
-    max-width: 100%;
-  }
-
-  .settings-page-theme-options {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .settings-page-content {
-    padding: 16px;
-  }
-
-  .settings-page-title {
-    font-size: 24px;
-  }
-
-  .settings-page-card {
-    padding: 20px;
-  }
-
-  .settings-page-card__title {
     font-size: 18px;
+    font-weight: 600;
+    margin: 0;
   }
 
-  .settings-page-toggle-settings {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  &__desc {
+    color: $text-gray;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
   }
 
-  .settings-page-toggle-switch {
-    align-self: flex-start;
-  }
-
-  .settings-page-btn {
-    width: 100%;
-    align-self: stretch;
+  &--danger {
+    border-left: 4px solid $danger;
   }
 }
 
-@media (max-width: 480px) {
-  .settings-page-card__header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-}
+.settings-page-form {
+  &-group {
+    margin-bottom: 20px;
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
 
-@media (max-width: 360px) {
-  .settings-page-card {
-    padding: 16px;
-  }
-
-  .settings-page-theme-option {
-    padding: 16px;
-
-    &__icon {
-      font-size: 28px;
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid $border;
+      border-radius: 10px;
+      font-size: 14px;
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
     }
   }
-
-  .settings-page-toggle-settings {
-    padding: 12px;
-  }
 }
 
-@media (max-width: 640px) {
-  .settings-page-btn--primary {
-    width: 100%;
+.settings-page-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+
+  &--primary {
+    background: $primary;
+    color: #fff;
+    &:hover { background: darken($primary, 5%); }
   }
 
-  .settings-page-theme-options {
-    grid-template-columns: 1fr;
+  &--export {
+    background: #f3f4f6;
+    color: $text-dark;
+    border: 1px solid $border;
+    &:hover { background: #e5e7eb; }
+  }
+
+  &--danger {
+    background: #fef2f2;
+    color: $danger;
+    &:hover { background: #fee2e2; }
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
   }
 }

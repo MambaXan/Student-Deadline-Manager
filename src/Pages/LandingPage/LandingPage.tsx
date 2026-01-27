@@ -71,7 +71,8 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
         <div className="landing-container">
           <div className="landing-hero__content">
             <h1 className="landing-hero__title">
-              Track All Your Deadlines in One Place
+              Built for students who don’t want to spend time setting up
+              productivity systems
             </h1>
             <p className="landing-hero__subtitle">
               Stay organized, never miss a deadline, and manage your university
@@ -356,7 +357,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
           </div>
 
           <div className="landing-footer-bottom">
-            © 2024 DeadlineTracker. All rights reserved.
+            © 2026 DeadlineTracker. All rights reserved.
           </div>
         </div>
       </footer>
