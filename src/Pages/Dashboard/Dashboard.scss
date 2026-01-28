@@ -840,3 +840,81 @@ $dashboard-info-light: #dbeafe;
   font-weight: 700;
   color: #374151;
 }
+
+.dashboard-mobile-nav-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  justify-content: flex-start;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .dashboard-mobile-nav {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &.is-open .dashboard-mobile-nav {
+    transform: translateX(0);
+  }
+}
+
+.dashboard-btn--warning {
+  background-color: $dashboard-warning-color;
+  color: $dashboard-white;
+  animation: pulse 2s infinite;
+
+  &:hover {
+    background-color: darken($dashboard-warning-color, 10%);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($dashboard-warning-color, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($dashboard-warning-color, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($dashboard-warning-color, 0);
+  }
+}
+
+.dashboard-progress-circle {
+  svg {
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.05));
+  }
+
+  circle {
+    transition: stroke-dashoffset 0.8s ease-in-out;
+  }
+}
+
+@media (max-width: 360px) {
+  .dashboard-upcoming-item {
+    &__title {
+      font-size: 13px;
+    }
+    &__course {
+      max-width: 100px;
+    }
+  }
+
+  .dashboard-stats-card__value {
+    font-size: 22px;
+  }
+}
+
+.dashboard-modal {
+  overflow-x: hidden;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

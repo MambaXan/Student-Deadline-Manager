@@ -9,7 +9,6 @@ interface Course {
   title: string;
   color: string;
 }
-
 interface Deadline {
   id: string;
   courseId: string;
@@ -31,7 +30,6 @@ interface DashboardProps {
   onClearCompleted: () => void;
 }
 
-// Components
 const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   percentage,
   size = 80,
@@ -40,12 +38,8 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const offset = circumference - (percentage / 100) * circumference;
-
-  const getStrokeColor = () => {
-    if (percentage < 30) return "#ef4444";
-    if (percentage < 70) return "#f59e0b";
-    return "#10b981";
-  };
+  const getStrokeColor = () =>
+    percentage < 30 ? "#ef4444" : percentage < 70 ? "#f59e0b" : "#10b981";
 
   return (
     <div
@@ -97,14 +91,13 @@ const ProgressBar: React.FC<{ percentage: number; size?: number }> = ({
   );
 };
 
-const TopBar: React.FC<{
-  userName: string;
-  onMenuClick?: () => void;
-}> = ({ userName, onMenuClick }) => {
+const TopBar: React.FC<{ userName: string; onMenuClick?: () => void }> = ({
+  userName,
+  onMenuClick,
+}) => {
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-
   return (
     <div className="dashboard-topbar">
       <div className="dashboard-topbar__content">
@@ -116,19 +109,11 @@ const TopBar: React.FC<{
             <button
               onClick={onMenuClick}
               className="dashboard-topbar__menu-btn"
-              style={{
-                fontSize: "24px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
             >
               ☰
             </button>
           )}
-          <h1 className="dashboard-topbar__title" style={{ margin: 0 }}>
-            Dashboard
-          </h1>
+          <h1 className="dashboard-topbar__title">Dashboard</h1>
         </div>
         <div className="dashboard-topbar__user">
           <span className="dashboard-topbar__user-name">
@@ -144,7 +129,8 @@ const DeadlineModal: React.FC<{
   courses: Course[];
   onSave: (deadline: Omit<Deadline, "id">) => void;
   onClose: () => void;
-}> = ({ courses, onSave, onClose }) => {
+  onNavigate: (page: string) => void;
+}> = ({ courses, onSave, onClose, onNavigate }) => {
   const [taskName, setTaskName] = useState("");
   const [selectedCourseId, setSelectedCourseId] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -154,7 +140,6 @@ const DeadlineModal: React.FC<{
     value: course.id,
     label: course.title,
   }));
-
   const priorityOptions = [
     { value: "high", label: "High" },
     { value: "medium", label: "Medium" },
@@ -164,7 +149,6 @@ const DeadlineModal: React.FC<{
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!taskName || !selectedCourseId || !dueDate) return;
-
     onSave({
       courseId: selectedCourseId,
       taskName,
@@ -184,62 +168,77 @@ const DeadlineModal: React.FC<{
             ×
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="dashboard-modal__form">
-          <div className="dashboard-form-group">
-            <label className="dashboard-form-label">Task Name</label>
-            <input
-              type="text"
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
-              className="dashboard-form-input"
-              required
-              placeholder="Enter task name"
-            />
-          </div>
-          <div className="dashboard-form-group">
-            <label className="dashboard-form-label">Course</label>
-            <CustomDropdown
-              value={selectedCourseId}
-              onChange={setSelectedCourseId}
-              options={courseOptions}
-              placeholder="Select a course"
-            />
-          </div>
-          <div className="dashboard-form-group">
-            <label className="dashboard-form-label">Priority</label>
-            <CustomDropdown
-              value={priority}
-              onChange={(v) => setPriority(v as Deadline["priority"])}
-              options={priorityOptions}
-              placeholder="Select priority"
-            />
-          </div>
-          <div className="dashboard-form-group">
-            <label className="dashboard-form-label">Due Date</label>
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="dashboard-form-input"
-              required
-            />
-          </div>
-          <div className="dashboard-modal__actions">
+
+        {courses.length === 0 ? (
+          <div style={{ padding: "20px", textAlign: "center" }}>
+            <p style={{ marginBottom: "15px", color: "#6b7280" }}>
+              You need to create a course first!
+            </p>
             <button
-              type="button"
-              className="dashboard-btn dashboard-btn--secondary"
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
+              onClick={() => onNavigate("courses")}
               className="dashboard-btn dashboard-btn--primary"
             >
-              Save Deadline
+              Go to Courses
             </button>
           </div>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="dashboard-modal__form">
+            <div className="dashboard-form-group">
+              <label className="dashboard-form-label">Task Name</label>
+              <input
+                type="text"
+                value={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+                className="dashboard-form-input"
+                required
+                placeholder="Enter task name"
+              />
+            </div>
+            <div className="dashboard-form-group">
+              <label className="dashboard-form-label">Course</label>
+              <CustomDropdown
+                value={selectedCourseId}
+                onChange={setSelectedCourseId}
+                options={courseOptions}
+                placeholder="Select a course"
+              />
+            </div>
+            <div className="dashboard-form-group">
+              <label className="dashboard-form-label">Priority</label>
+              <CustomDropdown
+                value={priority}
+                onChange={(v) => setPriority(v as Deadline["priority"])}
+                options={priorityOptions}
+                placeholder="Select priority"
+              />
+            </div>
+            <div className="dashboard-form-group">
+              <label className="dashboard-form-label">Due Date</label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="dashboard-form-input"
+                required
+              />
+            </div>
+            <div className="dashboard-modal__actions">
+              <button
+                type="button"
+                className="dashboard-btn dashboard-btn--secondary"
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="dashboard-btn dashboard-btn--primary"
+              >
+                Save Deadline
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
@@ -252,8 +251,6 @@ const MobileNav: React.FC<{
   isOpen: boolean;
   onClose: () => void;
 }> = ({ currentPage, onNavigate, onLogout, isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: "📊" },
     { id: "calendar", label: "Calendar", icon: "📅" },
@@ -264,14 +261,12 @@ const MobileNav: React.FC<{
 
   return (
     <div
-      className="dashboard-mobile-nav-overlay"
+      className={`dashboard-mobile-nav-overlay ${isOpen ? "is-open" : ""}`}
       onClick={onClose}
-      style={{ zIndex: 1000 }}
     >
       <div
         className="dashboard-mobile-nav"
         onClick={(e) => e.stopPropagation()}
-        style={{ animation: "slideIn 0.3s ease-out" }}
       >
         <div className="dashboard-mobile-nav__header">
           <h3 className="dashboard-mobile-nav__title">Menu</h3>
@@ -324,7 +319,6 @@ const SimpleBarChart: React.FC<{
   data: Array<{ name: string; tasks: number }>;
 }> = ({ data }) => {
   const maxTasks = Math.max(...data.map((d) => d.tasks), 1);
-
   return (
     <div className="dashboard-bar-chart">
       <div className="dashboard-bar-chart__bars">
@@ -336,7 +330,7 @@ const SimpleBarChart: React.FC<{
                 height: `${(item.tasks / maxTasks) * 120}px`,
                 minHeight: item.tasks > 0 ? "4px" : "0",
               }}
-              title={`${item.tasks} task${item.tasks !== 1 ? "s" : ""}`}
+              title={`${item.tasks} tasks`}
             />
             <span className="dashboard-bar-chart__day">{item.name}</span>
             <span className="dashboard-bar-chart__count">{item.tasks}</span>
@@ -361,7 +355,6 @@ export function Dashboard({
   const [showAddModal, setShowAddModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Calculate statistics
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
@@ -371,14 +364,10 @@ export function Dashboard({
       (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
     )
     .slice(0, 5);
-
   const overdueDeadlines = deadlines.filter((d) => d.status === "overdue");
-
   const completedCount = deadlines.filter(
     (d) => d.status === "completed"
   ).length;
-
-  // Chart data - deadlines per day for the next 7 days
   const completionRate =
     deadlines.length > 0
       ? Math.round((completedCount / deadlines.length) * 100)
@@ -393,29 +382,11 @@ export function Dashboard({
       dueDate.setHours(0, 0, 0, 0);
       return dueDate.getTime() === date.getTime() && d.status === "upcoming";
     }).length;
-
     chartData.push({
       name: date.toLocaleDateString("en-US", { weekday: "short" }),
       tasks: count,
     });
   }
-
-  const getPriorityClass = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "dashboard-badge dashboard-badge--high";
-      case "medium":
-        return "dashboard-badge dashboard-badge--medium";
-      case "low":
-        return "dashboard-badge dashboard-badge--low";
-      default:
-        return "dashboard-badge";
-    }
-  };
-
-  const getCourseById = (courseId: string) => {
-    return courses.find((c) => c.id === courseId);
-  };
 
   return (
     <div className="dashboard-page">
@@ -437,11 +408,8 @@ export function Dashboard({
           userName={userName}
           onMenuClick={() => setMobileMenuOpen(true)}
         />
-
         <main className="dashboard-content">
-          {/* Stats Cards */}
           <div className="dashboard-stats-grid">
-            {/* Upcoming Deadlines Card */}
             <div className="dashboard-stats-card">
               <div className="dashboard-stats-card__header">
                 <div>
@@ -458,8 +426,6 @@ export function Dashboard({
                 Tasks due soon
               </p>
             </div>
-
-            {/* Overdue Card */}
             <div className="dashboard-stats-card">
               <div className="dashboard-stats-card__header">
                 <div>
@@ -476,8 +442,6 @@ export function Dashboard({
                 Need attention
               </p>
             </div>
-
-            {/* Completed Card */}
             <div className="dashboard-stats-card">
               <div className="dashboard-stats-card__header">
                 <div>
@@ -497,7 +461,6 @@ export function Dashboard({
           </div>
 
           <div className="dashboard-grid">
-            {/* Upcoming Deadlines List */}
             <div className="dashboard-upcoming-card">
               <div className="dashboard-upcoming-card__header">
                 <h2 className="dashboard-upcoming-card__title">
@@ -505,93 +468,46 @@ export function Dashboard({
                 </h2>
                 <button
                   onClick={() => setShowAddModal(true)}
-                  className="dashboard-btn dashboard-btn--primary dashboard-btn--small"
+                  className={`dashboard-btn dashboard-btn--small ${
+                    courses.length === 0
+                      ? "dashboard-btn--warning"
+                      : "dashboard-btn--primary"
+                  }`}
                 >
                   <span className="dashboard-btn__icon">+</span>
-                  <span className="dashboard-btn__text">Add Deadline</span>
-                </button>
-                <button
-                  onClick={onClearCompleted}
-                  style={{
-                    fontSize: "12px",
-                    opacity: 0.6,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  🧹 Clear Done
+                  <span className="dashboard-btn__text">
+                    {courses.length === 0
+                      ? "Create Course First"
+                      : "Add Deadline"}
+                  </span>
                 </button>
               </div>
 
               <div className="dashboard-upcoming-list">
                 {upcomingDeadlines.length === 0 ? (
-                  <div
-                    className="dashboard-empty-state"
-                    style={{
-                      textAlign: "center",
-                      padding: "40px 20px",
-                      background: "#f9fafb",
-                      borderRadius: "12px",
-                      border: "2px dashed #e5e7eb",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "48px",
-                        display: "block",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      🎉
-                    </span>
-                    <h3
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "600",
-                        color: "#111827",
-                        margin: "0 0 8px 0",
-                      }}
-                    >
-                      All clear!
-                    </h3>
-                    <p
-                      style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}
-                    >
-                      No deadlines for now. Go grab a coffee or rest!
-                    </p>
+                  <div className="dashboard-empty-state">
+                    <span>🎉</span>
+                    <h3>All clear!</h3>
+                    <p>No deadlines for now.</p>
                   </div>
                 ) : (
                   upcomingDeadlines.map((deadline) => {
-                    const course = getCourseById(deadline.courseId);
+                    const course = courses.find(
+                      (c) => c.id === deadline.courseId
+                    );
                     return (
                       <div
                         key={deadline.id}
                         className="dashboard-upcoming-item"
                         style={{
                           borderLeft: `4px solid ${
-                            deadline.priority === "high"
-                              ? "#ef4444"
-                              : deadline.priority === "medium"
-                              ? "#f59e0b"
-                              : "#10b981"
+                            deadline.priority === "high" ? "#ef4444" : "#10b981"
                           }`,
-                          paddingLeft: "12px",
                         }}
-                        onClick={() => {
-                          if (deadline.status === "upcoming") {
-                            onUpdateDeadline(deadline.id, {
-                              status: "completed",
-                            });
-                          }
-                        }}
+                        onClick={() =>
+                          onUpdateDeadline(deadline.id, { status: "completed" })
+                        }
                       >
-                        <input
-                          type="checkbox"
-                          checked={deadline.status === "completed"}
-                          onChange={() => {}}
-                          className="dashboard-upcoming-item__checkbox"
-                        />
                         <div className="dashboard-upcoming-item__content">
                           <h3 className="dashboard-upcoming-item__title">
                             {deadline.taskName}
@@ -611,17 +527,11 @@ export function Dashboard({
                             <span className="dashboard-upcoming-item__date">
                               {new Date(deadline.dueDate).toLocaleDateString(
                                 "en-US",
-                                {
-                                  month: "short",
-                                  day: "numeric",
-                                }
+                                { month: "short", day: "numeric" }
                               )}
                             </span>
                           </div>
                         </div>
-                        <span className={getPriorityClass(deadline.priority)}>
-                          {deadline.priority}
-                        </span>
                       </div>
                     );
                   })
@@ -629,42 +539,16 @@ export function Dashboard({
               </div>
             </div>
 
-            {/* Right Column */}
             <div className="dashboard-sidebar-column">
-              {/* Overdue Tasks Warning */}
-              {overdueDeadlines.length > 0 && (
-                <div className="dashboard-warning-card">
-                  <div className="dashboard-warning-card__header">
-                    <span className="dashboard-warning-card__icon">⚠️</span>
-                    <h3 className="dashboard-warning-card__title">
-                      Overdue Tasks
-                    </h3>
-                  </div>
-                  <p className="dashboard-warning-card__text">
-                    You have {overdueDeadlines.length} overdue{" "}
-                    {overdueDeadlines.length === 1 ? "task" : "tasks"}
-                  </p>
-                  <button
-                    onClick={() => onNavigate("deadlines")}
-                    className="dashboard-warning-card__link"
-                  >
-                    View all →
-                  </button>
-                </div>
-              )}
-
-              {/* This Week Overview Chart */}
               <div className="dashboard-chart-card">
                 <div className="dashboard-chart-card__header">
-                  <span className="dashboard-chart-card__icon">📈</span>
+                  <span>📈</span>
                   <h3 className="dashboard-chart-card__title">
                     This Week Overview
                   </h3>
                 </div>
                 <SimpleBarChart data={chartData} />
               </div>
-
-              {/* Quick Stats */}
               <div className="dashboard-stats-summary">
                 <h3 className="dashboard-stats-summary__title">Quick Stats</h3>
                 <div
@@ -676,7 +560,6 @@ export function Dashboard({
                 >
                   <ProgressBar percentage={completionRate} size={100} />
                 </div>
-
                 <div className="dashboard-stats-summary__list">
                   <div className="dashboard-stats-summary__item">
                     <span className="dashboard-stats-summary__label">
@@ -694,19 +577,6 @@ export function Dashboard({
                       {deadlines.length}
                     </span>
                   </div>
-                  <div className="dashboard-stats-summary__item">
-                    <span className="dashboard-stats-summary__label">
-                      Status
-                    </span>
-                    <span
-                      className="dashboard-stats-summary__value"
-                      style={{
-                        color: completionRate === 100 ? "#10b981" : "#4f46e5",
-                      }}
-                    >
-                      {completionRate === 100 ? "All done! 🎉" : "In progress"}
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -719,6 +589,7 @@ export function Dashboard({
           courses={courses}
           onSave={onAddDeadline}
           onClose={() => setShowAddModal(false)}
+          onNavigate={onNavigate}
         />
       )}
     </div>
