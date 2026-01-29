@@ -567,3 +567,48 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     color: $courses-page-secondary-color;
   }
 }
+
+@media (max-width: 1024px) {
+  .courses-page-card__delete-btn {
+    opacity: 1 !important;
+    background-color: rgba(239, 68, 68, 1);
+  }
+}
+
+.courses-page-modal-overlay {
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.courses-page-modal {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.courses-page-card__title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.8em;
+}

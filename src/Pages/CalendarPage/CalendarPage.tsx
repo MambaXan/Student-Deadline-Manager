@@ -368,14 +368,6 @@ export function CalendarPage({
                                 borderLeft: `3px solid ${
                                   course?.color || "#6b7280"
                                 }`,
-                                fontSize: "10px",
-                                padding: "2px 4px",
-                                marginBottom: "2px",
-                                borderRadius: "4px",
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                display: "block",
                               }}
                               title={deadline.taskName}
                             >
@@ -383,6 +375,11 @@ export function CalendarPage({
                             </div>
                           );
                         })}
+                        {dayDeadlines.length > 3 && (
+                          <div className="calendar-widget__deadline-more">
+                            + {dayDeadlines.length - 3} more
+                          </div>
+                        )}
                       </div>
                     </div>
                   );

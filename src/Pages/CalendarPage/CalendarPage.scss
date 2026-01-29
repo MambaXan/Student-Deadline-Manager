@@ -564,3 +564,61 @@ $calendar-danger-color: #ef4444;
     justify-content: space-between;
   }
 }
+// 1. Улучшение отображения задач в ячейке
+.calendar-widget__deadlines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.calendar-widget__deadline-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    filter: brightness(0.95);
+  }
+}
+
+.calendar-widget__deadline-more {
+  font-size: 9px;
+  font-weight: 700;
+  color: $calendar-secondary-color;
+  text-align: center;
+  padding-top: 2px;
+}
+
+@media (max-width: 768px) {
+  .calendar-widget__day {
+    min-height: 70px;
+    padding: 4px;
+  }
+
+  .calendar-widget__day-number {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .calendar-widget__deadline-item {
+    font-size: 0;
+    height: 4px;
+    padding: 0;
+    border-left: none !important;
+    background-color: currentColor !important;
+  }
+}
+
+.calendar-modal-overlay {
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.calendar-modal {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
