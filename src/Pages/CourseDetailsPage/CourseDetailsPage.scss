@@ -83,57 +83,53 @@ $course-details-info-light: #dbeafe;
   @include course-details-card-shadow;
 
   &__banner {
-    height: 160px;
+    min-height: 180px;
+    padding: 30px 20px;
+    display: flex;
+    align-items: flex-end;
     position: relative;
+
+    @media (max-width: 480px) {
+      padding-top: 50px;
+    }
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+    z-index: 1;
   }
 
   &__info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    @include course-details-flex-between;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
   }
 
   &__left {
     flex: 1;
+    min-width: 200px;
   }
 
   &__title {
-    font-size: 28px;
+    font-size: clamp(20px, 5vw, 28px);
     font-weight: 700;
     color: $course-details-white;
-    margin-bottom: 8px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 12px;
+    line-height: 1.2;
+    word-break: break-word;
   }
 
   &__meta {
     display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  &__meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba($course-details-white, 0.9);
-  }
-
-  &__meta-icon {
-    font-size: 16px;
-  }
-
-  &__meta-text {
-    font-size: 14px;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 }
 
@@ -639,6 +635,139 @@ $course-details-info-light: #dbeafe;
       &:hover {
         background-color: $course-details-primary-light;
         color: $course-details-primary-color;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .course-details-deadlines {
+    background: transparent;
+    border: none;
+
+    table {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    tr {
+      display: block;
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid $course-details-medium-gray;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0 !important;
+      border: none !important;
+      text-align: right;
+
+      &:nth-child(1):before {
+        content: "Task";
+        font-weight: 600;
+        color: #6b7280;
+        margin-right: 10px;
+        text-align: left;
+      }
+      &:nth-child(2):before {
+        content: "Type";
+        font-weight: 600;
+        color: #6b7280;
+        margin-right: 10px;
+        text-align: left;
+      }
+      &:nth-child(3):before {
+        content: "Due Date";
+        font-weight: 600;
+        color: #6b7280;
+        margin-right: 10px;
+        text-align: left;
+      }
+      &:nth-child(4):before {
+        content: "Status";
+        font-weight: 600;
+        color: #6b7280;
+        margin-right: 10px;
+        text-align: left;
+      }
+
+      &:first-child {
+        font-weight: 700;
+        font-size: 16px;
+        color: $course-details-dark-gray;
+        border-bottom: 1px solid #f3f4f6 !important;
+        margin-bottom: 8px;
+        padding-bottom: 12px !important;
+      }
+    }
+  }
+}
+
+.course-details-header {
+  &__banner {
+    padding-top: env(safe-area-inset-top);
+    min-height: 200px !important;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__info {
+    position: relative !important;
+    bottom: 0 !important;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  &__title {
+    font-size: 22px !important;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 768px) {
+  .course-details-deadlines table {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: block;
+    }
+
+    tr {
+      display: block;
+      border: 1px solid #eee;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border: none !important;
+
+      &:before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #888;
       }
     }
   }

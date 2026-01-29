@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./CourseDetailsPage.scss";
 import { Sidebar } from "../../components/Sidebar";
 import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
+import { MobileNav } from "../../components/MobileNav";
 
 // Interfaces
 interface Course {
@@ -34,7 +35,10 @@ interface CourseDetailsPageProps {
 }
 
 // Components
-const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
+const TopBar: React.FC<{ userName: string; onMenuClick: () => void }> = ({
+  userName,
+  onMenuClick,
+}) => {
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
@@ -42,7 +46,21 @@ const TopBar: React.FC<{ userName: string }> = ({ userName }) => {
   return (
     <div className="course-details-topbar">
       <div className="course-details-topbar__content">
-        <h1 className="course-details-topbar__title">Course Details</h1>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <button
+            className="mobile-menu-toggle"
+            onClick={onMenuClick}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+            }}
+          >
+            ☰
+          </button>
+          <h1 className="course-details-topbar__title">Course Details</h1>
+        </div>
         <div className="course-details-topbar__user">
           <span className="course-details-topbar__user-name">
             {greeting}, {userName}!
@@ -185,6 +203,7 @@ export function CourseDetailsPage({
   onBack,
 }: CourseDetailsPageProps) {
   const [showAddModal, setShowAddModal] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const getPriorityClass = (priority: string) => {
     switch (priority) {
@@ -245,8 +264,19 @@ export function CourseDetailsPage({
         onLogout={onLogout}
       />
 
+      <MobileNav
+        currentPage="courses"
+        onNavigate={onNavigate}
+        onLogout={onLogout}
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+
       <div className="course-details-main-content">
-        <TopBar userName={userName} />
+        <TopBar
+          userName={userName}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
 
         <main className="course-details-content">
           {/* Back Button */}
@@ -361,7 +391,10 @@ export function CourseDetailsPage({
                         key={deadline.id}
                         className="course-details-deadlines-table__row"
                       >
-                        <td className="course-details-deadlines-table__cell">
+                        <td
+                          className="course-details-deadlines-table__cell"
+                          data-label="Task"
+                        >
                           <span
                             className={`course-details-deadlines-table__task ${
                               deadline.status === "completed"
@@ -372,29 +405,32 @@ export function CourseDetailsPage({
                             {deadline.taskName}
                           </span>
                         </td>
-                        <td className="course-details-deadlines-table__cell">
+                        <td
+                          className="course-details-deadlines-table__cell"
+                          data-label="Type"
+                        >
                           <span className="course-details-deadlines-table__type">
-                            <span className="course-details-deadlines-table__type-icon">
-                              {getTypeIcon(deadline.type)}
-                            </span>
-                            <span className="course-details-deadlines-table__type-text">
-                              {deadline.type}
-                            </span>
+                            {getTypeIcon(deadline.type)} {deadline.type}
                           </span>
                         </td>
-                        <td className="course-details-deadlines-table__cell course-details-deadlines-table__cell--date">
-                          {deadline.dueDate.toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
+                        <td
+                          className="course-details-deadlines-table__cell"
+                          data-label="Due Date"
+                        >
+                          {deadline.dueDate.toLocaleDateString()}
                         </td>
-                        <td className="course-details-deadlines-table__cell">
+                        <td
+                          className="course-details-deadlines-table__cell"
+                          data-label="Status"
+                        >
                           <span className={getStatusClass(deadline.status)}>
                             {deadline.status}
                           </span>
                         </td>
-                        <td className="course-details-deadlines-table__cell">
+                        <td
+                          className="course-details-deadlines-table__cell"
+                          data-label="Priority"
+                        >
                           <span className={getPriorityClass(deadline.priority)}>
                             {deadline.priority}
                           </span>

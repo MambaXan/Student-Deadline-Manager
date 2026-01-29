@@ -927,7 +927,9 @@ $deadlines-page-info-light: #dbeafe;
     cursor: pointer;
     font-size: 14px;
 
-    &--open { border-color: #4f46e5; }
+    &--open {
+      border-color: #4f46e5;
+    }
   }
 
   &__arrow {
@@ -955,13 +957,50 @@ $deadlines-page-info-light: #dbeafe;
     padding: 10px 12px;
     cursor: pointer;
     font-size: 14px;
-    &:hover { background: #f3f4f6; }
-    &--selected { background: #eef2ff; color: #4f46e5; font-weight: 600; }
+    &:hover {
+      background: #f3f4f6;
+    }
+    &--selected {
+      background: #eef2ff;
+      color: #4f46e5;
+      font-weight: 600;
+    }
   }
 
   &__overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
+  }
+}
+@media (max-width: 768px) {
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none !important;
+    padding: 6px 0 !important;
+    font-size: 14px;
+
+    &::before {
+      content: attr(data-label);
+      font-weight: 600;
+      color: #6b7280;
+    }
   }
 }
