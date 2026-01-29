@@ -265,6 +265,19 @@ const MobileNav: React.FC<{
           </button>
           <button
             onClick={() => {
+              onNavigate("settings");
+              onClose();
+            }}
+            className={`deadlines-page-mobile-nav__item ${
+              currentPage === "settings"
+                ? "deadlines-page-mobile-nav__item--active"
+                : ""
+            }`}
+          >
+            ⚙️ Settings
+          </button>
+          <button
+            onClick={() => {
               onLogout();
               onClose();
             }}
@@ -487,7 +500,10 @@ export function DeadlinesPage({
                           key={deadline.id}
                           className="deadlines-page-table__row"
                         >
-                          <td className="deadlines-page-table__cell deadlines-page-table__cell--task">
+                          <td
+                            className="deadlines-page-table__cell deadlines-page-table__cell--task"
+                            data-label="Task"
+                          >
                             <div className="deadlines-page-task-cell">
                               <input
                                 type="checkbox"
@@ -513,7 +529,10 @@ export function DeadlinesPage({
                               </span>
                             </div>
                           </td>
-                          <td className="deadlines-page-table__cell">
+                          <td
+                            className="deadlines-page-table__cell"
+                            data-label="Course"
+                          >
                             {course && (
                               <span
                                 className="deadlines-page-course-badge"
@@ -526,7 +545,10 @@ export function DeadlinesPage({
                               </span>
                             )}
                           </td>
-                          <td className="deadlines-page-table__cell">
+                          <td
+                            className="deadlines-page-table__cell"
+                            data-label="Type"
+                          >
                             <span className="deadlines-page-type-cell">
                               <span className="deadlines-page-type-cell__icon">
                                 {getTypeIcon(deadline.type)}
@@ -536,7 +558,10 @@ export function DeadlinesPage({
                               </span>
                             </span>
                           </td>
-                          <td className="deadlines-page-table__cell deadlines-page-table__cell--date">
+                          <td
+                            className="deadlines-page-table__cell deadlines-page-table__cell--date"
+                            data-label="Due Date"
+                          >
                             {new Date(deadline.dueDate).toLocaleDateString(
                               "en-US",
                               {
@@ -546,19 +571,28 @@ export function DeadlinesPage({
                               }
                             )}
                           </td>
-                          <td className="deadlines-page-table__cell">
+                          <td
+                            className="deadlines-page-table__cell"
+                            data-label="Status"
+                          >
                             <span className={getStatusClass(deadline.status)}>
                               {deadline.status}
                             </span>
                           </td>
-                          <td className="deadlines-page-table__cell">
+                          <td
+                            className="deadlines-page-table__cell"
+                            data-label="Priority"
+                          >
                             <span
                               className={getPriorityClass(deadline.priority)}
                             >
                               {deadline.priority}
                             </span>
                           </td>
-                          <td className="deadlines-page-table__cell deadlines-page-table__cell--actions">
+                          <td
+                            className="deadlines-page-table__cell deadlines-page-table__cell--actions"
+                            data-label="Actions"
+                          >
                             <div className="deadlines-page-actions-cell">
                               <button
                                 onClick={() =>
