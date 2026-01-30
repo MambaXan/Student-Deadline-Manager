@@ -207,7 +207,11 @@ export default function App() {
         );
       case "course-details":
         const selectedCourse = courses.find((c) => c.id === selectedCourseId);
-        return selectedCourse ? (
+        if (!selectedCourse) {
+          setCurrentPage("courses");
+          return null;
+        }
+        return (
           <CourseDetailsPage
             currentPage={currentPage}
             userName={userName}
@@ -218,11 +222,12 @@ export default function App() {
             onAddDeadline={addDeadline as any}
             onBack={() => navigateTo("courses")}
           />
-        ) : null;
+        );
       case "calendar":
         return (
           <CalendarPage
             currentPage={currentPage}
+            userName={userName}
             deadlines={deadlines}
             courses={courses}
             onNavigate={navigateTo}

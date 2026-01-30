@@ -16,6 +16,7 @@ interface Deadline {
 
 interface CalendarPageProps {
   currentPage: string;
+  userName: string;
   deadlines: ImportedDeadline[];
   courses: Course[];
   onNavigate: (page: string) => void;
@@ -56,7 +57,7 @@ const TopBar: React.FC<{
         </div>
         <div className="calendar-topbar__user">
           <span className="calendar-topbar__user-name">
-            {greeting}, {userName}!
+            {greeting}, {userName || "Student"}!
           </span>
         </div>
       </div>
@@ -156,6 +157,7 @@ export function CalendarPage({
   currentPage,
   deadlines,
   courses,
+  userName,
   onNavigate,
   onLogout,
   onAddDeadline,
@@ -277,7 +279,10 @@ export function CalendarPage({
       />
 
       <div className="calendar-main-content">
-        <TopBar userName="Marlen" onMenuClick={() => setMobileMenuOpen(true)} />
+        <TopBar
+          userName={userName || "Student"}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
 
         <main className="calendar-content">
           <div className="calendar-container">
