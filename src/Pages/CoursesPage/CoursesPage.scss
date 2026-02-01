@@ -36,6 +36,7 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     flex-direction: column;
     overflow: hidden;
     min-width: 0;
+    background-color: var(--background);
   }
 
   .courses-page-content {
@@ -528,6 +529,7 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   background-color: $courses-page-white;
   border-bottom: 1px solid $courses-page-medium-gray;
   padding: 16px 20px;
+  background-color: var(--sidebar);
 
   &__menu-btn {
     width: 40px;

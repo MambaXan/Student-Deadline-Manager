@@ -50,6 +50,7 @@ $calendar-danger-color: #ef4444;
     display: flex;
     flex-direction: column;
     min-width: 0;
+    background-color: var(--background);
   }
 
   .calendar-content {
@@ -114,6 +115,8 @@ $calendar-danger-color: #ef4444;
   background-color: $calendar-white;
   border-bottom: 1px solid $calendar-medium-gray;
   padding: 16px 20px;
+  background-color: var(--sidebar);
+  border: 1px solid var(--border);
 
   &__menu-btn {
     width: 40px;
@@ -167,15 +170,16 @@ $calendar-danger-color: #ef4444;
 
 // Calendar widget
 .calendar-widget {
-  background-color: $calendar-white;
+  background-color: var(--card);
   border-radius: 12px;
-  border: 1px solid $calendar-medium-gray;
+  border: 1px solid var(--border);
   padding: 24px;
   @include calendar-card-shadow;
 
   &__header {
     @include calendar-flex-between;
     margin-bottom: 24px;
+    background-color: var(--card);
   }
 
   &__title {
@@ -213,6 +217,7 @@ $calendar-danger-color: #ef4444;
     border: 1px solid $calendar-medium-gray;
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid var(--border);
   }
 
   &__day-header {
@@ -224,6 +229,7 @@ $calendar-danger-color: #ef4444;
     color: $calendar-secondary-color;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    background-color: var(--card);
   }
 
   &__day {
@@ -233,6 +239,8 @@ $calendar-danger-color: #ef4444;
 
     @media (max-width: 1440px) {
       min-height: 113px;
+      background-color: var(--card);
+      border: 1px solid var(--border);
     }
 
     @media (max-width: 1024px) {
@@ -249,7 +257,7 @@ $calendar-danger-color: #ef4444;
     }
 
     &--today {
-      background-color: $calendar-primary-light;
+      background-color: var(--card);
       border: 2px solid $calendar-today-color;
     }
   }
@@ -306,9 +314,9 @@ $calendar-danger-color: #ef4444;
 }
 
 .calendar-sidebar-card {
-  background-color: $calendar-white;
+  background-color: var(--card);
   border-radius: 12px;
-  border: 1px solid $calendar-medium-gray;
+  border: 1px solid var(--border);
   padding: 20px;
   @include calendar-card-shadow;
 
@@ -564,7 +572,7 @@ $calendar-danger-color: #ef4444;
     justify-content: space-between;
   }
 }
-// 1. Улучшение отображения задач в ячейке
+
 .calendar-widget__deadlines {
   display: flex;
   flex-direction: column;

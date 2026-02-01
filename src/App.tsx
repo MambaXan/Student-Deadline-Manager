@@ -136,6 +136,9 @@ export default function App() {
   };
 
   const updateUserName = (name: string) => {
+    if (!name || name.trim().length === 0) {
+      return;
+    }
     setUserName(name);
   };
 
@@ -143,6 +146,20 @@ export default function App() {
     setCourses(courses.filter((c) => c.id !== id));
     setDeadlines(deadlines.filter((d) => d.courseId !== id));
   };
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
 
   // --- Original rendering ---
   const renderPage = () => {
@@ -243,6 +260,8 @@ export default function App() {
             onNavigate={navigateTo}
             onLogout={handleLogout}
             onUpdateName={updateUserName}
+            isDarkMode={isDarkMode}
+            onToggleTheme={() => setIsDarkMode(!isDarkMode)}
           />
         );
       default:

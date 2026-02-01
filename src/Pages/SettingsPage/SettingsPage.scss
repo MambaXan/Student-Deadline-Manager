@@ -14,6 +14,7 @@ $text-gray: #6b7280;
     flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: var(--background);
   }
 
   .settings-page-content {
@@ -30,8 +31,9 @@ $text-gray: #6b7280;
 
 .settings-page-topbar {
   background: #fff;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid var(--border);
   padding: 16px 24px;
+  background-color: var(--sidebar);
 
   &__content {
     display: flex;
@@ -43,6 +45,7 @@ $text-gray: #6b7280;
     font-size: 20px;
     font-weight: 600;
     margin: 0;
+    color: var(--foreground);
   }
 
   &__menu-btn {
@@ -96,10 +99,10 @@ $text-gray: #6b7280;
 }
 
 .settings-page-card {
-  background: #fff;
+  background-color: var(--card);
   padding: 24px;
   border-radius: 16px;
-  border: 1px solid $border;
+  border: 1px solid var(--border);
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 
   &__header {
@@ -113,6 +116,7 @@ $text-gray: #6b7280;
     font-size: 18px;
     font-weight: 600;
     margin: 0;
+    color: var(--foreground);
   }
 
   &__desc {
@@ -124,6 +128,7 @@ $text-gray: #6b7280;
 
   &--danger {
     border-left: 4px solid $danger;
+    background-color: var(--card);
   }
 }
 
@@ -144,6 +149,7 @@ $text-gray: #6b7280;
       border: 1px solid $border;
       border-radius: 10px;
       font-size: 14px;
+      background-color: var(--input-background);
       &:focus {
         outline: none;
         border-color: $primary;

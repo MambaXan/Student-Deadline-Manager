@@ -18,12 +18,12 @@ $danger-light: #fee2e2;
 // Sidebar
 .sidebar {
   width: 260px;
-  background-color: $white;
-  border-right: 1px solid $medium-gray;
+  // background-color: $white;
+  border: 1px solid var(--border);
   height: 100vh;
   display: flex;
   flex-direction: column;
-  // position: fixed;
+  background-color: var(--background);
   position: sticky;
   left: 0;
   top: 0;
@@ -32,7 +32,7 @@ $danger-light: #fee2e2;
 
   &__header {
     padding: 24px;
-    border-bottom: 1px solid $medium-gray;
+    border-bottom: 1px solid var(--border);
   }
 
   &__logo {
@@ -52,7 +52,7 @@ $danger-light: #fee2e2;
 
   &__footer {
     padding: 16px;
-    border-top: 1px solid $medium-gray;
+    border-top: 1px solid var(--border);
   }
 }
 
