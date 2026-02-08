@@ -593,10 +593,9 @@ $dashboard-info-light: #dbeafe;
 
 // Dashboard topbar
 .dashboard-topbar {
-  background-color: $dashboard-white;
   border-bottom: 1px solid var(--border);
   padding: 16px 20px;
-  background-color: var(--sidebar);
+  background-color: var(--background);
 
   &__content {
     @include dashboard-flex-between;

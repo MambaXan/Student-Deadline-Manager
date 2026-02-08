@@ -112,11 +112,9 @@ $calendar-danger-color: #ef4444;
 
 // Calendar topbar
 .calendar-topbar {
-  background-color: $calendar-white;
-  border-bottom: 1px solid $calendar-medium-gray;
+  border-bottom: 1px solid var(--border);
   padding: 16px 20px;
-  background-color: var(--sidebar);
-  border: 1px solid var(--border);
+  background-color: var(--background);
 
   &__menu-btn {
     width: 40px;

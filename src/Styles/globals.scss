@@ -2119,3 +2119,36 @@ body.dialog-open {
     outline: none;
   }
 }
+
+.dark {
+  .settings-page-container,
+  .dashboard-container,
+  .courses-page-container,
+  .course-details-container,
+  body {
+    background-color: var(--background) !important;
+  }
+
+  .settings-page-card,
+  .courses-page-card,
+  .course-details-deadlines-section,
+  .stat-card {
+    background-color: var(--card) !important;
+    border-color: var(--border) !important;
+    color: var(--foreground) !important;
+  }
+
+  .sidebar {
+    background-color: var(--sidebar) !important;
+    border-right: 1px solid var(--sidebar-border) !important;
+  }
+
+  .sidebar__nav-item--active {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+  }
+
+  .course-details-deadlines-table__head {
+    background-color: var(--muted) !important;
+  }
+}

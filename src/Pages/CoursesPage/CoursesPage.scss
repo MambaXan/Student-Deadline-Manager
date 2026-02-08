@@ -149,24 +149,24 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
 
 // Courses Page card
 .courses-page-card {
-  background-color: $courses-page-white;
+  background-color: var(--card);
   border-radius: 16px;
-  border: 1px solid $courses-page-medium-gray;
+  border: 1px solid var(--border);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: $courses-page-card-shadow;
+  box-shadow: var(--card-shadow);
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $courses-page-card-shadow-hover;
+    box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.3);
     .courses-page-card__delete-btn {
       opacity: 1;
     }
 
     .courses-page-card__view-btn {
-      background-color: $courses-page-primary-light;
-      color: $courses-page-primary-color;
+      background-color: var(--primary);
+      color: var(--primary-foreground);
     }
   }
 
@@ -218,6 +218,9 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     @include courses-page-flex-center;
     font-size: 24px;
     color: $courses-page-white;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    color: white;
   }
 
   &__content {
@@ -227,7 +230,7 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
   &__title {
     font-size: 20px;
     font-weight: 600;
-    color: $courses-page-dark-gray;
+    color: var(--foreground);
     margin-bottom: 16px;
     line-height: 1.4;
   }
@@ -247,27 +250,29 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
 
   &__detail-icon {
     font-size: 16px;
-    color: $courses-page-secondary-color;
+    color: var(--muted-foreground);
   }
 
   &__detail-text {
     font-size: 14px;
-    color: $courses-page-secondary-color;
+    color: var(--muted-foreground);
   }
 
   &__footer {
     @include courses-page-flex-between;
     padding-top: 20px;
-    border-top: 1px solid $courses-page-medium-gray;
+    border-top: 1px solid var(--border);
     margin-bottom: 16px;
   }
 
   &__tasks-label {
     font-size: 14px;
-    color: $courses-page-secondary-color;
+    color: var(--muted-foreground);
   }
 
   &__tasks-count {
+    background-color: var(--muted);
+    color: var(--foreground);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 14px;
@@ -278,8 +283,8 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
     width: 100%;
     padding: 12px;
     border: none;
-    background-color: $courses-page-light-gray;
-    color: $courses-page-secondary-color;
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
     border-radius: 12px;
     font-size: 14px;
     font-weight: 500;
@@ -526,10 +531,9 @@ $courses-page-card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
 
 // Courses Page topbar
 .courses-page-topbar {
-  background-color: $courses-page-white;
-  border-bottom: 1px solid $courses-page-medium-gray;
+  border-bottom: 1px solid var(--border);
   padding: 16px 20px;
-  background-color: var(--sidebar);
+  background-color: var(--background);
 
   &__menu-btn {
     width: 40px;

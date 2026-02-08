@@ -328,7 +328,7 @@ $deadlines-page-info-light: #dbeafe;
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: $deadlines-page-light-gray;
+        // background-color: $deadlines-page-light-gray;
       }
 
       @media (max-width: 900px) {
