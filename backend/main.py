@@ -85,3 +85,21 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 def get_all_deadlines(db: Session = Depends(get_db)):
     results = db.query(models.Deadline).all()
     return results
+
+
+@app.post("/deadlines/test", response_model=schemas.Deadline)
+def create_test_deadline(deadline: schemas.DeadlineCreate, db: Session = Depends(get_db)):
+    test_user = db.query(models.UserModel).first()
+
+    if not test_user:
+        test_user = models.UserModel(
+            email="test@test.com", hashed_password="123")
+        db.add(test_user)
+        db.commit()
+        db.refresh(test_user)
+
+    new_deadline = models.Deadline(**deadline.dict(), owner_id=test_user.id)
+    db.add(new_deadline)
+    db.commit()
+    db.refresh(new_deadline)
+    return new_deadline

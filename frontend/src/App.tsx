@@ -114,9 +114,16 @@ export default function App() {
     setCurrentPage("course-details");
   };
 
-  const addDeadline = async (deadline: Omit<Deadline, "id">) => {
+  const addDeadline = async (deadline: any) => {
     try {
-      const savedDeadline = await createDeadline(deadline);
+      const deadlineToSave = {
+        title: deadline.taskName || "New Task",
+        subject: deadline.courseId || "General",
+        due_date: new Date(deadline.dueDate).toISOString(),
+        is_completed: deadline.status === "completed",
+      };
+
+      const savedDeadline = await createDeadline(deadlineToSave);
 
       setDeadlines((prev) => [
         ...prev,
@@ -128,6 +135,7 @@ export default function App() {
 
       toast.success("Saved to Database!");
     } catch (e) {
+      console.error("Ошибка сохранения:", e);
       toast.error("Failed to save to DB");
     }
   };

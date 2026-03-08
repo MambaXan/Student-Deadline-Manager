@@ -6,10 +6,11 @@ export const getDeadlines = async () => {
 };
 
 export const createDeadline = async (deadline: any) => {
-  const res = await fetch(`${BASE_URL}/deadlines/`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(deadline),
-  });
-  return res.json();
-};
+    const res = await fetch(`${BASE_URL}/deadlines/test`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(deadline),
+    });
+    if (!res.ok) throw new Error('Ошибка при сохранении');
+    return res.json();
+  };
