@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.scss";
 import { Sidebar } from "../../components/Sidebar";
 import CustomDropdown from "../../components/CustomDropdown/CustomDropdown";
+import { getDeadlines } from "../../api";
 
 // Interfaces
 interface Course {
@@ -354,6 +355,17 @@ export function Dashboard({
 }: DashboardProps) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    console.log("Пытаюсь достучаться до FastAPI...");
+    getDeadlines()
+      .then((data) => {
+        console.log("✅ Связь с БД установлена! Данные:", data);
+      })
+      .catch((err) => {
+        console.error("❌ Ошибка связи с бэкендом:", err);
+      });
+  }, []);
 
   const now = new Date();
   now.setHours(0, 0, 0, 0);

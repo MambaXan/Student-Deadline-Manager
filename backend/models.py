@@ -10,9 +10,9 @@ class UserModel(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
-    deadlines = relationship("DeadlineModel", back_populates="owner")
+    deadlines = relationship("Deadline", back_populates="owner")
 
-class DeadlineModel(Base):
+class Deadline(Base):
     __tablename__ = "deadlines"
 
     id = Column(Integer, primary_key=True, index=True)

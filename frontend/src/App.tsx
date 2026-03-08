@@ -10,6 +10,7 @@ import { CoursesPage } from "./Pages/CoursesPage";
 import { CourseDetailsPage } from "./Pages/CourseDetailsPage";
 import { CalendarPage } from "./Pages/CalendarPage";
 import { SettingsPage } from "./Pages/SettingsPage";
+import { getDeadlines, createDeadline } from "./api";
 
 import { Course } from "./Types/course";
 import { Deadline } from "./Types/deadline";
@@ -39,24 +40,31 @@ export default function App() {
     }
   });
 
-  const [deadlines, setDeadlines] = useState<Deadline[]>(() => {
-    try {
-      const saved = localStorage.getItem("my_deadlines");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          return parsed.map((d: any) => ({
-            ...d,
-            dueDate: new Date(d.dueDate),
-          }));
-        }
-      }
-      return [];
-    } catch (e) {
-      console.error("Failed to parse deadlines", e);
-      return [];
+  const [deadlines, setDeadlines] = useState<Deadline[]>([]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getDeadlines()
+        .then((data) => {
+          console.log("Что пришло из БД:", data);
+
+          if (Array.isArray(data)) {
+            const formatted = data.map((d: any) => ({
+              ...d,
+              dueDate: new Date(d.dueDate),
+            }));
+            setDeadlines(formatted);
+          } else {
+            console.error("Бэкенд вернул не список, а:", data);
+            setDeadlines([]);
+          }
+        })
+        .catch((err) => {
+          console.error("Ошибка запроса:", err);
+          toast.error("Database connection failed");
+        });
     }
-  });
+  }, [isAuthenticated]);
 
   // --- Save effects (do not change appearance, only write to memory) ---
   useEffect(() => {
@@ -106,10 +114,22 @@ export default function App() {
     setCurrentPage("course-details");
   };
 
-  const addDeadline = (deadline: Omit<Deadline, "id">) => {
-    const newDeadline = { ...deadline, id: Date.now().toString() };
-    setDeadlines([...deadlines, newDeadline as Deadline]);
-    toast.success("Deadline added!");
+  const addDeadline = async (deadline: Omit<Deadline, "id">) => {
+    try {
+      const savedDeadline = await createDeadline(deadline);
+
+      setDeadlines((prev) => [
+        ...prev,
+        {
+          ...savedDeadline,
+          dueDate: new Date(savedDeadline.dueDate),
+        },
+      ]);
+
+      toast.success("Saved to Database!");
+    } catch (e) {
+      toast.error("Failed to save to DB");
+    }
   };
 
   const clearCompletedDeadlines = () => {
