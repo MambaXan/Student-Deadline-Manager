@@ -81,6 +81,25 @@ export default function App() {
     localStorage.setItem("my_deadlines", JSON.stringify(deadlines));
   }, [deadlines]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Если токена нет, просто не делаем запрос и мчим на логин
+      console.log("Токена нет, юзер не залогинен");
+      return;
+    }
+
+    getDeadlines()
+      .then((data) => {
+        setDeadlines(data);
+      })
+      .catch((err) => {
+        console.error("Ошибка:", err);
+        toast.error("Session expired or DB error");
+      });
+  }, []);
+
   // --- Original logic of functions ---
   const handleLogin = (email: string, password: string) => {
     setIsAuthenticated(true);

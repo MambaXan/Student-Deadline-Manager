@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { registerUser, loginUser } from "../../api";
 import "./SignupPage.scss";
 
 interface SignupPageProps {
@@ -13,7 +14,7 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -22,12 +23,24 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
+    try {
+      // 1. Создаем юзера в БД
+      await registerUser({ email, password });
 
-    onSignup(name, email, password);
+      // 2. Сразу получаем токен, чтобы юзер не вводил данные дважды
+      const formData = new URLSearchParams();
+      formData.append("username", email);
+      formData.append("password", password);
+
+      await loginUser(formData);
+
+      // 3. Уходим на главную
+      onSignup(name, email, password);
+      onNavigate("dashboard");
+    } catch (err) {
+      console.error("Ошибка регистрации:", err);
+      setError("Registration failed. Email might be taken.");
+    }
   };
 
   return (

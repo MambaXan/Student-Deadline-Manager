@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {loginUser} from "../../api"
 import "./LoginPage.scss";
 
 interface LoginPageProps {
@@ -10,9 +11,24 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(email, password);
+    
+    try {
+      const formData = new URLSearchParams();
+      formData.append("username", email);
+      formData.append("password", password);
+  
+      await loginUser(formData);
+      
+      // После успешного входа принудительно редиректим на Dashboard
+      // или вызываем onLogin, если он меняет состояние в App.tsx
+      onLogin(email, password); 
+      onNavigate("dashboard");
+    } catch (err) {
+      console.error("Ошибка входа:", err);
+      alert("Неверный логин или пароль");
+    }
   };
 
   return (

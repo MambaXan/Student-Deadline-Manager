@@ -66,19 +66,40 @@ def create_deadline(deadline: schemas.DeadlineCreate, db: Session = Depends(get_
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(models.UserModel).filter(
         models.UserModel.email == form_data.username).first()
-    if not user or not auth.verify_password(form_data.password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    return {"access_token": auth.create_access_token(data={"sub": user.email}), "token_type": "bearer"}
+
+    if not user:
+        print(f"DEBUG: Юзер {form_data.username} не найден")
+        raise HTTPException(status_code=401, detail="Invalid email")
+
+    try:
+        is_valid = auth.verify_password(
+            form_data.password, user.hashed_password)
+    except Exception as e:
+        print(f"DEBUG: Ошибка при проверке пароля: {e}")
+        raise HTTPException(
+            status_code=500, detail="Password verification failed")
+
+    if not is_valid:
+        raise HTTPException(status_code=401, detail="Invalid password")
+
+    access_token = auth.create_access_token(data={"sub": user.email})
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @app.post("/register", response_model=schemas.User)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    hashed = auth.get_password_hash(user.password)
-    db_user = models.UserModel(email=user.email, hashed_password=hashed)
-    db.add(db_user)
+    db_user = db.query(models.UserModel).filter(
+        models.UserModel.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    hashed_pwd = auth.get_password_hash(user.password)
+    new_user = models.UserModel(email=user.email, hashed_password=hashed_pwd)
+
+    db.add(new_user)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(new_user)
+    return new_user
 
 
 @app.get("/deadlines/")
