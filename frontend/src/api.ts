@@ -53,3 +53,12 @@ export const createDeadline = async (deadline: any) => {
   if (!response.ok) throw new Error("Failed to create deadline");
   return response.json();
 };
+
+export const deleteDeadline = async (id: number) => {
+  const response = await fetch(`${API_URL}/deadlines/${id}`, {
+    method: "DELETE",
+    headers: getAuthHeader(),
+  });
+  if (!response.ok) throw new Error("Failed to delete deadline");
+  return response.json();
+};

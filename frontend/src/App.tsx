@@ -10,7 +10,7 @@ import { CoursesPage } from "./Pages/CoursesPage";
 import { CourseDetailsPage } from "./Pages/CourseDetailsPage";
 import { CalendarPage } from "./Pages/CalendarPage";
 import { SettingsPage } from "./Pages/SettingsPage";
-import { getDeadlines, createDeadline } from "./api";
+import { getDeadlines, createDeadline, loginUser, registerUser } from "./api";
 
 import { Course } from "./Types/course";
 import { Deadline } from "./Types/deadline";
@@ -83,34 +83,61 @@ export default function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
-    if (!token) {
-      // Если токена нет, просто не делаем запрос и мчим на логин
-      console.log("Токена нет, юзер не залогинен");
-      return;
+    if (isAuthenticated && token) {
+      getDeadlines()
+        .then((data) => {
+          if (Array.isArray(data)) {
+            const formatted: Deadline[] = data.map((d: any) => ({
+              id: d.id.toString(),
+              taskName: d.title || "Untitled",
+              courseId: d.subject || "",
+              dueDate: d.due_date ? new Date(d.due_date) : new Date(),
+              status: (d.is_completed ? "completed" : "upcoming") as
+                | "completed"
+                | "upcoming",
+              priority: (d.priority || "medium") as "low" | "medium" | "high",
+              type: "assignment" as "assignment", // жестко задаем тип из твоего интерфейса
+              description: d.description || "",
+            }));
+            setDeadlines(formatted);
+          }
+        })
+        .catch((err) => {
+          console.error("Ошибка загрузки:", err);
+        });
     }
-
-    getDeadlines()
-      .then((data) => {
-        setDeadlines(data);
-      })
-      .catch((err) => {
-        console.error("Ошибка:", err);
-        toast.error("Session expired or DB error");
-      });
-  }, []);
+  }, [isAuthenticated]);
 
   // --- Original logic of functions ---
-  const handleLogin = (email: string, password: string) => {
-    setIsAuthenticated(true);
-    setCurrentPage("dashboard");
-    toast(`Welcome back!`, { icon: "👋" });
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const formData = new URLSearchParams();
+      formData.append("username", email);
+      formData.append("password", password);
+
+      const data = await loginUser(formData); // Токен сохранится в api.ts
+
+      setIsAuthenticated(true);
+      setUserName(email.split("@")[0]);
+      setCurrentPage("dashboard");
+      toast.success("Logged in successfully!");
+    } catch (err) {
+      toast.error("Invalid credentials");
+    }
   };
 
-  const handleSignup = (name: string, email: string, password: string) => {
-    setUserName(name);
-    setIsAuthenticated(true);
-    setCurrentPage("dashboard");
+  const handleSignup = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
+    try {
+      await registerUser({ email, password });
+      toast.success("Registered! Now please log in.");
+      setCurrentPage("login");
+    } catch (err) {
+      toast.error("Registration failed");
+    }
   };
 
   const handleLogout = () => {
@@ -136,26 +163,34 @@ export default function App() {
   const addDeadline = async (deadline: any) => {
     try {
       const deadlineToSave = {
-        title: deadline.taskName || "New Task",
-        subject: deadline.courseId || "General",
+        title: deadline.taskName,
+        subject: deadline.courseId,
         due_date: new Date(deadline.dueDate).toISOString(),
-        is_completed: deadline.status === "completed",
+        is_completed: false,
+        priority: deadline.priority || "medium",
+        description: deadline.description || "",
       };
 
-      const savedDeadline = await createDeadline(deadlineToSave);
+      const saved = await createDeadline(deadlineToSave); // Получаем ОДИН объект
 
-      setDeadlines((prev) => [
-        ...prev,
-        {
-          ...savedDeadline,
-          dueDate: new Date(savedDeadline.dueDate),
-        },
-      ]);
+      const formattedNew: Deadline = {
+        id: saved.id.toString(),
+        taskName: saved.title || "Untitled",
+        courseId: saved.subject || "",
+        dueDate: new Date(saved.due_date),
+        status: (saved.is_completed ? "completed" : "upcoming") as
+          | "completed"
+          | "upcoming",
+        priority: (saved.priority || "medium") as "low" | "medium" | "high",
+        type: "assignment" as "assignment",
+        description: saved.description || "",
+      };
 
+      setDeadlines((prev) => [...prev, formattedNew]);
       toast.success("Saved to Database!");
     } catch (e) {
-      console.error("Ошибка сохранения:", e);
-      toast.error("Failed to save to DB");
+      console.error(e);
+      toast.error("DB Save Error");
     }
   };
 

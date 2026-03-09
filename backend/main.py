@@ -124,3 +124,17 @@ def create_test_deadline(deadline: schemas.DeadlineCreate, db: Session = Depends
     db.commit()
     db.refresh(new_deadline)
     return new_deadline
+
+
+# Прямо от самого начала строки, никаких пробелов!
+@app.delete("/deadlines/{deadline_id}")
+def delete_deadline(deadline_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    db_deadline = db.query(models.Deadline).filter(
+        models.Deadline.id == deadline_id,
+        models.Deadline.owner_id == current_user.id
+    ).first()
+    if not db_deadline:
+        raise HTTPException(status_code=404, detail="Deadline not found")
+    db.delete(db_deadline)
+    db.commit()
+    return {"message": "Deleted successfully"}

@@ -24,17 +24,14 @@ export function SignupPage({ onSignup, onNavigate }: SignupPageProps) {
     }
 
     try {
-      // 1. Создаем юзера в БД
       await registerUser({ email, password });
 
-      // 2. Сразу получаем токен, чтобы юзер не вводил данные дважды
       const formData = new URLSearchParams();
       formData.append("username", email);
       formData.append("password", password);
 
       await loginUser(formData);
 
-      // 3. Уходим на главную
       onSignup(name, email, password);
       onNavigate("dashboard");
     } catch (err) {
