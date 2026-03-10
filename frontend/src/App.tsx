@@ -96,7 +96,7 @@ export default function App() {
                 | "completed"
                 | "upcoming",
               priority: (d.priority || "medium") as "low" | "medium" | "high",
-              type: "assignment" as "assignment", // жестко задаем тип из твоего интерфейса
+              type: "assignment" as "assignment",
               description: d.description || "",
             }));
             setDeadlines(formatted);
@@ -115,7 +115,7 @@ export default function App() {
       formData.append("username", email);
       formData.append("password", password);
 
-      const data = await loginUser(formData); // Токен сохранится в api.ts
+      const data = await loginUser(formData);
 
       setIsAuthenticated(true);
       setUserName(email.split("@")[0]);
@@ -171,7 +171,7 @@ export default function App() {
         description: deadline.description || "",
       };
 
-      const saved = await createDeadline(deadlineToSave); // Получаем ОДИН объект
+      const saved = await createDeadline(deadlineToSave);
 
       const formattedNew: Deadline = {
         id: saved.id.toString(),

@@ -126,7 +126,6 @@ def create_test_deadline(deadline: schemas.DeadlineCreate, db: Session = Depends
     return new_deadline
 
 
-# Прямо от самого начала строки, никаких пробелов!
 @app.delete("/deadlines/{deadline_id}")
 def delete_deadline(deadline_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     db_deadline = db.query(models.Deadline).filter(

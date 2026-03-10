@@ -1,12 +1,9 @@
 const API_URL = "http://localhost:8000";
 
-// Явно указываем тип возвращаемого значения для TS
 const getAuthHeader = (): Record<string, string> => {
   const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
-
-// --- АВТОРИЗАЦИЯ ---
 
 export const registerUser = async (userData: any) => {
   const response = await fetch(`${API_URL}/register`, {
@@ -30,12 +27,10 @@ export const loginUser = async (credentials: URLSearchParams) => {
   return data;
 };
 
-// --- ДЕДЛАЙНЫ ---
-
 export const getDeadlines = async () => {
   const response = await fetch(`${API_URL}/deadlines`, {
     method: "GET",
-    headers: getAuthHeader(), // Передаем объект напрямую
+    headers: getAuthHeader(),
   });
   if (!response.ok) throw new Error("Failed to fetch deadlines");
   return response.json();

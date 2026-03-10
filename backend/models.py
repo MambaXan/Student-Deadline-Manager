@@ -16,7 +16,7 @@ class Deadline(Base):
     __tablename__ = "deadlines"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
+    task_name = Column(String)
     subject = Column(String)
     due_date = Column(DateTime)
     is_completed = Column(Boolean, default=False)

@@ -21,8 +21,6 @@ export function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
   
       await loginUser(formData);
       
-      // После успешного входа принудительно редиректим на Dashboard
-      // или вызываем onLogin, если он меняет состояние в App.tsx
       onLogin(email, password); 
       onNavigate("dashboard");
     } catch (err) {

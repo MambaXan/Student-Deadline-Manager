@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional, List
 
 class DeadlineBase(BaseModel):
-    title: str
+    task_name: str
     subject: str
     due_date: datetime
     is_completed: bool = False
