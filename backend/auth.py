@@ -6,8 +6,7 @@ SECRET_KEY = "SUPER_SECRET_KEY_123"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 43200
 
-pwd_context = CryptContext(
-    schemes=["bcrypt"], deprecated="auto", truncate_error=False)
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def verify_password(plain_password, hashed_password):
