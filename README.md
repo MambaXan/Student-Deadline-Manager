@@ -66,6 +66,7 @@ student-deadline-manager
 │   └── schemes.py
 ├── screenshots
 └── README.md
+```
 
 ## 🖼 Application Review
 ### 🏠 Main page
