@@ -48,8 +48,8 @@ Student Deadline Manager is a modern web application designed to help students o
 - Render - Backend Hosting
 
 # 📂 Project Structure
+```text
 student-deadline-manager
-│
 ├── frontend
 │   ├── components
 │   ├── constants
@@ -58,16 +58,13 @@ student-deadline-manager
 │   ├── styles
 │   ├── types
 │   └── ui
-│
 ├── backend
 │   ├── auth.py
 │   ├── database.py
 │   ├── main.py
 │   ├── models.py
 │   └── schemes.py
-│
 ├── screenshots
-│
 └── README.md
 
 ## 🖼 Application Review
@@ -102,9 +99,7 @@ git clone https://github.com/MambaXan/Student-Deadline-Manager.git
 cd student-deadline-manager
 npm start
 
-Install Frontend dependencies
 cd frontend
 npm install
 
-Start development server
 npm run dev
